@@ -9,12 +9,14 @@ import { Contact } from "@/components/sections/Contact";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { AIConsultantChat } from "@/components/AIConsultantChat";
+import { ProjectBanner } from "@/components/sections/ProjectBanner";
 
 export default function Home() {
   return (
     <main className="min-h-screen">
       <Navbar />
       <Hero />
+      <ProjectBanner />
       <Stats />
       <Experience />
       <Projects />
