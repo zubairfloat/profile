@@ -1,0 +1,35 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "avatar",
+      "description": "Professional corporate headshot",
+      "imageUrl": "https://picsum.photos/seed/rizwan/400/400",
+      "imageHint": "professional headshot"
+    },
+    {
+      "id": "mattress-firm",
+      "description": "Mattress Firm Commerce Platform",
+      "imageUrl": "https://picsum.photos/seed/mf/800/600",
+      "imageHint": "ecommerce website"
+    },
+    {
+      "id": "affirm",
+      "description": "Affirm Payment Integration",
+      "imageUrl": "https://picsum.photos/seed/affirm/800/600",
+      "imageHint": "payment checkout"
+    },
+    {
+      "id": "dynamics",
+      "description": "Dynamics 365 Commerce Dashboard",
+      "imageUrl": "https://picsum.photos/seed/d365/800/600",
+      "imageHint": "enterprise dashboard"
+    },
+    {
+      "id": "leasing",
+      "description": "Progressive Leasing financing",
+      "imageUrl": "https://picsum.photos/seed/leasing/800/600",
+      "imageHint": "financial interface"
+    }
+  ]
+}
