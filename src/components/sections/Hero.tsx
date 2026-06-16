@@ -117,7 +117,7 @@ export function Hero() {
                src="/images/zubair.jpeg"
                 alt="Muhammad Zubair Rizwan"
                 fill
-                className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                className="object-cover hover:grayscale-0 transition-all duration-700"
                 data-ai-hint="professional headshot"
               />
             </div>
