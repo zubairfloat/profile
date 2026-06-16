@@ -20,7 +20,7 @@ const projects = [
       { label: "Scale", value: "Millions of Users", icon: Users },
       { label: "Platform", value: "Enterprise Scale", icon: Globe }
     ],
-    image: PlaceHolderImages.find(img => img.id === 'mattress-firm')?.imageUrl
+   image: "/projects/mattress-firm.webp"
   },
   {
     id: "affirm",
@@ -32,7 +32,7 @@ const projects = [
       { label: "Performance", value: "Top 3 Payment Method", icon: Zap },
       { label: "Impact", value: "High Order Volume", icon: ShieldCheck }
     ],
-    image: PlaceHolderImages.find(img => img.id === 'affirm')?.imageUrl
+     image: "/projects/affirm.png"
   },
   {
     id: "dynamics",
@@ -44,7 +44,7 @@ const projects = [
       { label: "Type", value: "Enterprise CRM/ERP", icon: Globe },
       { label: "Tech", value: "Modern D365", icon: Zap }
     ],
-    image: PlaceHolderImages.find(img => img.id === 'dynamics')?.imageUrl
+    image: "/projects/dynamics.png"
   }
 ];
 

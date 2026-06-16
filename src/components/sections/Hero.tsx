@@ -6,14 +6,12 @@ import Image from 'next/image';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { FileText, ArrowRight, Github, Linkedin, ExternalLink } from "lucide-react";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { motion } from "framer-motion";
 
 export function Hero() {
-  const avatar = PlaceHolderImages.find(img => img.id === 'avatar');
 
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 hero-gradient -z-10" />
       <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px] -z-10 animate-pulse" />
@@ -60,10 +58,10 @@ export function Hero() {
           </div>
 
           <div className="flex items-center gap-6 pt-4">
-            <a href="https://linkedin.com" target="_blank" className="text-muted-foreground hover:text-primary transition-colors">
+            <a href="https://www.linkedin.com/in/muhammad-zubair-rizwan-69a355180/" target="_blank" className="text-muted-foreground hover:text-primary transition-colors">
               <Linkedin className="h-6 w-6" />
             </a>
-            <a href="https://github.com" target="_blank" className="text-muted-foreground hover:text-primary transition-colors">
+            <a href="https://github.com/zubairfloat" target="_blank" className="text-muted-foreground hover:text-primary transition-colors">
               <Github className="h-6 w-6" />
             </a>
             <div className="h-4 w-[1px] bg-border mx-2" />
@@ -116,7 +114,7 @@ export function Hero() {
             
             <div className="relative w-full h-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
               <Image 
-                src={avatar?.imageUrl || "https://picsum.photos/seed/rizwan/600/600"}
+               src="/images/zubair.jpeg"
                 alt="Muhammad Zubair Rizwan"
                 fill
                 className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
