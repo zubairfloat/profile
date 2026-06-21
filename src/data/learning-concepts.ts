@@ -119,10 +119,13 @@ export const learningConcepts: LearningConcept[] = [
       "Visualize how JavaScript schedules callbacks, microtasks, macrotasks, and rendering.",
     category: "javascript",
     difficulty: "Intermediate",
-    readTime: "Coming soon",
+    readTime: "15 minutes",
     tags: ["JavaScript", "Async", "Runtime"],
-    featured: false,
-    available: false,
+    featured: true,
+    available: true,
+    content: {
+      subtitle: "Understand asynchronous JavaScript through interactive visualizations.",
+    },
   },
   {
     id: "js-call-stack",
