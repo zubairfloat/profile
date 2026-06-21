@@ -29,7 +29,8 @@ const interviewQuestions = [
       "The Call Stack is a data structure that keeps track of function calls during code execution. When a function is called, it's added to the top of the stack. When it returns, it's removed from the stack. The Event Loop only processes queued tasks when the Call Stack is completely empty.",
   },
   {
-    question: "What is the difference between Microtask Queue and Callback Queue?",
+    question:
+      "What is the difference between Microtask Queue and Callback Queue?",
     answer:
       "The Microtask Queue has higher priority and includes Promise callbacks (then/catch/finally) and queueMicrotask calls. It executes after the Call Stack is empty but before the Callback Queue. The Callback Queue (also called Task Queue or Macrotask Queue) contains setTimeout, setInterval, and I/O operations. It executes one task at a time, then checks for microtasks again.",
   },
@@ -56,10 +57,10 @@ export function EventLoopLesson() {
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 hero-gradient -z-10" />
-      <div className="absolute left-1/2 top-24 h-px w-[80vw] -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+      {/* <div className="absolute inset-0 hero-gradient -z-10" />
+      <div className="absolute left-1/2 top-24 h-px w-[80vw] -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/40 to-transparent" /> */}
 
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto pb-16 pt-28">
         {/* Hero Section */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -67,28 +68,21 @@ export function EventLoopLesson() {
           transition={{ duration: 0.6 }}
           className="mb-20 text-center"
         >
-          <Badge variant="outline" className="mb-4 border-primary/30 bg-primary/5">
+          <Badge
+            variant="outline"
+            className="mb-4 border-primary/30 bg-primary/5"
+          >
             <Zap className="mr-2 h-3.5 w-3.5" />
             Interactive Learning
           </Badge>
-
-          <h1 className="mb-4 text-5xl font-bold leading-tight lg:text-6xl">
-            JavaScript Event Loop
+          <h1 className="text-5xl font-headline leading-tight tracking-tight lg:text-7xl">
+            JavaScript <span className="gradient-text">Event Loop</span>
           </h1>
-
-          <p className="mx-auto mb-6 max-w-3xl text-xl text-muted-foreground">
-            Understand how JavaScript handles asynchronous operations behind the scenes.
+          <p className="mx-auto mt-6 max-w-3xl text-xl leading-relaxed text-muted-foreground">
+            Understand how JavaScript handles asynchronous operations behind the
+            scenes.
           </p>
 
-          <p className="mx-auto mb-12 max-w-2xl text-lg text-muted-foreground/80">
-            Explore Call Stack, Web APIs, Microtasks, Callback Queues, Promises, Async/Await, and real-world
-            enterprise examples through interactive visualizations.
-          </p>
-
-          <div className="flex items-center justify-center gap-3 text-sm text-muted-foreground">
-            <Clock className="h-4 w-4" />
-            15 minute read
-          </div>
         </motion.section>
 
         {/* Main Content Tabs */}
@@ -144,7 +138,11 @@ export function EventLoopLesson() {
             </TabsTrigger>
           </TabsList>
 
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <TabsContent value="visualizer" className="space-y-8">
               <RuntimeArchitectureVisualizer />
             </TabsContent>
@@ -190,7 +188,8 @@ export function EventLoopLesson() {
           <div className="mb-12">
             <h2 className="mb-3 text-3xl font-bold">Interview Questions</h2>
             <p className="text-muted-foreground">
-              Master these fundamental questions about the Event Loop that appear in technical interviews.
+              Master these fundamental questions about the Event Loop that
+              appear in technical interviews.
             </p>
           </div>
 
@@ -206,17 +205,24 @@ export function EventLoopLesson() {
                 <Card
                   className={cn(
                     "border-white/10 backdrop-blur-xl transition-all cursor-pointer hover:border-primary/30 hover:bg-primary/5",
-                    expandedQuestion === index && "border-primary/30 bg-primary/5"
+                    expandedQuestion === index &&
+                      "border-primary/30 bg-primary/5",
                   )}
-                  onClick={() => setExpandedQuestion(expandedQuestion === index ? null : index)}
+                  onClick={() =>
+                    setExpandedQuestion(
+                      expandedQuestion === index ? null : index,
+                    )
+                  }
                 >
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between gap-4">
-                      <CardTitle className="text-base font-semibold">{qa.question}</CardTitle>
+                      <CardTitle className="text-base font-semibold">
+                        {qa.question}
+                      </CardTitle>
                       <ChevronDown
                         className={cn(
                           "h-5 w-5 flex-shrink-0 text-primary transition-transform",
-                          expandedQuestion === index && "rotate-180"
+                          expandedQuestion === index && "rotate-180",
                         )}
                       />
                     </div>
@@ -256,7 +262,11 @@ export function EventLoopLesson() {
               { title: "Queue priority", desc: "Microtasks before Macrotasks" },
               { title: "Collaborative", desc: "Browser controls rendering" },
             ].map((item, i) => (
-              <motion.div key={i} whileHover={{ scale: 1.05 }} className="rounded-lg bg-background/40 p-4">
+              <motion.div
+                key={i}
+                whileHover={{ scale: 1.05 }}
+                className="rounded-lg bg-background/40 p-4"
+              >
                 <p className="mb-2 font-semibold text-primary">{item.title}</p>
                 <p className="text-xs text-muted-foreground">{item.desc}</p>
               </motion.div>
