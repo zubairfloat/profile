@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Play, RotateCcw, ChevronLeft, ChevronRight } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -145,7 +145,7 @@ export function EventLoopSimulator() {
   };
 
   // Auto-play effect
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isAutoPlay) return;
 
     const timer = setTimeout(() => {
