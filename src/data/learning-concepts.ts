@@ -175,10 +175,14 @@ export const learningConcepts: LearningConcept[] = [
       "Understand lexical scope, preserved state, callbacks, factories, and closure pitfalls.",
     category: "javascript",
     difficulty: "Intermediate",
-    readTime: "Coming soon",
-    tags: ["JavaScript", "Scope"],
-    featured: false,
-    available: false,
+    readTime: "14 minutes",
+    tags: ["JavaScript", "Scope", "State"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Master lexical scope, persistent state, private variables, and one of JavaScript's most powerful concepts.",
+    },
   },
   {
     id: "js-hoisting",
@@ -201,10 +205,14 @@ export const learningConcepts: LearningConcept[] = [
       "Follow promise states, chaining, error paths, and microtask execution from first principles.",
     category: "javascript",
     difficulty: "Intermediate",
-    readTime: "Coming soon",
-    tags: ["JavaScript", "Async"],
-    featured: false,
-    available: false,
+    readTime: "13 minutes",
+    tags: ["JavaScript", "Async", "Promises"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Understand asynchronous programming, promise states, chaining, and error handling.",
+    },
   },
   {
     id: "js-async-await",

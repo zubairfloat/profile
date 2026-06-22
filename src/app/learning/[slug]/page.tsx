@@ -3,7 +3,9 @@ import type { ComponentType } from "react";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
 import { CallStackLesson } from "@/components/learning/CallStackLesson";
+import { ClosuresLesson } from "@/components/learning/ClosuresLesson";
 import { DebounceThrottleLesson } from "@/components/learning/DebounceThrottleLesson";
+import { PromisesLesson } from "@/components/learning/PromisesLesson";
 import { Navbar } from "@/components/Navbar";
 import {
   getLearningConceptBySlug,
@@ -51,6 +53,8 @@ export default async function LearningConceptPage({ params }: PageProps) {
   const lessonBySlug: Record<string, ComponentType> = {
     "debouncing-vs-throttling": DebounceThrottleLesson,
     "call-stack": CallStackLesson,
+    closures: ClosuresLesson,
+    promises: PromisesLesson,
   };
 
   const Lesson = lessonBySlug[concept.slug];
