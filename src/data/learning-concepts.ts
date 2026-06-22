@@ -3,19 +3,25 @@ import {
   Bot,
   Boxes,
   BrainCircuit,
+  Cloud,
   Code2,
   Cpu,
   Database,
   FileCode2,
+  Hexagon,
   Network,
+  Server,
 } from "lucide-react";
 
 export type LearningCategoryId =
   | "javascript"
   | "react"
   | "nextjs"
+  | "nodejs"
+  | "nestjs"
   | "typescript"
   | "system-design"
+  | "aws"
   | "ai-engineering"
   | "agentic-ai"
   | "d365-commerce";
@@ -63,6 +69,18 @@ export const learningCategories: LearningCategory[] = [
     icon: Network,
   },
   {
+    id: "nodejs",
+    title: "Node.js",
+    description: "Runtime internals, APIs, streams, async I/O, services, and production backend patterns.",
+    icon: Server,
+  },
+  {
+    id: "nestjs",
+    title: "NestJS",
+    description: "Modules, providers, controllers, dependency injection, guards, pipes, and scalable APIs.",
+    icon: Hexagon,
+  },
+  {
     id: "typescript",
     title: "TypeScript",
     description: "Type modeling, narrowing, generics, and safer application contracts.",
@@ -73,6 +91,12 @@ export const learningCategories: LearningCategory[] = [
     title: "System Design",
     description: "Scalability, reliability, data movement, queues, caches, and tradeoffs.",
     icon: Database,
+  },
+  {
+    id: "aws",
+    title: "AWS",
+    description: "Cloud architecture, compute, storage, networking, serverless, observability, and deployments.",
+    icon: Cloud,
   },
   {
     id: "ai-engineering",
@@ -135,10 +159,13 @@ export const learningConcepts: LearningConcept[] = [
       "See how function calls create execution frames and why recursive code can overflow.",
     category: "javascript",
     difficulty: "Beginner",
-    readTime: "Coming soon",
-    tags: ["JavaScript", "Runtime"],
-    featured: false,
-    available: false,
+    readTime: "12 minutes",
+    tags: ["JavaScript", "Runtime", "Execution"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle: "Understand how JavaScript executes functions one frame at a time.",
+    },
   },
   {
     id: "js-closures",

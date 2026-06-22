@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import type { ComponentType } from "react";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
+import { CallStackLesson } from "@/components/learning/CallStackLesson";
 import { DebounceThrottleLesson } from "@/components/learning/DebounceThrottleLesson";
 import { Navbar } from "@/components/Navbar";
 import {
@@ -46,14 +48,19 @@ export default async function LearningConceptPage({ params }: PageProps) {
     notFound();
   }
 
-  if (concept.slug !== "debouncing-vs-throttling") {
-    notFound();
-  }
+  const lessonBySlug: Record<string, ComponentType> = {
+    "debouncing-vs-throttling": DebounceThrottleLesson,
+    "call-stack": CallStackLesson,
+  };
+
+  const Lesson = lessonBySlug[concept.slug];
+
+  if (!Lesson) notFound();
 
   return (
     <main className="min-h-screen">
       <Navbar />
-      <DebounceThrottleLesson />
+      <Lesson />
       <Footer />
     </main>
   );
