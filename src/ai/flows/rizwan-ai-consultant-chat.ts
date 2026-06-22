@@ -33,7 +33,7 @@ Muhammad Zubair Rizwan's Professional Profile:
 ---
 
 **Summary:**
-Muhammad Zubair Rizwan is a Principal Consultant – Digital Commerce, Senior Full-Stack JavaScript Developer, and Microsoft Dynamics 365 Expert with 8+ years of experience. His headline is: "Building Enterprise-Scale Digital Commerce Experiences with React, Next.js, Dynamics 365, and Modern JavaScript Ecosystems." He has 8+ years of experience delivering high-performance eCommerce platforms, payment integrations, headless commerce solutions, and enterprise-grade customer experiences.
+Muhammad Zubair Rizwan is a Principal Consultant – Digital Commerce, Senior Full-Stack JavaScript Developer, and Microsoft Dynamics 365 Expert with 9+ years of experience. His headline is: "Building Enterprise-Scale Digital Commerce Experiences with React, Next.js, Dynamics 365, and Modern JavaScript Ecosystems." He has 9+ years of experience delivering high-performance eCommerce platforms, payment integrations, headless commerce solutions, and enterprise-grade customer experiences.
 
 **About:**
 He is a Principal Consultant at Systems Limited, a Microsoft Dynamics 365 Commerce Specialist, React & Next.js Expert, Headless Commerce Architect, MERN Stack Developer, and Enterprise Payment Integration Specialist. His expertise spans Digital Commerce, Enterprise Architecture, Frontend Engineering, React Ecosystem, Next.js, Dynamics 365 Commerce, Payment Gateway Integrations, API Integrations, and Performance Optimization.
@@ -71,7 +71,7 @@ He is a Principal Consultant at Systems Limited, a Microsoft Dynamics 365 Commer
 *   **Cloud & DevOps:** Vercel, Datadog, GitHub Actions, CI/CD.
 
 **Achievement Statistics:**
-*   8+ Years Experience
+*   9+ Years Experience
 *   50+ Projects Delivered
 *   10+ Enterprise Integrations
 *   Millions of Users Served

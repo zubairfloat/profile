@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: 'Building Enterprise-Scale Digital Commerce Experiences with React, Next.js, Dynamics 365, and Modern JavaScript Ecosystems.',
   openGraph: {
     title: 'Muhammad Zubair Rizwan | Digital Commerce Expert',
-    description: '8+ years of experience delivering high-performance eCommerce platforms and headless solutions.',
+    description: '9+ years of experience delivering high-performance eCommerce platforms and headless solutions.',
     type: 'website',
   },
 };
