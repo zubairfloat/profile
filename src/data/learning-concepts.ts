@@ -222,10 +222,14 @@ export const learningConcepts: LearningConcept[] = [
       "Turn promise chains into readable flows while preserving cancellation and error handling discipline.",
     category: "javascript",
     difficulty: "Intermediate",
-    readTime: "Coming soon",
-    tags: ["JavaScript", "Async"],
-    featured: false,
-    available: false,
+    readTime: "13 minutes",
+    tags: ["JavaScript", "Async", "Promises"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Write asynchronous JavaScript that looks synchronous and is easier to maintain.",
+    },
   },
   {
     id: "js-memory-management",
@@ -235,10 +239,14 @@ export const learningConcepts: LearningConcept[] = [
       "Explore references, garbage collection, leaks, detached DOM nodes, and performance debugging.",
     category: "javascript",
     difficulty: "Advanced",
-    readTime: "Coming soon",
-    tags: ["JavaScript", "Performance"],
-    featured: false,
-    available: false,
+    readTime: "16 minutes",
+    tags: ["JavaScript", "Performance", "Runtime"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Understand how JavaScript allocates memory, garbage collection works, and how to prevent memory leaks in production applications.",
+    },
   },
   {
     id: "js-execution-context",

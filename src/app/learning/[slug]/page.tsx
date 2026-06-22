@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import type { ComponentType } from "react";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
+import { AsyncAwaitLesson } from "@/components/learning/AsyncAwaitLesson";
 import { CallStackLesson } from "@/components/learning/CallStackLesson";
 import { ClosuresLesson } from "@/components/learning/ClosuresLesson";
 import { DebounceThrottleLesson } from "@/components/learning/DebounceThrottleLesson";
+import { MemoryManagementLesson } from "@/components/learning/MemoryManagementLesson";
 import { PromisesLesson } from "@/components/learning/PromisesLesson";
 import { Navbar } from "@/components/Navbar";
 import {
@@ -55,6 +57,8 @@ export default async function LearningConceptPage({ params }: PageProps) {
     "call-stack": CallStackLesson,
     closures: ClosuresLesson,
     promises: PromisesLesson,
+    "async-await": AsyncAwaitLesson,
+    "memory-management": MemoryManagementLesson,
   };
 
   const Lesson = lessonBySlug[concept.slug];
