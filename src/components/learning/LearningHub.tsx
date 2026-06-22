@@ -66,9 +66,14 @@ function ConceptCard({ concept, index }: { concept: LearningConcept; index: numb
             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Button>
         ) : (
-          <Badge variant="secondary" className="bg-secondary/70">
-            Coming Soon
-          </Badge>
+          <div className="flex flex-wrap items-center gap-3">
+            <Badge variant="secondary" className="bg-secondary/70">
+              Coming Soon
+            </Badge>
+            <Button disabled variant="outline" className="rounded-full border-white/10 font-semibold">
+              Coming Soon
+            </Button>
+          </div>
         )}
       </div>
     </motion.article>
