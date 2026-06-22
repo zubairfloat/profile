@@ -10,6 +10,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { AIConsultantChat } from "@/components/AIConsultantChat";
 import { ProjectBanner } from "@/components/sections/ProjectBanner";
+import { LearningHubPreview } from "@/components/sections/LearningHubPreview";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Hero />
       <ProjectBanner />
       <Stats />
+      <LearningHubPreview />
       <Experience />
       <Projects />
       <Skills />

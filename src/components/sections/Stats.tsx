@@ -5,11 +5,11 @@ import React from 'react';
 import { motion } from "framer-motion";
 
 const stats = [
-  { label: "Years Experience", value: "8+" },
+  { label: "Years Experience", value: "9+" },
   { label: "Projects Delivered", value: "50+" },
-  { label: "Enterprise Integrations", value: "10+" },
-  { label: "Users Served", value: "Millions" },
-  { label: "Features Shipped", value: "100+" }
+  { label: "Concepts Explained", value: "25+" },
+  { label: "Technologies Mastered", value: "20+" },
+  { label: "Mentoring & Knowledge Sharing", value: "Active" }
 ];
 
 export function Stats() {

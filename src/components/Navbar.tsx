@@ -1,30 +1,95 @@
 
 "use client"
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 
+type NavLink = {
+  name: string;
+  sectionId?: string;
+  href?: string;
+};
+
+const navLinks: NavLink[] = [
+  { name: 'Experience', sectionId: 'experience' },
+  { name: 'Projects', sectionId: 'projects' },
+  { name: 'Learning', sectionId: 'learning-hub', href: '/learning' },
+  { name: 'Skills', sectionId: 'skills' },
+  { name: 'Contact', sectionId: 'contact' },
+];
+
 export function Navbar() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const isHomePage = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+
+      if (!isHomePage) return;
+
+      const currentSection = navLinks
+        .filter((link) => link.sectionId)
+        .map((link) => link.sectionId as string)
+        .findLast((sectionId) => {
+          const element = document.getElementById(sectionId);
+          if (!element) return false;
+          return element.getBoundingClientRect().top <= 140;
+        });
+
+      setActiveSection(currentSection ?? "");
     };
+
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isHomePage]);
 
-  const navLinks = [
-    { name: 'Experience', href: '#experience' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Learning', href: '/learning' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Contact', href: '#contact' },
-  ];
+  function getHref(link: NavLink) {
+    if (link.name === "Learning" && !isHomePage) return link.href ?? "/learning";
+    if (!link.sectionId) return link.href ?? "/";
+    return isHomePage ? `#${link.sectionId}` : `/#${link.sectionId}`;
+  }
+
+  function isActive(link: NavLink) {
+    if (link.name === "Learning" && pathname.startsWith("/learning")) return true;
+    return isHomePage && activeSection === link.sectionId;
+  }
+
+  function scrollToSection(sectionId: string) {
+    const element = document.getElementById(sectionId);
+    if (!element) return;
+
+    const top = element.getBoundingClientRect().top + window.scrollY - 96;
+    window.scrollTo({ top, behavior: "smooth" });
+    window.history.pushState(null, "", `#${sectionId}`);
+    setActiveSection(sectionId);
+  }
+
+  function handleLinkClick(event: React.MouseEvent<HTMLAnchorElement>, link: NavLink) {
+    setIsMobileMenuOpen(false);
+
+    if (!isHomePage || !link.sectionId) return;
+
+    event.preventDefault();
+    scrollToSection(link.sectionId);
+  }
+
+  function handleConsultClick(event: React.MouseEvent<HTMLAnchorElement>) {
+    setIsMobileMenuOpen(false);
+
+    if (!isHomePage) return;
+
+    event.preventDefault();
+    scrollToSection("contact");
+  }
 
   return (
     <nav className={cn(
@@ -42,16 +107,23 @@ export function Navbar() {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <a 
+            <Link
               key={link.name} 
-              href={link.href}
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              href={getHref(link)}
+              onClick={(event) => handleLinkClick(event, link)}
+              aria-current={isActive(link) ? "page" : undefined}
+              className={cn(
+                "text-sm font-medium transition-colors",
+                isActive(link) ? "text-primary" : "text-muted-foreground hover:text-primary"
+              )}
             >
               {link.name}
-            </a>
+            </Link>
           ))}
-          <Button size="sm" className="rounded-full bg-primary text-primary-foreground px-6">
-            Consult Now
+          <Button asChild size="sm" className="rounded-full bg-primary text-primary-foreground px-6">
+            <Link href={isHomePage ? "#contact" : "/#contact"} onClick={handleConsultClick}>
+              Consult Now
+            </Link>
           </Button>
         </div>
 
@@ -65,16 +137,24 @@ export function Navbar() {
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-white/5 p-4 space-y-4 flex flex-col items-center animate-in slide-in-from-top-2">
           {navLinks.map((link) => (
-            <a 
+            <Link
               key={link.name} 
-              href={link.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors"
+              href={getHref(link)}
+              onClick={(event) => handleLinkClick(event, link)}
+              aria-current={isActive(link) ? "page" : undefined}
+              className={cn(
+                "text-lg font-medium transition-colors",
+                isActive(link) ? "text-primary" : "text-muted-foreground hover:text-primary"
+              )}
             >
               {link.name}
-            </a>
+            </Link>
           ))}
-          <Button className="w-full rounded-full">Consult Now</Button>
+          <Button asChild className="w-full rounded-full">
+            <Link href={isHomePage ? "#contact" : "/#contact"} onClick={handleConsultClick}>
+              Consult Now
+            </Link>
+          </Button>
         </div>
       )}
     </nav>

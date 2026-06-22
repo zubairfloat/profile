@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -10,16 +11,17 @@ import {
   Github,
   Linkedin,
   ExternalLink,
+  GraduationCap,
+  Mail,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center pt-20 sm:pt-0 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-24 sm:pt-20 overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 hero-gradient -z-10" />
-      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px] -z-10 animate-pulse" />
-      <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-accent/20 rounded-full blur-[120px] -z-10 animate-pulse [animation-delay:2s]" />
+      <div className="absolute left-1/2 top-24 h-px w-[82vw] -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
 
       <div className="container px-4 mx-auto grid lg:grid-cols-2 gap-12 items-center">
         <motion.div
@@ -33,23 +35,23 @@ export function Hero() {
               variant="outline"
               className="px-4 py-1 text-primary border-primary/20 bg-primary/5 rounded-full font-medium"
             >
-              Available for Strategic Consulting
+              Senior Full Stack JavaScript Developer
             </Badge>
-            <h1 className="text-5xl lg:text-7xl font-headline tracking-tighter leading-tight">
+            <h1 className="text-5xl lg:text-7xl font-headline tracking-normal leading-tight">
               Muhammad <span className="gradient-text">Zubair Rizwan</span>
             </h1>
             <div className="space-y-2">
-              <p className="text-xl font-medium text-muted-foreground uppercase tracking-widest text-sm">
-                Principal Consultant – Digital Commerce
+              <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest">
+                Principal Consultant · Technical Educator · Architecture Enthusiast
               </p>
               <h2 className="text-2xl lg:text-3xl font-semibold leading-relaxed">
-                Building Enterprise-Scale Digital Commerce Experiences.
+                Building Enterprise Applications & Teaching Software Engineering Through Interactive Learning Experiences.
               </h2>
             </div>
             <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-              8+ years of expertise delivering high-performance eCommerce
-              platforms, headless commerce solutions, and enterprise-grade
-              customer experiences with React, Next.js, and Dynamics 365.
+              9+ years of professional engineering experience delivering high-performance
+              commerce platforms, modern web applications, and visual learning systems
+              with JavaScript, React, Next.js, TypeScript, and Dynamics 365.
             </p>
           </div>
 
@@ -58,6 +60,28 @@ export function Hero() {
               asChild
               size="lg"
               className="rounded-full bg-primary text-primary-foreground font-semibold px-8 hover:scale-105 transition-transform group"
+            >
+              <Link href="/learning">
+                Explore Learning Hub
+                <GraduationCap className="ml-2 h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="rounded-full border-primary/20 hover:bg-primary/5 px-8 font-semibold"
+            >
+              <a href="#projects">
+                View Projects
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="rounded-full border-white/10 hover:bg-secondary/60 px-8 font-semibold"
             >
               <a
                 href="/resume/zubair.pdf"
@@ -69,12 +93,15 @@ export function Hero() {
               </a>
             </Button>
             <Button
+              asChild
               variant="outline"
               size="lg"
-              className="rounded-full border-primary/20 hover:bg-primary/5 px-8 font-semibold"
+              className="rounded-full border-white/10 hover:bg-secondary/60 px-8 font-semibold"
             >
-              View Projects
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <a href="#contact">
+                Contact Me
+                <Mail className="ml-2 h-4 w-4" />
+              </a>
             </Button>
           </div>
 
@@ -126,9 +153,9 @@ export function Hero() {
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">
-                  Projects Delivered
+                  Concepts Explained
                 </p>
-                <p className="font-bold text-lg">50+</p>
+                <p className="font-bold text-lg">25+</p>
               </div>
             </motion.div>
 
@@ -152,7 +179,7 @@ export function Hero() {
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">Enterprise Exp.</p>
-                <p className="font-bold text-lg">8+ Years</p>
+                <p className="font-bold text-lg">9+ Years</p>
               </div>
             </motion.div>
 
