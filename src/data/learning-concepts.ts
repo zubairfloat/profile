@@ -279,26 +279,34 @@ export const learningConcepts: LearningConcept[] = [
     slug: "react-rendering",
     title: "React Rendering",
     description:
-      "Understand component rendering, re-renders, reconciliation, and Virtual DOM updates.",
+      "Understand how React renders components, updates the Virtual DOM, performs reconciliation, and efficiently updates the UI.",
     category: "react",
     difficulty: "Intermediate",
-    readTime: "Coming soon",
-    tags: ["React", "Rendering", "Virtual DOM"],
-    featured: false,
-    available: false,
+    readTime: "18 minutes",
+    tags: ["React", "Rendering", "Virtual DOM", "Performance"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Understand how React renders components, updates the Virtual DOM, performs reconciliation, and efficiently updates the UI.",
+    },
   },
   {
     id: "react-hooks-deep-dive",
     slug: "react-hooks-deep-dive",
     title: "React Hooks Deep Dive",
     description:
-      "Master useState, useEffect, useMemo, useCallback, useRef, and custom hooks.",
+      "Master useState, useEffect, useMemo, useCallback, useRef, dependency arrays, stale closures, and custom hooks.",
     category: "react",
     difficulty: "Intermediate",
-    readTime: "Coming soon",
-    tags: ["React", "Hooks", "State"],
-    featured: false,
-    available: false,
+    readTime: "20 minutes",
+    tags: ["React", "Hooks", "State", "Effects", "Performance"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Master useState, useEffect, useMemo, useCallback, useRef, dependency arrays, stale closures, and custom hooks.",
+    },
   },
   {
     id: "react-reconciliation",

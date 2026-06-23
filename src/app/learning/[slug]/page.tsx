@@ -8,6 +8,8 @@ import { ClosuresLesson } from "@/components/learning/ClosuresLesson";
 import { DebounceThrottleLesson } from "@/components/learning/DebounceThrottleLesson";
 import { MemoryManagementLesson } from "@/components/learning/MemoryManagementLesson";
 import { PromisesLesson } from "@/components/learning/PromisesLesson";
+import { ReactHooksDeepDiveLesson } from "@/components/learning/ReactHooksDeepDiveLesson";
+import { ReactRenderingLesson } from "@/components/learning/ReactRenderingLesson";
 import { Navbar } from "@/components/Navbar";
 import {
   getLearningConceptBySlug,
@@ -59,6 +61,8 @@ export default async function LearningConceptPage({ params }: PageProps) {
     promises: PromisesLesson,
     "async-await": AsyncAwaitLesson,
     "memory-management": MemoryManagementLesson,
+    "react-hooks-deep-dive": ReactHooksDeepDiveLesson,
+    "react-rendering": ReactRenderingLesson,
   };
 
   const Lesson = lessonBySlug[concept.slug];
