@@ -313,13 +313,17 @@ export const learningConcepts: LearningConcept[] = [
     slug: "react-reconciliation",
     title: "React Reconciliation",
     description:
-      "Learn how React compares trees and efficiently updates the DOM.",
+      "Learn how React compares old and new trees, preserves identity with types and keys, and efficiently commits DOM updates.",
     category: "react",
     difficulty: "Advanced",
-    readTime: "Coming soon",
-    tags: ["React", "Reconciliation", "DOM"],
-    featured: false,
-    available: false,
+    readTime: "16 minutes",
+    tags: ["React", "Reconciliation", "Keys", "Virtual DOM", "Performance"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Understand React's diffing heuristics, component identity, keys, remounts, and commit behavior.",
+    },
   },
   {
     id: "react-state-management",

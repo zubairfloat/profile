@@ -9,6 +9,7 @@ import { DebounceThrottleLesson } from "@/components/learning/DebounceThrottleLe
 import { MemoryManagementLesson } from "@/components/learning/MemoryManagementLesson";
 import { PromisesLesson } from "@/components/learning/PromisesLesson";
 import { ReactHooksDeepDiveLesson } from "@/components/learning/ReactHooksDeepDiveLesson";
+import { ReactReconciliationLesson } from "@/components/learning/ReactReconciliationLesson";
 import { ReactRenderingLesson } from "@/components/learning/ReactRenderingLesson";
 import { Navbar } from "@/components/Navbar";
 import {
@@ -62,6 +63,7 @@ export default async function LearningConceptPage({ params }: PageProps) {
     "async-await": AsyncAwaitLesson,
     "memory-management": MemoryManagementLesson,
     "react-hooks-deep-dive": ReactHooksDeepDiveLesson,
+    "react-reconciliation": ReactReconciliationLesson,
     "react-rendering": ReactRenderingLesson,
   };
 
