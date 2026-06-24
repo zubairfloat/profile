@@ -11,6 +11,7 @@ import { PromisesLesson } from "@/components/learning/PromisesLesson";
 import { ReactHooksDeepDiveLesson } from "@/components/learning/ReactHooksDeepDiveLesson";
 import { ReactReconciliationLesson } from "@/components/learning/ReactReconciliationLesson";
 import { ReactRenderingLesson } from "@/components/learning/ReactRenderingLesson";
+import { ReactStateManagementLesson } from "@/components/learning/ReactStateManagementLesson";
 import { Navbar } from "@/components/Navbar";
 import {
   getLearningConceptBySlug,
@@ -65,6 +66,7 @@ export default async function LearningConceptPage({ params }: PageProps) {
     "react-hooks-deep-dive": ReactHooksDeepDiveLesson,
     "react-reconciliation": ReactReconciliationLesson,
     "react-rendering": ReactRenderingLesson,
+    "state-management": ReactStateManagementLesson,
   };
 
   const Lesson = lessonBySlug[concept.slug];

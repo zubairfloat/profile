@@ -330,13 +330,17 @@ export const learningConcepts: LearningConcept[] = [
     slug: "state-management",
     title: "State Management",
     description:
-      "Explore local state, Context API, Zustand, Redux, and enterprise patterns.",
+      "Learn where React state should live across local state, lifted state, Context, server state, and external stores.",
     category: "react",
     difficulty: "Intermediate",
-    readTime: "Coming soon",
-    tags: ["React", "State", "Architecture"],
-    featured: false,
-    available: false,
+    readTime: "18 minutes",
+    tags: ["React", "State", "Context", "Architecture", "Stores"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Choose the right home for state across components, providers, server caches, and dedicated stores.",
+    },
   },
   {
     id: "react-component-lifecycle",
