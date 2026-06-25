@@ -381,26 +381,34 @@ export const learningConcepts: LearningConcept[] = [
     slug: "custom-hooks",
     title: "Custom Hooks",
     description:
-      "Build reusable business logic through custom hook architecture.",
+      "Learn how to extract reusable React logic into clean hooks for forms, APIs, carts, checkout flows, and enterprise apps.",
     category: "react",
     difficulty: "Intermediate",
-    readTime: "Coming soon",
-    tags: ["React", "Hooks", "Reuse"],
-    featured: false,
-    available: false,
+    readTime: "18 minutes",
+    tags: ["React", "Hooks", "Reuse", "Architecture", "Forms"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Build reusable business logic with custom hooks for forms, APIs, carts, checkout flows, and enterprise applications.",
+    },
   },
   {
     id: "react-context-api",
     slug: "context-api",
     title: "Context API",
     description:
-      "Share global state without prop drilling.",
+      "Share data across your React application without prop drilling while understanding performance tradeoffs.",
     category: "react",
     difficulty: "Beginner",
-    readTime: "Coming soon",
-    tags: ["React", "Context", "State"],
-    featured: false,
-    available: false,
+    readTime: "22 minutes",
+    tags: ["React", "Context", "State", "Performance", "Architecture"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Learn Context providers, consumers, prop drilling, optimization, Context with useReducer, and the history of React state management.",
+    },
   },
   {
     id: "react-server-components",
