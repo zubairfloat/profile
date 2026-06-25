@@ -347,26 +347,34 @@ export const learningConcepts: LearningConcept[] = [
     slug: "component-lifecycle",
     title: "Component Lifecycle",
     description:
-      "Understand mounting, updating, unmounting, and effect execution.",
+      "Understand how React components mount, update, unmount, run effects, and clean up resources.",
     category: "react",
     difficulty: "Beginner",
-    readTime: "Coming soon",
-    tags: ["React", "Lifecycle", "Effects"],
-    featured: false,
-    available: false,
+    readTime: "15 minutes",
+    tags: ["React", "Lifecycle", "Effects", "Hooks"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Learn mount, update, unmount, effect timing, cleanup functions, and lifecycle mental models for modern React.",
+    },
   },
   {
     id: "react-performance-optimization",
     slug: "react-performance-optimization",
     title: "React Performance Optimization",
     description:
-      "Learn memoization, lazy loading, code splitting, and render optimization.",
+      "Learn how to reduce unnecessary renders with memoization, context optimization, virtualization, code splitting, and enterprise performance patterns.",
     category: "react",
     difficulty: "Advanced",
-    readTime: "Coming soon",
-    tags: ["React", "Performance", "Optimization"],
-    featured: false,
-    available: false,
+    readTime: "25 minutes",
+    tags: ["React", "Performance", "Optimization", "Memoization", "Enterprise"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "A practical visual guide to React.memo, useMemo, useCallback, lazy loading, code splitting, virtualization, and real-world performance patterns.",
+    },
   },
   {
     id: "react-custom-hooks",
