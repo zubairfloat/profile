@@ -18,6 +18,7 @@ const navLinks: NavLink[] = [
   { name: 'Experience', sectionId: 'experience' },
   { name: 'Projects', sectionId: 'projects' },
   { name: 'Learning', sectionId: 'learning-hub', href: '/learning' },
+  { name: 'AI Resume Studio', href: '/resume-builder' },
   { name: 'Skills', sectionId: 'skills' },
   { name: 'Contact', sectionId: 'contact' },
 ];
@@ -60,6 +61,7 @@ export function Navbar() {
 
   function isActive(link: NavLink) {
     if (link.name === "Learning" && pathname.startsWith("/learning")) return true;
+    if (link.name === "AI Resume Studio" && pathname.startsWith("/resume-builder")) return true;
     return isHomePage && activeSection === link.sectionId;
   }
 

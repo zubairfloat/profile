@@ -10,6 +10,7 @@ import { Footer } from "@/components/Footer";
 import { AIConsultantChat } from "@/components/AIConsultantChat";
 import { ProjectBanner } from "@/components/sections/ProjectBanner";
 import { LearningHubPreview } from "@/components/sections/LearningHubPreview";
+import { ResumeBuilderCTA } from "@/components/sections/ResumeBuilderCTA";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Hero />
       <ProjectBanner />
       <Stats />
+      <ResumeBuilderCTA />
       <LearningHubPreview />
       <Experience />
       <Projects />
