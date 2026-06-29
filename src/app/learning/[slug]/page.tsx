@@ -3,6 +3,8 @@ import type { ComponentType } from "react";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
 import { AsyncAwaitLesson } from "@/components/learning/AsyncAwaitLesson";
+import { AwsCloudFundamentalsLesson } from "@/components/learning/AwsCloudFundamentalsLesson";
+import { AwsGlobalInfrastructureLesson } from "@/components/learning/AwsGlobalInfrastructureLesson";
 import { CallStackLesson } from "@/components/learning/CallStackLesson";
 import { ClosuresLesson } from "@/components/learning/ClosuresLesson";
 import { DebounceThrottleLesson } from "@/components/learning/DebounceThrottleLesson";
@@ -61,6 +63,8 @@ export default async function LearningConceptPage({ params }: PageProps) {
   }
 
   const lessonBySlug: Record<string, ComponentType> = {
+    "aws-cloud-fundamentals": AwsCloudFundamentalsLesson,
+    "aws-global-infrastructure": AwsGlobalInfrastructureLesson,
     "debouncing-vs-throttling": DebounceThrottleLesson,
     "call-stack": CallStackLesson,
     closures: ClosuresLesson,
