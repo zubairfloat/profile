@@ -15,6 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 
 function ConceptCard({ concept, index }: { concept: LearningConcept; index: number }) {
+  const href = concept.id === "aws-iam" ? "/learning/aws/iam" : `/learning/${concept.slug}`;
   const card = (
     <motion.article
       initial={{ opacity: 0, y: 18 }}
@@ -82,7 +83,7 @@ function ConceptCard({ concept, index }: { concept: LearningConcept; index: numb
   if (!concept.available) return card;
 
   return (
-    <Link href={`/learning/${concept.slug}`} className="block h-full">
+    <Link href={href} className="block h-full">
       {card}
     </Link>
   );

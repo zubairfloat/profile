@@ -1120,10 +1120,10 @@ export const learningConcepts: LearningConcept[] = [
       "Manage users, groups, roles, permissions, and security best practices.",
     category: "aws",
     difficulty: "Beginner",
-    readTime: "Coming soon",
+    readTime: "22 minutes",
     tags: ["AWS", "Security"],
-    featured: false,
-    available: false,
+    featured: true,
+    available: true,
   },
   {
     id: "aws-ec2",
