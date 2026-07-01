@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
 import { AsyncAwaitLesson } from "@/components/learning/AsyncAwaitLesson";
 import { AwsCloudFundamentalsLesson } from "@/components/learning/AwsCloudFundamentalsLesson";
+import { AwsEc2Lesson } from "@/components/learning/AwsEc2Lesson";
 import { AwsGlobalInfrastructureLesson } from "@/components/learning/AwsGlobalInfrastructureLesson";
 import { AwsIamLesson } from "@/components/learning/AwsIamLesson";
 import { CallStackLesson } from "@/components/learning/CallStackLesson";
@@ -65,6 +66,7 @@ export default async function LearningConceptPage({ params }: PageProps) {
 
   const lessonBySlug: Record<string, ComponentType> = {
     "aws-cloud-fundamentals": AwsCloudFundamentalsLesson,
+    ec2: AwsEc2Lesson,
     "aws-global-infrastructure": AwsGlobalInfrastructureLesson,
     "iam-identity-and-access-management": AwsIamLesson,
     "debouncing-vs-throttling": DebounceThrottleLesson,

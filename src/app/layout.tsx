@@ -34,8 +34,8 @@ export default function RootLayout({
               "jobTitle": "Principal Consultant - Digital Commerce",
               "url": "https://zubairrizwan.dev",
               "sameAs": [
-                "https://github.com/zubairrizwan",
-                "https://linkedin.com/in/zubairrizwan"
+                "https://github.com/zubairfloat",
+                "https://www.linkedin.com/in/muhammad-zubair-rizwan-69a355180/"
               ]
             }),
           }}

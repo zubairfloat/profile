@@ -15,7 +15,11 @@ import {
 import { cn } from "@/lib/utils";
 
 function ConceptCard({ concept, index }: { concept: LearningConcept; index: number }) {
-  const href = concept.id === "aws-iam" ? "/learning/aws/iam" : `/learning/${concept.slug}`;
+  const awsNestedRoutes: Partial<Record<string, string>> = {
+    "aws-ec2": "/learning/aws/ec2",
+    "aws-iam": "/learning/aws/iam",
+  };
+  const href = awsNestedRoutes[concept.id] ?? `/learning/${concept.slug}`;
   const card = (
     <motion.article
       initial={{ opacity: 0, y: 18 }}

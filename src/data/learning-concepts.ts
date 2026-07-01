@@ -1133,10 +1133,10 @@ export const learningConcepts: LearningConcept[] = [
       "Launch, configure, and scale virtual servers in AWS.",
     category: "aws",
     difficulty: "Beginner",
-    readTime: "Coming soon",
+    readTime: "30 minutes",
     tags: ["AWS", "EC2"],
-    featured: false,
-    available: false,
+    featured: true,
+    available: true,
   },
   {
     id: "aws-s3",
