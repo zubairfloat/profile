@@ -20,7 +20,7 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
-import { submitContactInquiry, type ContactActionResult } from "@/app/actions/contact";
+import { submitContact, type ContactActionResult } from "@/app/actions/contact";
 import {
   budgetOptions,
   contactSchema,
@@ -152,7 +152,6 @@ export function Contact() {
     handleSubmit,
     register,
     reset,
-    setError,
     setValue,
     watch,
   } = form;
@@ -219,17 +218,10 @@ export function Contact() {
     });
 
     startTransition(async () => {
-      const response = await submitContactInquiry(values);
+      const response = await submitContact(values);
       setResult(response);
 
-      if (response.errors) {
-        Object.entries(response.errors).forEach(([key, value]) => {
-          if (!value) return;
-          setError(key as keyof ContactFormValues, { message: value });
-        });
-      }
-
-      if (response.ok) {
+      if (response.success) {
         trackContactEvent("Form Success", {
           service: values.service,
           budget: values.budget,
@@ -246,11 +238,11 @@ export function Contact() {
         return;
       }
 
-      trackContactEvent("Form Failed", { saved: response.saved });
+      trackContactEvent("Form Failed", { error: response.error });
       toast({
-        title: response.saved ? "Message safely saved" : "Message not sent",
-        description: response.message,
-        variant: response.saved ? "default" : "destructive",
+        title: "Message not sent",
+        description: response.error,
+        variant: "destructive",
       });
     });
   }
@@ -491,15 +483,13 @@ export function Contact() {
                       <FieldError message={errors.message?.message} />
                     </div>
 
-                    {result && !result.ok ? (
-                      <div className={cn("rounded-lg border p-4 text-sm", result.saved ? "border-primary/25 bg-primary/10" : "border-destructive/30 bg-destructive/10")}>
-                        <p className="font-semibold">{result.saved ? "Message safely saved" : "Submission failed"}</p>
-                        <p className="mt-1 text-muted-foreground">{result.message}</p>
-                        {result.retryable ? (
-                          <Button type="button" size="sm" variant="outline" className="mt-3 rounded-full border-white/10" onClick={() => void handleSubmit(submit)()}>
-                            Retry
-                          </Button>
-                        ) : null}
+                    {result && !result.success ? (
+                      <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm">
+                        <p className="font-semibold">Submission failed</p>
+                        <p className="mt-1 text-muted-foreground">{result.error}</p>
+                        <Button type="button" size="sm" variant="outline" className="mt-3 rounded-full border-white/10" onClick={() => void handleSubmit(submit)()}>
+                          Retry
+                        </Button>
                       </div>
                     ) : null}
 

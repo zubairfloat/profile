@@ -55,13 +55,6 @@ export type ContactFormValues = z.infer<typeof contactSchema>;
 
 export type ContactMessageRecord = Omit<ContactFormValues, "honeypot" | "startedAt"> & {
   id?: string;
-  status: "unread" | "read" | "archived";
-  createdAt: string;
-  ip?: string;
-  browser?: string;
-  operatingSystem?: string;
-  referrer?: string;
-  userAgent?: string;
-  emailSent?: boolean;
-  autoReplySent?: boolean;
+  status: "new" | "read" | "archived";
+  createdAt?: string;
 };

@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Clock, Sparkles } from "lucide-react";
+import { ArrowRight, Award, Clock, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CertificationHub } from "@/components/learning/CertificationHub";
 import {
   getConceptsByCategory,
   learningCategories,
@@ -117,7 +118,7 @@ export function LearningHub() {
             Developer <span className="gradient-text">Learning Hub</span>
           </h1>
           <p className="mx-auto mt-6 max-w-3xl text-xl leading-relaxed text-muted-foreground">
-            Interactive visual explanations of JavaScript, React, Next.js, System Design, AI, and Enterprise Commerce concepts.
+            Interactive visual explanations of JavaScript, React, Next.js, System Design, AI, Enterprise Commerce, and certification paths.
           </p>
           <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-muted-foreground">
             A growing collection of technical concepts, visual demonstrations, and real-world engineering patterns learned through enterprise software development.
@@ -125,7 +126,7 @@ export function LearningHub() {
         </motion.div>
 
         <Tabs defaultValue="javascript" className="space-y-8">
-          <TabsList className="grid h-auto grid-cols-2 gap-1 rounded-lg border border-white/10 bg-background/60 p-1 md:grid-cols-4 lg:grid-cols-8">
+          <TabsList className="grid h-auto grid-cols-2 gap-1 rounded-lg border border-white/10 bg-background/60 p-1 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-12">
             {learningCategories.map((category) => {
               const Icon = category.icon;
               return (
@@ -139,6 +140,13 @@ export function LearningHub() {
                 </TabsTrigger>
               );
             })}
+            <TabsTrigger
+              value="certifications"
+              className="min-h-12 rounded-md px-3 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+            >
+              <Award className="mr-2 h-4 w-4" />
+              Certifications
+            </TabsTrigger>
           </TabsList>
 
           {learningCategories.map((category) => {
@@ -186,6 +194,10 @@ export function LearningHub() {
               </TabsContent>
             );
           })}
+
+          <TabsContent value="certifications" className="space-y-8">
+            <CertificationHub />
+          </TabsContent>
         </Tabs>
       </div>
     </section>

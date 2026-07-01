@@ -6,7 +6,7 @@ import { Navbar } from "@/components/Navbar";
 export const metadata: Metadata = {
   title: "Developer Learning Hub | Muhammad Zubair Rizwan",
   description:
-    "Interactive visual explanations of JavaScript, React, Next.js, System Design, AI, and Enterprise Commerce concepts.",
+    "Interactive visual explanations of JavaScript, React, Next.js, System Design, AI, Enterprise Commerce, and certification learning paths.",
 };
 
 export default function LearningPage() {
