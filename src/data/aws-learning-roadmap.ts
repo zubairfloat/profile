@@ -145,7 +145,140 @@ export const awsLearningRoadmap: AwsRoadmapWeek[] = [
     description:
       "Compute, storage, databases, and networking services that appear in almost every exam.",
     estimatedHours: "8-12 hours",
-    lessons: [],
+    lessons: [
+      {
+        id: "amazon-ec2",
+        slug: "amazon-ec2",
+        title: "Amazon EC2",
+        description:
+          "Learn virtual servers, instance types, operating system control, and when EC2 is the right compute choice.",
+        difficulty: "Beginner",
+        duration: "18 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "aws-lambda",
+        slug: "aws-lambda",
+        title: "AWS Lambda",
+        description:
+          "Understand serverless, event-driven compute, automatic scaling, triggers, and pay-per-execution pricing.",
+        difficulty: "Beginner",
+        duration: "16 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "amazon-ecs",
+        slug: "amazon-ecs",
+        title: "Amazon ECS",
+        description:
+          "Learn AWS-native container orchestration for Docker applications, APIs, and microservices.",
+        difficulty: "Intermediate",
+        duration: "12 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "amazon-eks",
+        slug: "amazon-eks",
+        title: "Amazon EKS",
+        description:
+          "Understand AWS managed Kubernetes and how it compares with ECS for container workloads.",
+        difficulty: "Intermediate",
+        duration: "12 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "amazon-s3",
+        slug: "amazon-s3",
+        title: "Amazon S3",
+        description:
+          "Learn object storage for images, videos, backups, static websites, data lakes, and logs.",
+        difficulty: "Beginner",
+        duration: "15 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "amazon-ebs",
+        slug: "amazon-ebs",
+        title: "Amazon EBS",
+        description:
+          "Understand block storage attached to EC2 instances, boot volumes, databases, and application disks.",
+        difficulty: "Beginner",
+        duration: "10 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "amazon-efs",
+        slug: "amazon-efs",
+        title: "Amazon EFS",
+        description:
+          "Learn shared file storage that multiple EC2 instances can access at the same time.",
+        difficulty: "Beginner",
+        duration: "10 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "amazon-s3-glacier",
+        slug: "amazon-s3-glacier",
+        title: "Amazon S3 Glacier",
+        description:
+          "Understand low-cost archive storage for compliance records, old backups, and long-term retention.",
+        difficulty: "Beginner",
+        duration: "8 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "amazon-rds",
+        slug: "amazon-rds",
+        title: "Amazon RDS",
+        description:
+          "Learn managed relational databases for MySQL, PostgreSQL, MariaDB, Oracle, and SQL Server.",
+        difficulty: "Beginner",
+        duration: "14 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "amazon-dynamodb",
+        slug: "amazon-dynamodb",
+        title: "Amazon DynamoDB",
+        description:
+          "Understand serverless NoSQL, key-value access patterns, millisecond latency, and automatic scaling.",
+        difficulty: "Beginner",
+        duration: "12 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "amazon-aurora",
+        slug: "amazon-aurora",
+        title: "Amazon Aurora",
+        description:
+          "Learn AWS cloud-native relational database performance, replication, and high availability benefits.",
+        difficulty: "Intermediate",
+        duration: "10 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "amazon-vpc",
+        slug: "amazon-vpc",
+        title: "Amazon VPC",
+        description:
+          "Understand your private AWS network, subnets, routing, gateways, firewalls, and public IPs.",
+        difficulty: "Intermediate",
+        duration: "20 min",
+        status: "Not Started",
+        available: true,
+      },
+    ],
     plannedTopics: ["EC2", "S3", "VPC", "Lambda", "RDS", "EBS", "CloudFront", "ECS", "EKS"],
   },
   {
