@@ -287,7 +287,107 @@ export const awsLearningRoadmap: AwsRoadmapWeek[] = [
     description:
       "Identity, monitoring, audit logging, encryption, and security services that are heavily tested.",
     estimatedHours: "6-9 hours",
-    lessons: [],
+    lessons: [
+      {
+        id: "shared-responsibility-security",
+        slug: "shared-responsibility-security",
+        title: "Shared Responsibility Security",
+        description:
+          "Understand security of the cloud versus security in the cloud for exam scenarios.",
+        difficulty: "Beginner",
+        duration: "10 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "aws-iam",
+        slug: "aws-iam",
+        title: "AWS IAM",
+        description:
+          "Learn how IAM controls who can access AWS resources and what actions they can perform.",
+        difficulty: "Beginner",
+        duration: "14 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "iam-users-groups-roles",
+        slug: "iam-users-groups-roles",
+        title: "IAM Users, Groups, and Roles",
+        description:
+          "Compare long-term identities, grouped permissions, and temporary role-based access.",
+        difficulty: "Beginner",
+        duration: "16 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "iam-policies-least-privilege",
+        slug: "iam-policies-least-privilege",
+        title: "IAM Policies + Least Privilege",
+        description:
+          "Understand JSON permission documents and why users should only receive required permissions.",
+        difficulty: "Intermediate",
+        duration: "14 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "mfa",
+        slug: "mfa",
+        title: "Multi-Factor Authentication",
+        description:
+          "Learn why MFA protects root and administrator accounts with a second verification factor.",
+        difficulty: "Beginner",
+        duration: "8 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "amazon-cloudwatch",
+        slug: "amazon-cloudwatch",
+        title: "Amazon CloudWatch",
+        description:
+          "Monitor metrics, logs, dashboards, alarms, and application health in real time.",
+        difficulty: "Beginner",
+        duration: "14 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "aws-cloudtrail",
+        slug: "aws-cloudtrail",
+        title: "AWS CloudTrail",
+        description:
+          "Track AWS API activity, user actions, source IPs, changed resources, and audit logs.",
+        difficulty: "Beginner",
+        duration: "12 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "aws-kms",
+        slug: "aws-kms",
+        title: "AWS KMS",
+        description:
+          "Understand encryption key management, managed keys, customer managed keys, and rotation.",
+        difficulty: "Intermediate",
+        duration: "12 min",
+        status: "Not Started",
+        available: true,
+      },
+      {
+        id: "data-encryption",
+        slug: "data-encryption",
+        title: "Data at Rest + Data in Transit",
+        description:
+          "Compare stored data encryption with network data protection using HTTPS, TLS, SSL, and VPN.",
+        difficulty: "Beginner",
+        duration: "12 min",
+        status: "Not Started",
+        available: true,
+      },
+    ],
     plannedTopics: [
       "IAM",
       "CloudWatch",

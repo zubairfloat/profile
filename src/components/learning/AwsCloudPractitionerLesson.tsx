@@ -145,6 +145,105 @@ const week2ExamTips = [
   "Elastic IP gives a stable public IPv4 address.",
 ];
 
+const week3Objectives = [
+  "Understand AWS Identity and Access Management.",
+  "Compare IAM Users, Groups, Roles, and Policies.",
+  "Apply least privilege and MFA best practices.",
+  "Monitor AWS resources with CloudWatch.",
+  "Audit AWS API activity with CloudTrail.",
+  "Use KMS and explain encryption at rest versus in transit.",
+];
+
+const week3Modules = [
+  {
+    title: "Module 1: AWS Security Fundamentals",
+    icon: ShieldCheck,
+    summary:
+      "AWS follows a Shared Responsibility Model. AWS secures the cloud infrastructure, while customers secure identities, data, applications, and configuration inside the cloud.",
+    sections: [
+      "Security OF the cloud belongs to AWS: physical servers, data centers, networking, and hardware.",
+      "Security IN the cloud belongs to the customer: IAM users, passwords, applications, customer data, and security groups.",
+      "For the exam, pay close attention to wording. If the question says physical facilities or hardware, AWS is responsible. If it says customer data, IAM, or application settings, the customer is responsible.",
+    ],
+    comparison: [
+      ["AWS responsibility", "Physical servers, data centers, networking, hardware"],
+      ["Customer responsibility", "IAM, passwords, apps, data, security groups"],
+      ["Exam shortcut", "Of the cloud = AWS. In the cloud = customer"],
+    ],
+  },
+  {
+    title: "Module 2: Identity and Access Management",
+    icon: Server,
+    summary:
+      "IAM securely controls who can access AWS resources and what actions they can perform. Think of IAM as the security guard for your AWS account.",
+    sections: [
+      "IAM Users represent a single person or application with long-term access. Each user can have console access and programmatic access keys.",
+      "IAM Groups assign permissions to multiple users at once, making access management easier and more consistent.",
+      "IAM Roles provide temporary permissions and are commonly used by AWS services such as EC2, Lambda, and ECS.",
+      "IAM Policies are JSON permission documents that define allowed or denied actions on AWS resources.",
+      "Least privilege means users receive only the permissions they need, such as allowing a developer to read S3 and launch EC2 but not delete IAM users.",
+      "MFA adds a second verification factor and should be enabled for root and administrator users.",
+    ],
+    comparison: [
+      ["IAM User", "Long-term identity for one person or application"],
+      ["IAM Group", "Permission management for multiple users"],
+      ["IAM Role", "Temporary permissions without permanent access keys"],
+      ["IAM Policy", "JSON document that defines permissions"],
+      ["MFA", "Password plus an additional verification factor"],
+    ],
+  },
+  {
+    title: "Module 3: Monitoring",
+    icon: Network,
+    summary:
+      "Monitoring helps you observe the health and activity of your AWS environment. CloudWatch monitors performance, while CloudTrail records API activity.",
+    sections: [
+      "Amazon CloudWatch monitors AWS resources in real time using metrics, dashboards, logs, alarms, events, and custom metrics.",
+      "CloudWatch can alert when CPU exceeds 80%, Lambda errors increase, API response time rises, RDS storage runs low, or application logs show errors.",
+      "AWS CloudTrail records AWS API activity and answers who did it, what changed, when it happened, and which resource was affected.",
+      "Use CloudTrail when someone deletes an EC2 instance, changes IAM permissions, accesses S3, logs in, or performs security-sensitive API calls.",
+    ],
+    comparison: [
+      ["CloudWatch", "Performance monitoring, metrics, logs, dashboards, alarms"],
+      ["CloudTrail", "User activity, resource changes, API calls, audit logs"],
+      ["Exam shortcut", "CloudWatch = performance. CloudTrail = audit"],
+    ],
+  },
+  {
+    title: "Module 4: Encryption",
+    icon: Database,
+    summary:
+      "Encryption protects data from unauthorized access. AWS supports encryption for stored data and data moving across networks.",
+    sections: [
+      "AWS KMS manages encryption keys, including managed keys, customer managed keys, automatic rotation, secure storage, and access control.",
+      "AWS services such as S3, EBS, RDS, Lambda, and EFS can use KMS for encryption.",
+      "Data at rest is stored data, such as S3 objects, EBS volumes, RDS databases, EFS files, and Glacier archives.",
+      "Data in transit is data moving across a network, such as browser to website, EC2 to RDS, application to API, or client to S3.",
+      "Data in transit is protected with HTTPS, TLS/SSL, VPN, and secure APIs.",
+    ],
+    comparison: [
+      ["KMS", "Encryption key management"],
+      ["Data at Rest", "Stored data such as S3, EBS, RDS, EFS, Glacier"],
+      ["Data in Transit", "Moving data protected by HTTPS, TLS/SSL, VPN"],
+    ],
+  },
+];
+
+const week3ExamTips = [
+  "IAM = authentication and authorization.",
+  "IAM User = one person or application.",
+  "IAM Group = collection of users.",
+  "IAM Role = temporary permissions.",
+  "IAM Policy = permission document.",
+  "MFA = extra authentication factor.",
+  "CloudWatch = monitoring, metrics, logs, dashboards, and alarms.",
+  "CloudTrail = API logging and auditing.",
+  "KMS = encryption key management.",
+  "Data at Rest = stored data encryption.",
+  "Data in Transit = network data encryption.",
+  "Least Privilege = grant only required permissions.",
+];
+
 const lessons = [
   {
     title: "What is Cloud Computing?",
@@ -848,6 +947,12 @@ export function AwsCloudPractitionerLesson() {
       (total, lesson) => total + Number.parseInt(lesson.duration, 10),
       0
     ) ?? 0;
+  const week3 = awsLearningRoadmap.find((week) => week.week === "Week 3");
+  const week3TotalMinutes =
+    week3?.lessons.reduce(
+      (total, lesson) => total + Number.parseInt(lesson.duration, 10),
+      0
+    ) ?? 0;
 
   useEffect(() => {
     if (!activeWeek) return;
@@ -1355,6 +1460,212 @@ export function AwsCloudPractitionerLesson() {
                       "Read Storage Section",
                       "Read Database Section",
                       "Read Networking Section",
+                      "Read Exam Tips",
+                    ]}
+                  />
+                </div>
+              </motion.div>
+            ) : selectedWeek?.week === "Week 3" ? (
+              <motion.div
+                ref={detailRef}
+                key="week-3-content"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 16 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                className="scroll-mt-24"
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7 }}
+                  className="mb-10 rounded-lg border border-white/10 bg-card/35 p-8 backdrop-blur-xl"
+                >
+                  <Badge variant="outline" className="mb-5 rounded-full border-primary/20 bg-primary/5 px-4 py-1 text-primary">
+                    <Sparkles className="mr-2 h-3.5 w-3.5" />
+                    Week 3: AWS Cloud Practitioner
+                  </Badge>
+                  <div className="grid gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
+                    <div>
+                      <h1 className="text-5xl font-headline leading-tight tracking-normal lg:text-7xl">
+                        Security & <span className="gradient-text">Monitoring</span>
+                      </h1>
+                      <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                        Security is one of the most heavily tested Cloud Practitioner
+                        domains. Learn IAM, least privilege, MFA, CloudWatch, CloudTrail,
+                        KMS, and encryption scenarios for the exam.
+                      </p>
+                    </div>
+
+                    <Card className="border-primary/20 bg-primary/5 backdrop-blur-xl">
+                      <CardContent className="p-6">
+                        <div className="mb-5 flex items-center justify-between gap-4">
+                          <div>
+                            <p className="text-sm text-muted-foreground">Week 3 Progress</p>
+                            <p className="mt-1 text-3xl font-headline font-bold">
+                              0/{week3?.lessons.length ?? 0} Lessons Completed
+                            </p>
+                          </div>
+                          <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-primary/20 bg-background/60">
+                            <ShieldCheck className="h-7 w-7 text-primary" />
+                          </div>
+                        </div>
+                        <Progress value={0} />
+                        <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                          Estimated study time: {week3TotalMinutes} minutes. Focus on
+                          service selection, responsibility boundaries, and security exam wording.
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </motion.div>
+
+                <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                  {week3Objectives.map((objective, index) => (
+                    <motion.div
+                      key={objective}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.05 }}
+                      className="rounded-lg border border-white/10 bg-card/45 p-5 backdrop-blur-xl"
+                    >
+                      <CheckCircle2 className="mb-4 h-5 w-5 text-primary" />
+                      <p className="text-sm leading-6 text-muted-foreground">
+                        {objective}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <div className="mt-12 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+                  <Card className="border-white/10 bg-card/45 backdrop-blur-xl">
+                    <CardContent className="p-6">
+                      <h2 className="text-3xl font-headline font-bold">Security Responsibility Map</h2>
+                      <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                        AWS secures the underlying cloud infrastructure. You secure the
+                        identities, access, applications, data, and resource configuration
+                        that you place in AWS.
+                      </p>
+                      <div className="mt-6 grid gap-3 md:grid-cols-2">
+                        {[
+                          ["Security OF the Cloud", "Physical servers, data centers, networking, hardware"],
+                          ["Security IN the Cloud", "IAM users, passwords, apps, data, security groups"],
+                        ].map(([label, detail]) => (
+                          <div key={label} className="rounded-lg border border-white/10 bg-background/60 p-4">
+                            <p className="font-semibold text-primary">{label}</p>
+                            <p className="mt-2 text-sm leading-6 text-muted-foreground">{detail}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="border-white/10 bg-card/45 backdrop-blur-xl">
+                    <CardContent className="p-6">
+                      <h2 className="text-3xl font-headline font-bold">Security Architecture</h2>
+                      <div className="mt-6 space-y-3">
+                        {[
+                          "User",
+                          "MFA Login",
+                          "IAM User",
+                          "IAM Policy Applied",
+                          "AWS VPC",
+                          "EC2 + S3 + RDS",
+                          "AWS KMS encryption keys",
+                          "CloudWatch metrics + CloudTrail audit logs",
+                        ].map((step, index) => (
+                          <div key={step} className="flex items-center gap-3">
+                            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-xs text-primary">
+                              {index + 1}
+                            </div>
+                            <div className="flex-1 rounded-lg border border-white/10 bg-background/60 px-4 py-3 text-sm">
+                              {step}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                <div className="mt-12">
+                  <h2 className="mb-5 text-3xl font-headline font-bold">Week 3 Modules</h2>
+                  <div className="grid gap-5">
+                    {week3Modules.map((module, index) => {
+                      const Icon = module.icon;
+
+                      return (
+                        <motion.article
+                          key={module.title}
+                          initial={{ opacity: 0, y: 18 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: index * 0.05 }}
+                          className="rounded-lg border border-white/10 bg-card/45 p-6 backdrop-blur-xl"
+                        >
+                          <div className="mb-5 flex items-start gap-4">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-primary/10">
+                              <Icon className="h-6 w-6 text-primary" />
+                            </div>
+                            <div>
+                              <h3 className="text-2xl font-headline font-bold">{module.title}</h3>
+                              <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                                {module.summary}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
+                            <div className="space-y-3">
+                              {module.sections.map((section) => (
+                                <div key={section} className="rounded-lg border border-white/10 bg-background/60 p-4 text-sm leading-7 text-muted-foreground">
+                                  {section}
+                                </div>
+                              ))}
+                            </div>
+                            <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
+                              <p className="mb-3 text-sm font-semibold text-primary">Exam Comparison</p>
+                              <div className="space-y-3">
+                                {module.comparison.map(([label, detail]) => (
+                                  <div key={label} className="rounded-lg border border-white/10 bg-background/60 p-3">
+                                    <p className="font-semibold">{label}</p>
+                                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{detail}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </motion.article>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="mt-12 grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+                  <Card className="border-primary/20 bg-primary/5 backdrop-blur-xl">
+                    <CardContent className="p-6">
+                      <h2 className="text-3xl font-headline font-bold">Week 3 Exam Tips</h2>
+                      <div className="mt-6 space-y-4">
+                        {week3ExamTips.map((tip) => (
+                          <div key={tip} className="flex gap-3">
+                            <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                            <p className="text-sm leading-6 text-muted-foreground">{tip}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <InteractiveAwsQuiz
+                    quiz={awsQuizzes["week-3-security-monitoring"]}
+                    checklistItems={[
+                      "Read Hero",
+                      "Read Shared Responsibility Map",
+                      "Read Security Architecture",
+                      "Read IAM Section",
+                      "Read Monitoring Section",
+                      "Read Encryption Section",
                       "Read Exam Tips",
                     ]}
                   />
