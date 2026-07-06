@@ -10,6 +10,8 @@ import { AwsIamLesson } from "@/components/learning/AwsIamLesson";
 import { CallStackLesson } from "@/components/learning/CallStackLesson";
 import { ClosuresLesson } from "@/components/learning/ClosuresLesson";
 import { DebounceThrottleLesson } from "@/components/learning/DebounceThrottleLesson";
+import { ExecutionContextLesson } from "@/components/learning/ExecutionContextLesson";
+import { HoistingLesson } from "@/components/learning/HoistingLesson";
 import { MemoryManagementLesson } from "@/components/learning/MemoryManagementLesson";
 import { PromisesLesson } from "@/components/learning/PromisesLesson";
 import { ReactComponentLifecycleLesson } from "@/components/learning/ReactComponentLifecycleLesson";
@@ -72,6 +74,8 @@ export default async function LearningConceptPage({ params }: PageProps) {
     "debouncing-vs-throttling": DebounceThrottleLesson,
     "call-stack": CallStackLesson,
     closures: ClosuresLesson,
+    "execution-context": ExecutionContextLesson,
+    hoisting: HoistingLesson,
     promises: PromisesLesson,
     "async-await": AsyncAwaitLesson,
     "component-lifecycle": ReactComponentLifecycleLesson,

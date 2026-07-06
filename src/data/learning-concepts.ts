@@ -189,13 +189,17 @@ export const learningConcepts: LearningConcept[] = [
     slug: "hoisting",
     title: "Hoisting",
     description:
-      "Learn how declarations are prepared before execution and why var, let, const, and functions differ.",
+      "Visualize how JavaScript prepares variables and functions before execution, including var, let, const, TDZ, and function hoisting.",
     category: "javascript",
     difficulty: "Beginner",
-    readTime: "Coming soon",
-    tags: ["JavaScript", "Scope"],
-    featured: false,
-    available: false,
+    readTime: "13 minutes",
+    tags: ["JavaScript", "Runtime", "Interview"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Understand Memory Creation Phase, Execution Phase, Temporal Dead Zone, and function hoisting through visual examples.",
+    },
   },
   {
     id: "js-promises",
@@ -253,13 +257,17 @@ export const learningConcepts: LearningConcept[] = [
     slug: "execution-context",
     title: "Execution Context",
     description:
-      "Break down creation and execution phases, scope chains, this binding, and variable environments.",
+      "Visualize how JavaScript creates execution environments, manages variables, resolves scope, binds this, and executes code step by step.",
     category: "javascript",
     difficulty: "Intermediate",
-    readTime: "Coming soon",
-    tags: ["JavaScript", "Runtime"],
-    featured: false,
-    available: false,
+    readTime: "15 minutes",
+    tags: ["JavaScript", "Runtime", "Scope"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Understand Global and Function Execution Contexts, Creation Phase, Execution Phase, Scope Chain, and this binding through visual simulations.",
+    },
   },
   {
     id: "js-prototype-chain",
