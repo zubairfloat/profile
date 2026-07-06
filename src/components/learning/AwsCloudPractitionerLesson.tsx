@@ -244,6 +244,263 @@ const week3ExamTips = [
   "Least Privilege = grant only required permissions.",
 ];
 
+const week4Objectives = [
+  "Estimate future AWS costs using pricing tools.",
+  "Analyze and control actual AWS spending.",
+  "Compare AWS Support Plans for learning, development, production, and enterprise workloads.",
+  "Explain the six pillars of the AWS Well-Architected Framework.",
+  "Understand Regions, Availability Zones, Edge Locations, and Local Zones.",
+  "Build a basic highly available AWS web architecture.",
+  "Prepare for hands-on labs and final exam readiness.",
+];
+
+const week4Modules = [
+  {
+    title: "Lesson 1: AWS Billing & Pricing",
+    icon: Database,
+    summary:
+      "AWS billing starts with pricing models, Free Tier awareness, cost estimates, usage analysis, alerts, and billing reports.",
+    sections: [
+      "AWS pricing models include pay-as-you-go, save when you reserve, pay less by using more, and Free Tier for eligible learning workloads.",
+      "AWS Pricing Calculator estimates monthly cost before deployment. Use it for EC2, S3, RDS, migration planning, and comparing deployment options.",
+      "A certification-friendly estimate could include 2 EC2 instances, 100 GB of S3 storage, and 1 RDS database.",
+      "AWS Cost Explorer analyzes actual AWS spending. It shows service costs, daily and monthly trends, forecasts, and historical usage.",
+      "AWS Budgets sets spending limits and sends alerts when usage reaches thresholds such as 80% or 100% of budget.",
+      "The Billing Dashboard helps you review bills, usage reports, cost allocation tags, and consolidated billing.",
+      "Exam shortcut: Pricing Calculator estimates future cost, Cost Explorer analyzes past/current cost, and Budgets alerts on thresholds.",
+    ],
+    comparison: [
+      ["Pay-As-You-Go", "Pay only for consumed resources"],
+      ["Save When You Reserve", "Commit to predictable usage for savings"],
+      ["Pay Less by Using More", "Volume-based discounts for eligible services"],
+      ["Free Tier", "Learn with eligible low-usage resources"],
+      ["Pricing Calculator", "Estimate future costs before deployment"],
+      ["Cost Explorer", "Analyze actual current and historical spending"],
+      ["AWS Budgets", "Set spending limits and receive alerts"],
+    ],
+  },
+  {
+    title: "Lesson 2: AWS Support Plans",
+    icon: Server,
+    summary:
+      "AWS support plans match different business needs, from free learning support to enterprise-grade guidance with a Technical Account Manager.",
+    sections: [
+      "Basic Support is included with every account and provides documentation, whitepapers, customer service, and AWS Health Dashboard access.",
+      "Developer Support provides business-hour technical support and general architecture guidance for development environments.",
+      "Business Support is designed for production workloads with 24/7 support, faster response times, Trusted Advisor, and technical guidance.",
+      "Enterprise Support includes 24/7 expert support, a Technical Account Manager, proactive guidance, and infrastructure event management.",
+    ],
+    comparison: [
+      ["Basic", "Learning, personal projects, Free Tier users"],
+      ["Developer", "Development workloads and business-hour support"],
+      ["Business", "Production applications and 24/7 support"],
+      ["Enterprise", "Mission-critical enterprise workloads with TAM"],
+    ],
+  },
+  {
+    title: "Lesson 3: AWS Well-Architected Framework",
+    icon: Layers3,
+    summary:
+      "The Well-Architected Framework gives best practices for secure, reliable, efficient, cost-effective, sustainable cloud applications.",
+    sections: [
+      "Operational Excellence focuses on operations, automation, monitoring, continuous improvement, and infrastructure as code.",
+      "Security protects systems and data with IAM, MFA, encryption, least privilege, and logging.",
+      "Reliability keeps applications running through backups, Auto Scaling, Multi-AZ deployments, and disaster recovery.",
+      "Performance Efficiency uses resources efficiently with serverless, right instance types, caching, and scaling.",
+      "Cost Optimization avoids unnecessary spending with right-sizing, lifecycle policies, monitoring, and stopping unused resources.",
+      "Sustainability reduces environmental impact by using efficient architectures and reducing idle resources.",
+    ],
+    comparison: [
+      ["Operational Excellence", "Operations and automation"],
+      ["Security", "Protect systems and data"],
+      ["Reliability", "Prevent and recover from failures"],
+      ["Performance Efficiency", "Use resources efficiently"],
+      ["Cost Optimization", "Reduce waste and costs"],
+      ["Sustainability", "Reduce environmental impact"],
+    ],
+  },
+  {
+    title: "Lesson 4: AWS Global Infrastructure",
+    icon: Globe2,
+    summary:
+      "AWS serves users worldwide through Regions, Availability Zones, Edge Locations, and Local Zones.",
+    sections: [
+      "A Region is a geographic area containing multiple Availability Zones. Examples include Ohio, N. Virginia, Frankfurt, Mumbai, Singapore, and Sydney.",
+      "An Availability Zone is an isolated data center within a Region. Multiple AZs support high availability and fault tolerance.",
+      "Edge Locations are used by CloudFront and edge services to cache content closer to users for lower latency.",
+      "Local Zones place selected AWS services near large population centers for low-latency workloads such as gaming, live streaming, video editing, and VDI.",
+      "Exam shortcut: Region = geographic area, AZ = isolated data center, Edge Location = content caching, Local Zone = low-latency compute near users.",
+    ],
+    comparison: [
+      ["Region", "Geographic area containing multiple AZs"],
+      ["Availability Zone", "Isolated data center inside a Region"],
+      ["Edge Location", "CloudFront caching and low latency"],
+      ["Local Zone", "Low-latency AWS services near users"],
+    ],
+  },
+  {
+    title: "Lesson 5: AWS Architecture Patterns",
+    icon: Network,
+    summary:
+      "Architecture patterns connect the services from all four weeks into deployable application designs.",
+    sections: [
+      "Three-tier architecture: Users, CloudFront, Application Load Balancer, EC2 Auto Scaling Group, Amazon RDS, and Amazon S3.",
+      "Serverless architecture: Users, API Gateway, Lambda, DynamoDB, and S3 for event-driven applications.",
+      "High availability architecture: Load Balancer, EC2 instances across AZ A and AZ B, and Multi-AZ RDS.",
+      "Static website architecture: Users, CloudFront, Amazon S3, and static website hosting.",
+      "Hybrid architecture: On-premises systems connect to an AWS VPC through VPN.",
+      "Microservices architecture: API Gateway, Lambda, SQS, RDS, and DynamoDB for decoupled services.",
+    ],
+    comparison: [
+      ["Three-Tier", "Web, app, and database layers"],
+      ["Serverless", "API Gateway, Lambda, DynamoDB, S3"],
+      ["High Availability", "Load balancer, multiple AZs, Multi-AZ database"],
+      ["Static Website", "CloudFront and S3"],
+      ["Hybrid", "On-premises connected to AWS VPC"],
+      ["Microservices", "Decoupled services with queues and APIs"],
+    ],
+  },
+  {
+    title: "Lesson 6: Final Revision & Exam Preparation",
+    icon: CheckCircle2,
+    summary:
+      "Hands-on practice makes the services memorable. Before the exam, combine labs, revision, and 700-1000 practice questions.",
+    sections: [
+      "Create a Free Tier account and practice launching EC2, creating S3 buckets, uploading files, creating IAM users and roles, exploring CloudWatch, launching RDS, creating a VPC, configuring Security Groups, creating Budgets, and estimating an app in Pricing Calculator.",
+      "Before scheduling the exam, complete 700-1000 practice questions and review every wrong answer until you understand the reason.",
+      "Aim for 85-90% consistently across multiple full-length practice exams before booking the real certification.",
+      "Recommended resources include AWS Skill Builder, FreeCodeCamp, Andrew Brown, Stephane Maarek, Neal Davis, Tutorials Dojo, Whizlabs, and ExamTopics for discussion rather than memorization.",
+    ],
+    comparison: [
+      ["Hands-on labs", "EC2, S3, IAM, CloudWatch, RDS, VPC, Security Groups"],
+      ["Practice questions", "700-1000 before real exam"],
+      ["Target score", "85-90% consistently"],
+      ["Final readiness", "Explain service choices without memorizing dumps"],
+    ],
+  },
+];
+
+const week4ExamTips = [
+  "AWS Pricing Calculator = estimate future costs.",
+  "AWS Cost Explorer = analyze current and historical costs.",
+  "AWS Budgets = set spending limits and alerts.",
+  "Basic Support = free support and documentation.",
+  "Developer Support = business-hours technical support.",
+  "Business Support = 24/7 production support.",
+  "Enterprise Support = 24/7 support with a Technical Account Manager.",
+  "Operational Excellence = automation and operational improvement.",
+  "Security = IAM, MFA, encryption, least privilege.",
+  "Reliability = high availability, backups, disaster recovery.",
+  "Performance Efficiency = right-size and optimize performance.",
+  "Cost Optimization = eliminate waste and control spending.",
+  "Sustainability = reduce environmental impact.",
+  "Region = geographic location containing multiple AZs.",
+  "Availability Zone = isolated data center within a Region.",
+  "Edge Location = CloudFront content caching for lower latency.",
+  "Local Zone = low-latency AWS services near users.",
+  "Three-tier architecture usually means CloudFront, load balancer, EC2, RDS, and S3.",
+  "Serverless architecture usually means API Gateway, Lambda, DynamoDB, and S3.",
+  "Hybrid architecture connects on-premises networks with AWS VPC.",
+];
+
+const week4HandsOnLabs = [
+  "Launch an EC2 instance and connect with SSH or EC2 Instance Connect.",
+  "Create an S3 bucket, upload files, and enable versioning.",
+  "Create Admin, Developer, and Read-Only IAM users with different permissions.",
+  "Create an IAM Role that allows EC2 to access S3.",
+  "Explore CloudWatch CPU metrics, dashboards, logs, and alarms.",
+  "Launch an RDS database using Free Tier settings.",
+  "Create a VPC with public and private subnets.",
+  "Create Security Groups for HTTP, HTTPS, and SSH from your IP only.",
+  "Create an AWS Budget with email alerts.",
+  "Use AWS Pricing Calculator to estimate a simple web application's monthly cost.",
+];
+
+const finalReadinessQuestions = [
+  "When should you use Amazon EC2 instead of AWS Lambda?",
+  "What is the difference between Amazon S3, EBS, and EFS?",
+  "Compare Amazon RDS, Aurora, and DynamoDB.",
+  "What is the purpose of an Amazon VPC?",
+  "Explain Security Groups versus Network ACLs.",
+  "What is the Shared Responsibility Model?",
+  "What is the difference between CloudWatch and CloudTrail?",
+  "What is AWS KMS used for?",
+  "Compare Pricing Calculator, Cost Explorer, and Budgets.",
+  "Which Support Plan fits a production business application?",
+  "Name and explain the six Well-Architected pillars.",
+  "Explain Region, Availability Zone, Edge Location, and Local Zone.",
+  "How do multiple Availability Zones improve high availability?",
+  "Describe a simple AWS architecture using EC2, RDS, S3, and CloudFront.",
+  "When would you choose a serverless architecture with API Gateway, Lambda, DynamoDB, and S3?",
+  "How does a hybrid architecture connect on-premises systems to AWS?",
+];
+
+const week4BudgetFlow = [
+  "Budget = $100",
+  "80% threshold reached",
+  "Email alert sent",
+  "100% threshold reached",
+  "Budget exceeded",
+];
+
+const week4ArchitecturePatterns = [
+  {
+    name: "Three-Tier Architecture",
+    flow: ["Users", "CloudFront", "Application Load Balancer", "EC2 Auto Scaling Group", "Amazon RDS", "Amazon S3"],
+  },
+  {
+    name: "Serverless Architecture",
+    flow: ["Users", "API Gateway", "AWS Lambda", "Amazon DynamoDB", "Amazon S3"],
+  },
+  {
+    name: "High Availability Architecture",
+    flow: ["Internet", "Load Balancer", "EC2 in AZ A", "EC2 in AZ B", "Multi-AZ RDS"],
+  },
+  {
+    name: "Static Website Architecture",
+    flow: ["Users", "CloudFront", "Amazon S3", "Static Website"],
+  },
+  {
+    name: "Hybrid Architecture",
+    flow: ["On-Premises", "VPN", "AWS VPC"],
+  },
+  {
+    name: "Microservices Architecture",
+    flow: ["Users", "API Gateway", "Lambda", "SQS", "RDS", "DynamoDB"],
+  },
+];
+
+const week4RevisionSections = [
+  ["Cloud Basics", "Cloud Types", "Service Models"],
+  ["Compute", "EC2", "Lambda", "ECS", "EKS"],
+  ["Storage", "S3", "EBS", "EFS", "Glacier"],
+  ["Database", "RDS", "Aurora", "DynamoDB"],
+  ["Networking", "VPC", "Subnets", "Security Groups", "NACLs", "NAT", "Route Tables"],
+  ["Security", "IAM", "Policies", "Roles", "MFA", "KMS", "CloudTrail", "CloudWatch"],
+  ["Billing", "Pricing Calculator", "Cost Explorer", "Budgets"],
+  ["Architecture", "Regions", "Availability Zones", "Edge Locations", "Well-Architected Framework"],
+];
+
+const week4RecommendedResources = [
+  "AWS Skill Builder (Official)",
+  "Tutorials Dojo",
+  "Whizlabs",
+  "Stephane Maarek (Udemy)",
+  "Andrew Brown (FreeCodeCamp)",
+  "Neal Davis Practice Exams",
+  "ExamTopics for explanation review, not memorization",
+];
+
+const week4LearningOutcomes = [
+  "Explain cloud computing concepts and AWS fundamentals.",
+  "Select appropriate compute, storage, database, networking, and security services for common scenarios.",
+  "Estimate, monitor, and optimize AWS costs.",
+  "Design secure, reliable, and cost-effective architectures using the Well-Architected Framework.",
+  "Understand Regions, Availability Zones, Edge Locations, and Local Zones.",
+  "Build and deploy a basic AWS architecture using Free Tier services.",
+  "Answer scenario-based CLF-C02 questions with confidence.",
+];
+
 const lessons = [
   {
     title: "What is Cloud Computing?",
@@ -950,6 +1207,12 @@ export function AwsCloudPractitionerLesson() {
   const week3 = awsLearningRoadmap.find((week) => week.week === "Week 3");
   const week3TotalMinutes =
     week3?.lessons.reduce(
+      (total, lesson) => total + Number.parseInt(lesson.duration, 10),
+      0
+    ) ?? 0;
+  const week4 = awsLearningRoadmap.find((week) => week.week === "Week 4");
+  const week4TotalMinutes =
+    week4?.lessons.reduce(
       (total, lesson) => total + Number.parseInt(lesson.duration, 10),
       0
     ) ?? 0;
@@ -1669,6 +1932,355 @@ export function AwsCloudPractitionerLesson() {
                       "Read Exam Tips",
                     ]}
                   />
+                </div>
+              </motion.div>
+            ) : selectedWeek?.week === "Week 4" ? (
+              <motion.div
+                ref={detailRef}
+                key="week-4-content"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 16 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                className="scroll-mt-24"
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7 }}
+                  className="mb-10 rounded-lg border border-white/10 bg-card/35 p-8 backdrop-blur-xl"
+                >
+                  <Badge variant="outline" className="mb-5 rounded-full border-primary/20 bg-primary/5 px-4 py-1 text-primary">
+                    <Sparkles className="mr-2 h-3.5 w-3.5" />
+                    Week 4: AWS Cloud Practitioner
+                  </Badge>
+                  <div className="grid gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
+                    <div>
+                      <h1 className="text-5xl font-headline leading-tight tracking-normal lg:text-7xl">
+                        Billing, Architecture & <span className="gradient-text">Global Infrastructure</span>
+                      </h1>
+                      <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                        Finish the Cloud Practitioner path by learning AWS cost tools,
+                        support plans, Well-Architected pillars, global infrastructure,
+                        hands-on labs, and final exam readiness.
+                      </p>
+                    </div>
+
+                    <Card className="border-primary/20 bg-primary/5 backdrop-blur-xl">
+                      <CardContent className="p-6">
+                        <div className="mb-5 flex items-center justify-between gap-4">
+                          <div>
+                            <p className="text-sm text-muted-foreground">Week 4 Progress</p>
+                            <p className="mt-1 text-3xl font-headline font-bold">
+                              0/{week4?.lessons.length ?? 0} Lessons Completed
+                            </p>
+                          </div>
+                          <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-primary/20 bg-background/60">
+                            <Globe2 className="h-7 w-7 text-primary" />
+                          </div>
+                        </div>
+                        <Progress value={0} />
+                        <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                          Estimated study time: {week4TotalMinutes} minutes. Complete
+                          the labs and readiness checklist before scheduling the exam.
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </motion.div>
+
+                <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+                  {week4Objectives.map((objective, index) => (
+                    <motion.div
+                      key={objective}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.05 }}
+                      className="rounded-lg border border-white/10 bg-card/45 p-5 backdrop-blur-xl"
+                    >
+                      <CheckCircle2 className="mb-4 h-5 w-5 text-primary" />
+                      <p className="text-sm leading-6 text-muted-foreground">
+                        {objective}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <div className="mt-12 grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
+                  <Card className="border-white/10 bg-card/45 backdrop-blur-xl">
+                    <CardContent className="p-6">
+                      <h2 className="text-3xl font-headline font-bold">Billing Tool Flow</h2>
+                      <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                        Use the right billing tool at the right point in the lifecycle:
+                        estimate before deployment, analyze after usage starts, and set
+                        alerts so spending does not surprise you.
+                      </p>
+                      <div className="mt-6 space-y-3">
+                        {[
+                          "Pricing Calculator: estimate future monthly cost",
+                          "Cost Explorer: inspect actual current and historical spend",
+                          "Budgets: alert at thresholds such as 80% and 100%",
+                        ].map((step, index) => (
+                          <div key={step} className="flex items-center gap-3">
+                            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-xs text-primary">
+                              {index + 1}
+                            </div>
+                            <div className="flex-1 rounded-lg border border-white/10 bg-background/60 px-4 py-3 text-sm">
+                              {step}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="mt-6 rounded-lg border border-primary/20 bg-primary/5 p-4">
+                        <p className="text-sm font-semibold text-primary">Budget Alert Example</p>
+                        <div className="mt-4 space-y-3">
+                          {week4BudgetFlow.map((step, index) => (
+                            <div key={step} className="flex items-center gap-3">
+                              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-background/70 text-xs text-primary">
+                                {index + 1}
+                              </div>
+                              <p className="text-sm leading-6 text-muted-foreground">{step}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="border-white/10 bg-card/45 backdrop-blur-xl">
+                    <CardContent className="p-6">
+                      <h2 className="text-3xl font-headline font-bold">Typical AWS Architecture</h2>
+                      <div className="mt-6 space-y-3">
+                        {[
+                          "Users",
+                          "CloudFront",
+                          "Application Load Balancer",
+                          "EC2 in AZ A + EC2 in AZ B",
+                          "Amazon RDS Multi-AZ",
+                          "Amazon S3",
+                        ].map((step, index) => (
+                          <div key={step} className="flex items-center gap-3">
+                            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-xs text-primary">
+                              {index + 1}
+                            </div>
+                            <div className="flex-1 rounded-lg border border-white/10 bg-background/60 px-4 py-3 text-sm">
+                              {step}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                <div className="mt-12">
+                  <h2 className="mb-5 text-3xl font-headline font-bold">Week 4 Modules</h2>
+                  <div className="grid gap-5">
+                    {week4Modules.map((module, index) => {
+                      const Icon = module.icon;
+
+                      return (
+                        <motion.article
+                          key={module.title}
+                          initial={{ opacity: 0, y: 18 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: index * 0.05 }}
+                          className="rounded-lg border border-white/10 bg-card/45 p-6 backdrop-blur-xl"
+                        >
+                          <div className="mb-5 flex items-start gap-4">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-primary/10">
+                              <Icon className="h-6 w-6 text-primary" />
+                            </div>
+                            <div>
+                              <h3 className="text-2xl font-headline font-bold">{module.title}</h3>
+                              <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                                {module.summary}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
+                            <div className="space-y-3">
+                              {module.sections.map((section) => (
+                                <div key={section} className="rounded-lg border border-white/10 bg-background/60 p-4 text-sm leading-7 text-muted-foreground">
+                                  {section}
+                                </div>
+                              ))}
+                            </div>
+                            <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
+                              <p className="mb-3 text-sm font-semibold text-primary">Exam Comparison</p>
+                              <div className="space-y-3">
+                                {module.comparison.map(([label, detail]) => (
+                                  <div key={label} className="rounded-lg border border-white/10 bg-background/60 p-3">
+                                    <p className="font-semibold">{label}</p>
+                                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{detail}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </motion.article>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="mt-12">
+                  <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                      <h2 className="text-3xl font-headline font-bold">Architecture Pattern Lab</h2>
+                      <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                        Use these flows to connect the services from all four weeks into common exam scenarios.
+                      </p>
+                    </div>
+                    <Badge variant="outline" className="w-fit border-primary/20 bg-primary/5 text-primary">
+                      Scenario Practice
+                    </Badge>
+                  </div>
+                  <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                    {week4ArchitecturePatterns.map((pattern, patternIndex) => (
+                      <motion.article
+                        key={pattern.name}
+                        initial={{ opacity: 0, y: 16 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: patternIndex * 0.04 }}
+                        className="rounded-lg border border-white/10 bg-card/45 p-5 backdrop-blur-xl"
+                      >
+                        <h3 className="text-xl font-headline font-bold">{pattern.name}</h3>
+                        <div className="mt-5 space-y-3">
+                          {pattern.flow.map((step, stepIndex) => (
+                            <div key={`${pattern.name}-${step}`} className="flex items-center gap-3">
+                              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-xs text-primary">
+                                {stepIndex + 1}
+                              </div>
+                              <div className="flex-1 rounded-lg border border-white/10 bg-background/60 px-3 py-2 text-sm text-muted-foreground">
+                                {step}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </motion.article>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-12 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+                  <Card className="border-white/10 bg-card/45 backdrop-blur-xl">
+                    <CardContent className="p-6">
+                      <h2 className="text-3xl font-headline font-bold">Hands-On Labs</h2>
+                      <div className="mt-6 space-y-3">
+                        {week4HandsOnLabs.map((lab) => (
+                          <div key={lab} className="flex gap-3 rounded-lg border border-white/10 bg-background/60 p-4">
+                            <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                            <p className="text-sm leading-6 text-muted-foreground">{lab}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="border-white/10 bg-card/45 backdrop-blur-xl">
+                    <CardContent className="p-6">
+                      <h2 className="text-3xl font-headline font-bold">Final Readiness Checklist</h2>
+                      <div className="mt-6 space-y-3">
+                        {finalReadinessQuestions.map((question, index) => (
+                          <div key={question} className="rounded-lg border border-white/10 bg-background/60 p-4">
+                            <p className="text-sm leading-6">
+                              <span className="font-code text-primary">{index + 1}.</span>{" "}
+                              {question}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                <div className="mt-12">
+                  <h2 className="mb-5 text-3xl font-headline font-bold">Final Revision Map</h2>
+                  <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                    {week4RevisionSections.map(([category, ...items]) => (
+                      <Card key={category} className="border-white/10 bg-card/45 backdrop-blur-xl">
+                        <CardContent className="p-5">
+                          <p className="font-semibold text-primary">{category}</p>
+                          <div className="mt-4 space-y-2">
+                            {items.map((item) => (
+                              <div key={item} className="flex gap-2 text-sm leading-6 text-muted-foreground">
+                                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                                {item}
+                              </div>
+                            ))}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-12 grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+                  <Card className="border-primary/20 bg-primary/5 backdrop-blur-xl">
+                    <CardContent className="p-6">
+                      <h2 className="text-3xl font-headline font-bold">Week 4 Exam Tips</h2>
+                      <div className="mt-6 space-y-4">
+                        {week4ExamTips.map((tip) => (
+                          <div key={tip} className="flex gap-3">
+                            <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                            <p className="text-sm leading-6 text-muted-foreground">{tip}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <InteractiveAwsQuiz
+                    quiz={awsQuizzes["week-4-billing-architecture"]}
+                    checklistItems={[
+                      "Read Hero",
+                      "Read Billing Tool Flow",
+                      "Read Typical Architecture",
+                      "Read Billing Section",
+                      "Read Support Plans",
+                      "Read Well-Architected Section",
+                      "Read Global Infrastructure Section",
+                      "Review Architecture Pattern Lab",
+                      "Complete Hands-On Labs Review",
+                      "Read Final Readiness Checklist",
+                    ]}
+                  />
+                </div>
+
+                <div className="mt-12 grid gap-6 lg:grid-cols-2">
+                  <Card className="border-white/10 bg-card/45 backdrop-blur-xl">
+                    <CardContent className="p-6">
+                      <h2 className="text-3xl font-headline font-bold">Recommended Resources</h2>
+                      <div className="mt-6 space-y-3">
+                        {week4RecommendedResources.map((resource) => (
+                          <div key={resource} className="flex gap-3 rounded-lg border border-white/10 bg-background/60 p-4">
+                            <Star className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                            <p className="text-sm leading-6 text-muted-foreground">{resource}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="border-white/10 bg-card/45 backdrop-blur-xl">
+                    <CardContent className="p-6">
+                      <h2 className="text-3xl font-headline font-bold">Final Learning Outcome</h2>
+                      <div className="mt-6 space-y-3">
+                        {week4LearningOutcomes.map((outcome) => (
+                          <div key={outcome} className="flex gap-3 rounded-lg border border-white/10 bg-background/60 p-4">
+                            <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                            <p className="text-sm leading-6 text-muted-foreground">{outcome}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
               </motion.div>
             ) : selectedWeek ? (
