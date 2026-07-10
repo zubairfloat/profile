@@ -274,13 +274,17 @@ export const learningConcepts: LearningConcept[] = [
     slug: "prototype-chain",
     title: "Prototype Chain",
     description:
-      "Trace property lookup through prototypes, constructors, classes, and inheritance mechanics.",
+      "Visualize how JavaScript finds properties and methods through object links, prototypes, constructors, classes, and inheritance.",
     category: "javascript",
     difficulty: "Intermediate",
-    readTime: "Coming soon",
-    tags: ["JavaScript", "Objects"],
-    featured: false,
-    available: false,
+    readTime: "15 minutes",
+    tags: ["JavaScript", "Objects", "Inheritance"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Understand property lookup, Object.prototype, constructor prototypes, __proto__, Object.create(), ES6 classes, and built-in prototype chains.",
+    },
   },
   {
     id: "react-rendering",
