@@ -28,9 +28,9 @@ function ConceptCard({ concept, index }: { concept: LearningConcept; index: numb
       viewport={{ once: true }}
       transition={{ delay: index * 0.05 }}
       className={cn(
-        "group flex h-full flex-col justify-between rounded-lg border border-white/10 bg-card/45 p-6 backdrop-blur-xl transition-all",
+        "learning-card group flex h-full flex-col justify-between p-6 transition-all",
         concept.available
-          ? "hover:-translate-y-1 hover:border-primary/40 hover:bg-primary/5"
+          ? "hover:-translate-y-1 hover:border-primary/40 hover:bg-primary/5 hover:shadow-md"
           : "opacity-75"
       )}
     >
@@ -57,7 +57,7 @@ function ConceptCard({ concept, index }: { concept: LearningConcept; index: numb
           {concept.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full border border-white/10 bg-background/60 px-3 py-1 font-code text-xs text-muted-foreground"
+              className="rounded-full border border-border bg-muted/60 px-3 py-1 font-code text-xs text-muted-foreground"
             >
               {tag}
             </span>
@@ -76,7 +76,7 @@ function ConceptCard({ concept, index }: { concept: LearningConcept; index: numb
             <Badge variant="secondary" className="bg-secondary/70">
               Coming Soon
             </Badge>
-            <Button disabled variant="outline" className="rounded-full border-white/10 font-semibold">
+            <Button disabled variant="outline" className="rounded-full font-semibold">
               Coming Soon
             </Button>
           </div>
@@ -96,7 +96,7 @@ function ConceptCard({ concept, index }: { concept: LearningConcept; index: numb
 
 export function LearningHub() {
   return (
-    <section className="relative overflow-hidden py-28">
+    <section className="relative overflow-hidden bg-background py-28 text-foreground">
       <div className="absolute inset-0 hero-gradient -z-10" />
       <div className="absolute left-1/2 top-24 h-px w-[80vw] -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
 
@@ -105,7 +105,7 @@ export function LearningHub() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="mx-auto mb-14 max-w-4xl text-center"
+          className="mx-auto mb-14 max-w-[800px] text-center"
         >
           <Badge
             variant="outline"
@@ -114,26 +114,26 @@ export function LearningHub() {
             <Sparkles className="mr-2 h-3.5 w-3.5" />
             Interactive Learning Platform
           </Badge>
-          <h1 className="text-5xl font-headline leading-tight tracking-tight lg:text-7xl">
+          <h1 className="text-5xl font-headline leading-tight tracking-normal lg:text-7xl">
             Developer <span className="gradient-text">Learning Hub</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-3xl text-xl leading-relaxed text-muted-foreground">
+          <p className="mx-auto mt-6 max-w-[800px] text-xl leading-8 text-muted-foreground">
             Interactive visual explanations of JavaScript, React, Next.js, System Design, AI, Enterprise Commerce, and certification paths.
           </p>
-          <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-muted-foreground">
+          <p className="mx-auto mt-5 max-w-[800px] text-base leading-8 text-muted-foreground">
             A growing collection of technical concepts, visual demonstrations, and real-world engineering patterns learned through enterprise software development.
           </p>
         </motion.div>
 
         <Tabs defaultValue="javascript" className="space-y-8">
-          <TabsList className="grid h-auto grid-cols-2 gap-1 rounded-lg border border-white/10 bg-background/60 p-1 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-12">
+          <TabsList className="grid h-auto grid-cols-2 gap-1 rounded-lg border border-border bg-card p-1 shadow-sm md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-12">
             {learningCategories.map((category) => {
               const Icon = category.icon;
               return (
                 <TabsTrigger
                   key={category.id}
                   value={category.id}
-                  className="min-h-12 rounded-md px-3 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  className="min-h-12 rounded-md px-3 text-xs text-muted-foreground hover:bg-primary/10 hover:text-primary data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
                 >
                   <Icon className="mr-2 h-4 w-4" />
                   {category.title}
@@ -142,7 +142,7 @@ export function LearningHub() {
             })}
             <TabsTrigger
               value="certifications"
-              className="min-h-12 rounded-md px-3 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              className="min-h-12 rounded-md px-3 text-xs text-muted-foreground hover:bg-primary/10 hover:text-primary data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
             >
               <Award className="mr-2 h-4 w-4" />
               Certifications
@@ -155,10 +155,10 @@ export function LearningHub() {
 
             return (
               <TabsContent key={category.id} value={category.id} className="space-y-8">
-                <div className="rounded-lg border border-white/10 bg-card/35 p-6 backdrop-blur-xl">
+                <div className="learning-card p-6">
                   <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div className="flex items-start gap-4">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-primary/10">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-border bg-primary/10">
                         <Icon className="h-6 w-6 text-primary" />
                       </div>
                       <div>
@@ -183,7 +183,7 @@ export function LearningHub() {
                     ))}
                   </div>
                 ) : (
-                  <Card className="border-dashed border-white/10 bg-card/35 backdrop-blur-xl">
+                  <Card className="border-dashed bg-card">
                     <CardContent className="p-12 text-center">
                       <p className="text-sm uppercase tracking-widest text-muted-foreground">
                         Coming Soon
