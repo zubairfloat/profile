@@ -170,6 +170,49 @@ const codeExamples = [
   },
 ];
 
+const asyncAwaitAnalogySteps = [
+  ["Place request", "Start an async operation such as fetchProducts()."],
+  ["Wait for result", "await pauses only the current async function."],
+  ["Continue work", "When the Promise settles, JavaScript resumes after await."],
+  ["Handle failure", "try/catch gives the async function a clear error path."],
+];
+
+const asyncAwaitFlowDiagram = `async function starts
+      |
+      v
+Run synchronous lines
+      |
+      v
+Hit await Promise
+      |
+      v
+Pause async function
+      |
+      v
+Promise settles
+      |
+      v
+Resume after await`;
+
+const awaitRuntimeDiagram = `Call Stack
+  getData()
+      |
+      v
+await fetchProducts()
+      |
+      v
+getData() pauses
+      |
+      v
+Microtask Queue
+  resume getData()
+      |
+      v
+Continue after await`;
+
+const asyncInterviewAnswer =
+  "Async/await is syntax built on top of Promises. An async function always returns a Promise. Inside an async function, await pauses that function until the awaited Promise settles, then execution continues from the next line. await does not block the whole event loop; it only pauses the current async function. Errors are usually handled with try/catch.";
+
 const realWorldExamples = [
   { title: "Login", icon: UserCheck, text: "Validate credentials, fetch profile data, and redirect after authentication succeeds." },
   { title: "Search", icon: Search, text: "Await product results and update loading, empty, success, or error states clearly." },
@@ -259,6 +302,35 @@ function CodePanel({ code, activeLine }: { code: string; activeLine?: number }) 
   );
 }
 
+function DiagramPanel({ title, diagram }: { title: string; diagram: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function copyDiagram() {
+    await navigator.clipboard.writeText(diagram);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1400);
+  }
+
+  return (
+    <div className="rounded-lg border border-border bg-slate-950 p-4 text-slate-100 shadow-sm dark:bg-slate-900">
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <p className="font-code text-xs uppercase tracking-widest text-slate-400">{title}</p>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={copyDiagram}
+          className="h-8 w-8 text-slate-300 hover:bg-white/10 hover:text-white"
+          aria-label={`Copy ${title} diagram`}
+        >
+          {copied ? <Check className="h-4 w-4 text-success" /> : <Clipboard className="h-4 w-4" />}
+        </Button>
+      </div>
+      <pre className="overflow-x-auto whitespace-pre-wrap font-code text-sm leading-7">{diagram}</pre>
+    </div>
+  );
+}
+
 function ConceptOverview() {
   const cards = useMemo(
     () => [
@@ -304,6 +376,109 @@ function ConceptOverview() {
           </motion.article>
         ))}
       </div>
+    </section>
+  );
+}
+
+function BeginnerAsyncAwaitGuide() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Beginner Mental Model"
+        icon={Timer}
+        title="Async/Await Makes Promises Read Top-to-Bottom"
+        description="Promises are still underneath. async/await simply makes asynchronous code easier to read and reason about."
+      />
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <h3 className="text-2xl font-headline font-bold">What async and await Mean</h3>
+            <div className="mt-5 grid gap-3">
+              {asyncAwaitAnalogySteps.map(([title, text], index) => (
+                <div key={title} className="flex gap-3 rounded-lg border border-border bg-background/70 p-4">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-code text-sm font-bold text-primary">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <p className="font-semibold">{title}</p>
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="space-y-5 p-6">
+            <DiagramPanel title="Async/await flow" diagram={asyncAwaitFlowDiagram} />
+            <CodePanel
+              code={`async function loadProducts() {
+  try {
+    const response = await fetch("/api/products");
+    const products = await response.json();
+    renderProducts(products);
+  } catch (error) {
+    showError(error);
+  }
+}`}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+}
+
+function AwaitRuntimeMentalModel() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Runtime Mental Model"
+        icon={Workflow}
+        title="await Pauses the Function, Not the Whole App"
+        description="When await is reached, JavaScript can keep handling other work. The async function resumes later through the microtask queue."
+      />
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <DiagramPanel title="await runtime flow" diagram={awaitRuntimeDiagram} />
+        <Card className="border-primary/20 bg-primary/5 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <h3 className="text-2xl font-headline font-bold">Key Rules</h3>
+            <div className="mt-5 grid gap-3">
+              {[
+                "async functions always return a Promise.",
+                "await can be used inside async functions.",
+                "Code before await runs immediately.",
+                "Code after await runs after the Promise settles.",
+                "Use Promise.all when independent awaits can run together.",
+              ].map((item) => (
+                <div key={item} className="flex gap-3 rounded-lg border border-border bg-card p-4">
+                  <Check className="h-5 w-5 shrink-0 text-success" />
+                  <p className="text-sm leading-6 text-muted-foreground">{item}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+}
+
+function AsyncAwaitInterviewSummary() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Interview Ready"
+        icon={ShieldCheck}
+        title="Async/Await in 30 Seconds"
+        description="Use this concise answer when asked to explain async/await."
+      />
+      <Card className="border-primary/20 bg-primary/5 backdrop-blur-xl">
+        <CardContent className="p-6">
+          <p className="text-base leading-8 text-muted-foreground">{asyncInterviewAnswer}</p>
+        </CardContent>
+      </Card>
     </section>
   );
 }
@@ -749,6 +924,8 @@ export function AsyncAwaitLesson() {
       </section>
 
       <ConceptOverview />
+      <BeginnerAsyncAwaitGuide />
+      <AwaitRuntimeMentalModel />
 
       <section className="container mx-auto px-4 py-10">
         <Tabs defaultValue="runtime" className="space-y-8">
@@ -788,6 +965,7 @@ export function AsyncAwaitLesson() {
 
       <ExampleCards />
       <EcommerceExamples />
+      <AsyncAwaitInterviewSummary />
       <InterviewQuestions />
     </div>
   );

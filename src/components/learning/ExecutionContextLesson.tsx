@@ -262,6 +262,142 @@ const memoryCards = [
   ["Console Output", "Output appears during execution, not creation."],
 ];
 
+const officeWorkspaceItems = [
+  ["Laptop", "Runtime tools needed to work"],
+  ["Documents", "Variables and function declarations"],
+  ["Credentials", "Access to outer scopes"],
+  ["Project files", "Code waiting to execute"],
+  ["Team information", "Context about this and surrounding environment"],
+];
+
+const executionContextTypes = [
+  {
+    title: "Global Execution Context (GEC)",
+    detail: "Created when the JavaScript file starts. Created only once for the top-level program.",
+  },
+  {
+    title: "Function Execution Context (FEC)",
+    detail: "Created every time a function is called. Removed when that function finishes.",
+  },
+  {
+    title: "Eval Execution Context",
+    detail: "Created when eval() runs. It is rare and generally discouraged.",
+  },
+];
+
+const simpleProgramCode = `console.log("Start");
+
+function greet() {
+  console.log("Hello");
+}
+
+greet();
+
+console.log("End");`;
+
+const simpleProgramSteps = [
+  ["1", "Global Execution Context is created", "JavaScript prepares the top-level workspace."],
+  ["2", "console.log(\"Start\") runs", "Output: Start"],
+  ["3", "greet is stored in memory", "The function is defined but not executed yet."],
+  ["4", "greet() is called", "A Function Execution Context is pushed."],
+  ["5", "console.log(\"Hello\") runs", "Output: Hello, then greet context is removed."],
+  ["6", "console.log(\"End\") runs", "Output: End"],
+];
+
+const creationMemoryRows = [
+  ["a", "undefined"],
+  ["sayHi", "Function"],
+  ["this", "Global Object"],
+];
+
+const checkoutCode = `checkout();`;
+
+const checkoutInsideCode = `validateCart();
+
+processPayment();
+
+sendEmail();`;
+
+const checkoutContextDiagram = `Global
+
+|
+v
+
+checkout()
+
+|
+v
+
+validateCart()
+
+|
+v
+
+Return
+
+|
+v
+
+processPayment()
+
+|
+v
+
+Return
+
+|
+v
+
+sendEmail()`;
+
+const executionContextInsideDiagram = `Execution Context
+
+|-- Variable Environment
+|      (variables & functions)
+|
+|-- Scope Chain
+|      (access to outer scopes)
+|
+|-- this
+       (current object reference)`;
+
+const contextVisualizationDiagram = `                Global Execution Context
+        +------------------------------+
+        | Variables                    |
+        | Functions                    |
+        | this                         |
+        +--------------+---------------+
+                       |
+             Function Called
+                       v
+        +------------------------------+
+        | Function Execution Context   |
+        | Local Variables              |
+        | Arguments                    |
+        | Scope Chain                  |
+        | this                         |
+        +------------------------------+`;
+
+const companyLifecycleDiagram = `Company Opens
+       |
+       v
+Global Execution Context
+
+Employee Starts a Task
+       |
+       v
+Function Execution Context
+
+Employee Finishes Task
+       |
+       v
+Function Context Destroyed
+
+Company Closes
+       |
+       v
+Global Context Destroyed`;
+
 const playgroundExamples: PlaygroundExample[] = [
   {
     title: "Simple Variable",
@@ -839,6 +975,35 @@ function CodePanel({ code, activeLine }: { code: string; activeLine?: number }) 
   );
 }
 
+function DiagramPanel({ title, diagram }: { title: string; diagram: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function copyDiagram() {
+    await navigator.clipboard.writeText(diagram);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1400);
+  }
+
+  return (
+    <div className="rounded-lg border border-border bg-slate-950 p-4 text-slate-100 shadow-sm dark:bg-slate-900">
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <p className="font-code text-xs uppercase tracking-widest text-slate-400">{title}</p>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={copyDiagram}
+          className="h-8 w-8 text-slate-300 hover:bg-white/10 hover:text-white"
+          aria-label={`Copy ${title} diagram`}
+        >
+          {copied ? <Check className="h-4 w-4 text-success" /> : <Clipboard className="h-4 w-4" />}
+        </Button>
+      </div>
+      <pre className="overflow-x-auto whitespace-pre-wrap font-code text-sm leading-7">{diagram}</pre>
+    </div>
+  );
+}
+
 function ConceptOverview() {
   return (
     <section className="container mx-auto px-4 py-10">
@@ -850,14 +1015,16 @@ function ConceptOverview() {
             </div>
             <h2 className="text-3xl font-headline font-bold">What is Execution Context?</h2>
             <p className="mt-4 text-base leading-8 text-muted-foreground">
-              Think of Execution Context as JavaScript&apos;s workspace. Whenever
-              JavaScript starts or a function runs, it creates a brand-new
-              workspace where variables, functions, and the value of this are
-              stored.
+              An Execution Context is the environment in which JavaScript code
+              is executed. It contains all the information needed to run the
+              code, including variables, functions, the value of{" "}
+              <span className="font-code text-foreground">this</span>, and the
+              scope chain.
             </p>
             <p className="mt-4 rounded-lg border border-white/10 bg-background/60 p-4 text-sm leading-7 text-muted-foreground">
-              Every function call gets its own workspace. When the function
-              finishes, that workspace is removed from the stack.
+              Think of it as JavaScript&apos;s workspace for executing code. Every
+              function call gets its own workspace. When the function finishes,
+              that workspace is removed from the stack.
             </p>
           </CardContent>
         </Card>
@@ -877,6 +1044,164 @@ function ConceptOverview() {
             </motion.div>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function OfficeAnalogyAndTypes() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Beginner Analogy"
+        icon={Boxes}
+        title="Think of It Like an Office Workspace"
+        description="Before you start a task, your workspace must be prepared. JavaScript does the same thing before it executes code."
+      />
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <h3 className="text-2xl font-headline font-bold">Software Engineer Workspace</h3>
+            <p className="mt-3 text-base leading-8 text-muted-foreground">
+              When you start a task, the company gives you everything you need:
+              tools, files, access, and context. Only then do you start coding.
+            </p>
+            <div className="mt-5 grid gap-3">
+              {officeWorkspaceItems.map(([item, detail], index) => (
+                <div key={item} className="flex gap-3 rounded-lg border border-border bg-background/70 p-4">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-code text-sm font-bold text-primary">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <p className="font-semibold">{item}</p>
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{detail}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-primary/20 bg-primary/5 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <h3 className="text-2xl font-headline font-bold">Types of Execution Context</h3>
+            <div className="mt-5 space-y-4">
+              {executionContextTypes.map((item) => (
+                <div key={item.title} className="rounded-lg border border-border bg-card p-4">
+                  <p className="font-semibold text-primary">{item.title}</p>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.detail}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+}
+
+function SimpleExecutionWalkthrough() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Step-by-Step Example"
+        icon={Code2}
+        title="A Simple Program from Start to End"
+        description="This example shows the Global Execution Context, a Function Execution Context, and the final output."
+      />
+      <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardHeader>
+            <CardTitle>Example 1</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CodePanel code={simpleProgramCode} />
+            <div className="mt-5 rounded-lg border border-success/25 bg-success/10 p-4">
+              <p className="mb-2 text-xs uppercase tracking-widest text-success">Final Output</p>
+              <p className="font-code text-sm">Start</p>
+              <p className="font-code text-sm">Hello</p>
+              <p className="font-code text-sm">End</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="grid gap-3">
+          {simpleProgramSteps.map(([step, title, detail]) => (
+            <div key={step} className="rounded-lg border border-border bg-card p-4 shadow-sm">
+              <div className="flex gap-3">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-code text-sm font-bold text-primary">
+                  {step}
+                </span>
+                <div>
+                  <p className="font-semibold">{title}</p>
+                  <p className="mt-1 text-sm leading-6 text-muted-foreground">{detail}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CreationExecutionDeepDive() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Memory Creation Phase"
+        icon={MemoryStick}
+        title="Creation Phase Prepares Memory Before Code Runs"
+        description="JavaScript scans the code first. var starts as undefined, function declarations are stored completely, and this is prepared."
+      />
+      <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardHeader>
+            <CardTitle>Creation Phase Example</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CodePanel
+              code={`console.log(a);
+
+var a = 10;
+
+function sayHi() {
+  console.log("Hi");
+}`}
+            />
+            <p className="mt-5 text-sm leading-7 text-muted-foreground">
+              No code has run yet during the creation phase. JavaScript has only
+              prepared memory.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardHeader>
+            <CardTitle>Memory Looks Like</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-hidden rounded-lg border border-border">
+              <div className="grid grid-cols-2 bg-background/70 p-3 text-sm font-semibold">
+                <div>Name</div>
+                <div>Value</div>
+              </div>
+              {creationMemoryRows.map(([name, value]) => (
+                <div key={name} className="grid grid-cols-2 border-t border-border p-3 text-sm">
+                  <div className="font-code text-primary">{name}</div>
+                  <div className="text-muted-foreground">{value}</div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-5 rounded-lg border border-warning/30 bg-warning/10 p-4">
+              <p className="text-sm leading-6 text-muted-foreground">
+                During execution, <span className="font-code text-foreground">console.log(a)</span>{" "}
+                prints undefined. Then <span className="font-code text-foreground">a = 10</span>{" "}
+                updates memory to the real value.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </section>
   );
@@ -1436,6 +1761,142 @@ function MemoryVisualization() {
   );
 }
 
+function CheckoutFlowExample() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Real-World Flow"
+        icon={Workflow}
+        title="Real-World Example: Checkout Flow"
+        description="A checkout flow is a practical way to see function execution contexts being created and removed."
+      />
+      <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="space-y-5 p-6">
+            <div>
+              <p className="mb-3 text-sm leading-7 text-muted-foreground">Imagine a checkout process.</p>
+              <CodePanel code={checkoutCode} />
+            </div>
+            <div>
+              <p className="mb-3 text-sm leading-7 text-muted-foreground">Inside:</p>
+              <CodePanel code={checkoutInsideCode} />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardHeader>
+            <CardTitle>Execution Contexts</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <DiagramPanel title="Checkout context flow" diagram={checkoutContextDiagram} />
+            <p className="mt-5 text-sm leading-7 text-muted-foreground">
+              Each function gets its own execution context. After each function
+              finishes, that context is removed from the call stack.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+}
+
+function ContextInternalsVisualization() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Context Internals"
+        icon={Layers3}
+        title="What's Inside an Execution Context?"
+        description="Every execution context stores variable memory, scope access, and this."
+      />
+      <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <DiagramPanel title="Execution context contents" diagram={executionContextInsideDiagram} />
+          </CardContent>
+        </Card>
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <DiagramPanel title="Global to function context" diagram={contextVisualizationDiagram} />
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+}
+
+function CompanyLifecycleExample() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Real-World Analogy"
+        icon={Server}
+        title="Real-World Example: Company"
+        description="The company opens once like the Global Execution Context. Every task creates a temporary function context."
+      />
+      <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+        <CardContent className="p-6">
+          <DiagramPanel title="Company lifecycle" diagram={companyLifecycleDiagram} />
+        </CardContent>
+      </Card>
+    </section>
+  );
+}
+
+function WhyExecutionContextMatters() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Interview Ready"
+        icon={BookOpenCheck}
+        title="Why Execution Context Is Important"
+        description="This one concept explains many JavaScript behaviors that appear in interviews and real projects."
+      />
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <h3 className="text-2xl font-headline font-bold">It Explains How JavaScript</h3>
+            <div className="mt-5 grid gap-3">
+              {[
+                "Executes code",
+                "Stores variables and functions",
+                "Manages function calls",
+                "Handles scope",
+                "Determines the value of this",
+                "Supports recursion and nested function calls",
+              ].map((item) => (
+                <div key={item} className="flex gap-3 rounded-lg border border-border bg-background/70 p-4">
+                  <CheckCircle2 className="h-5 w-5 shrink-0 text-success" />
+                  <p className="text-sm leading-6 text-muted-foreground">{item}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-primary/20 bg-primary/5 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <Badge variant="outline" className="mb-4 border-primary/20 bg-background/60 text-primary">
+              30-second answer
+            </Badge>
+            <p className="text-base leading-8 text-muted-foreground">
+              An Execution Context is the environment in which JavaScript code
+              is executed. Every execution context has two phases: the Memory
+              Creation Phase, where variables and functions are allocated
+              memory, and the Execution Phase, where code runs line by line.
+              JavaScript creates one Global Execution Context when a program
+              starts and creates a new Function Execution Context each time a
+              function is invoked. These contexts are managed using the Call
+              Stack.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+}
+
 function CodePlayground() {
   const [active, setActive] = useState(0);
   const [lineStep, setLineStep] = useState(0);
@@ -1840,6 +2301,9 @@ export function ExecutionContextLesson() {
       </section>
 
       <ConceptOverview />
+      <OfficeAnalogyAndTypes />
+      <SimpleExecutionWalkthrough />
+      <CreationExecutionDeepDive />
       <ExecutionFlowTimeline />
       <ExecutionContextVisualizer />
       <PhaseComparison />
@@ -1851,6 +2315,10 @@ export function ExecutionContextLesson() {
       <ThisBinding />
       <CallStackIntegration />
       <MemoryVisualization />
+      <CheckoutFlowExample />
+      <ContextInternalsVisualization />
+      <CompanyLifecycleExample />
+      <WhyExecutionContextMatters />
       <CodePlayground />
       <RealWorldExamples />
       <CommonMistakes />

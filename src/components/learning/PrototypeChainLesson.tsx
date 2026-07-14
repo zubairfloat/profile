@@ -63,16 +63,14 @@ type QuizQuestion = {
 };
 
 const objectives = [
-  "What Prototype is",
-  "What Prototype Chain is",
-  "Property Lookup",
-  "Inheritance",
-  "Object.prototype",
-  "Constructor Functions",
-  "__proto__",
-  "prototype property",
-  "ES6 Classes",
-  "Prototype vs Class inheritance",
+  "What the Prototype Chain is",
+  "How JavaScript searches for properties",
+  "Why objects can use methods they do not own",
+  "How arrays, strings, and functions get built-in methods",
+  "Why Object.prototype and null matter",
+  "How prototype-based inheritance differs from Java or C# classes",
+  "How to explain prototypes in interviews",
+  "Common prototype mistakes",
 ];
 
 const lookupSteps = [
@@ -206,10 +204,109 @@ const comparisonCards = [
   },
 ];
 
+const beginnerExamples = [
+  {
+    title: "Example 1: Basic Prototype Chain",
+    code: `const animal = {
+  eat() {
+    console.log("Eating...");
+  }
+};
+
+const dog = {
+  bark() {
+    console.log("Woof!");
+  }
+};
+
+Object.setPrototypeOf(dog, animal);
+
+dog.bark();
+dog.eat();`,
+    output: ["Woof!", "Eating..."],
+    explanation:
+      "dog owns bark(), but it does not own eat(). JavaScript follows dog's prototype link to animal and finds eat() there.",
+  },
+  {
+    title: "Example 2: Property Lookup",
+    code: `const person = {
+  country: "Pakistan"
+};
+
+const employee = {
+  name: "Zubair"
+};
+
+Object.setPrototypeOf(employee, person);
+
+console.log(employee.name);
+console.log(employee.country);`,
+    output: ["Zubair", "Pakistan"],
+    explanation:
+      "name is found directly on employee. country is not found on employee, so JavaScript checks person and returns Pakistan.",
+  },
+  {
+    title: "Example 3: Multiple Prototype Levels",
+    code: `const grandParent = {
+  city: "Lahore"
+};
+
+const parent = {
+  car: "Honda"
+};
+
+const child = {
+  laptop: "MacBook"
+};
+
+Object.setPrototypeOf(parent, grandParent);
+Object.setPrototypeOf(child, parent);
+
+console.log(child.city);`,
+    output: ["Lahore"],
+    explanation:
+      "city is not on child or parent. JavaScript keeps walking upward and finds city on grandParent.",
+  },
+];
+
 const builtInChains = [
-  ["Array", "Array.prototype", "Object.prototype", "null"],
-  ["Function", "Function.prototype", "Object.prototype", "null"],
-  ["Date", "Date.prototype", "Object.prototype", "null"],
+  {
+    title: "Array",
+    code: `const numbers = [10, 20, 30];
+
+numbers.push(40);`,
+    question: "Where does push() come from?",
+    answer:
+      "It comes from Array.prototype. The array instance does not store a separate copy of push().",
+    chain: ["numbers", "Array.prototype", "Object.prototype", "null"],
+  },
+  {
+    title: "String",
+    code: `const name = "Zubair";
+
+console.log(name.toUpperCase());`,
+    question: "Where does toUpperCase() come from?",
+    answer:
+      "JavaScript temporarily wraps the primitive string and looks up toUpperCase() on String.prototype.",
+    chain: ["name", "String.prototype", "Object.prototype", "null"],
+  },
+  {
+    title: "Function",
+    code: `function greet() {}
+
+greet.call(null);`,
+    question: "Where does call() come from?",
+    answer:
+      "Functions are objects too. call() is found through Function.prototype.",
+    chain: ["greet", "Function.prototype", "Object.prototype", "null"],
+  },
+];
+
+const visualSearchSteps: Array<{ label: string; success: boolean }> = [
+  { label: "Does child have city?", success: false },
+  { label: "Check prototype", success: false },
+  { label: "Check next prototype", success: true },
+  { label: "Return value", success: true },
 ];
 
 const playgroundExamples: PlaygroundExample[] = [
@@ -703,6 +800,35 @@ function CodePanel({ code, activeLine }: { code: string; activeLine?: number }) 
   );
 }
 
+function DiagramPanel({ title, diagram }: { title: string; diagram: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function copyDiagram() {
+    await navigator.clipboard.writeText(diagram);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1400);
+  }
+
+  return (
+    <div className="rounded-lg border border-border bg-slate-950 p-4 text-slate-100 shadow-sm dark:bg-slate-900">
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <p className="font-code text-xs uppercase tracking-widest text-slate-400">{title}</p>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={copyDiagram}
+          className="h-8 w-8 text-slate-300 hover:bg-white/10 hover:text-white"
+          aria-label={`Copy ${title} diagram`}
+        >
+          {copied ? <Check className="h-4 w-4 text-success" /> : <Clipboard className="h-4 w-4" />}
+        </Button>
+      </div>
+      <pre className="overflow-x-auto whitespace-pre-wrap font-code text-sm leading-7">{diagram}</pre>
+    </div>
+  );
+}
+
 function ConceptOverview() {
   return (
     <section className="container mx-auto px-4 py-10">
@@ -712,12 +838,16 @@ function ConceptOverview() {
             <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-primary/10">
               <Link2 className="h-6 w-6 text-primary" />
             </div>
-            <h2 className="text-3xl font-headline font-bold">What is Prototype?</h2>
+            <h2 className="text-3xl font-headline font-bold">What is the Prototype Chain?</h2>
             <p className="mt-4 text-base leading-8 text-muted-foreground">
-              Imagine every JavaScript object has a hidden link to another
-              object. When JavaScript cannot find a property inside the current
-              object, it follows this hidden link to search somewhere else. That
-              hidden link is called the Prototype.
+              The Prototype Chain is JavaScript&apos;s inheritance mechanism. It
+              lets an object inherit properties and methods from another object
+              through a hidden prototype link.
+            </p>
+            <p className="mt-4 text-base leading-8 text-muted-foreground">
+              Unlike Java or C#, JavaScript uses prototype-based inheritance.
+              The modern <span className="font-code text-foreground">class</span>{" "}
+              syntax is still built on top of prototypes.
             </p>
           </CardContent>
         </Card>
@@ -738,6 +868,171 @@ function ConceptOverview() {
           ))}
         </div>
       </div>
+    </section>
+  );
+}
+
+function BeginnerPrototypeGuide() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Beginner Mental Model"
+        icon={Layers3}
+        title="Think of Prototypes Like a Family Tree"
+        description="When JavaScript cannot find something on the current object, it asks the parent prototype, then the next one, until it reaches null."
+      />
+
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <DiagramPanel
+              title="Family Tree Analogy"
+              diagram={`Grandfather
+     ^
+Father
+     ^
+Son
+
+Grandfather owns a house.
+Father owns a car.
+Son owns a laptop.
+
+If the son needs something:
+1. Does the son have it?
+2. If not, check the father.
+3. If not, check the grandfather.
+4. If nobody has it, return undefined.`}
+            />
+          </CardContent>
+        </Card>
+
+        <div className="grid gap-4">
+          {[
+            ["Son", "Current object", "JavaScript checks here first."],
+            ["Father", "Prototype", "Checked only if the property is missing."],
+            ["Grandfather", "Next prototype", "JavaScript keeps walking upward."],
+            ["undefined", "Not found", "Returned when the chain ends without a match."],
+          ].map(([label, role, text], index) => (
+            <motion.div
+              key={label}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.05 }}
+              className="rounded-lg border border-border bg-card p-5 shadow-sm"
+            >
+              <div className="flex items-start gap-4">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 font-code text-sm font-bold text-primary">
+                  {index + 1}
+                </span>
+                <div>
+                  <h3 className="font-semibold">{label}</h3>
+                  <p className="mt-1 text-sm text-primary">{role}</p>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{text}</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-8 grid gap-6 lg:grid-cols-3">
+        {beginnerExamples.map((example) => (
+          <Card key={example.title} className="border-border/60 bg-card/45 backdrop-blur-xl">
+            <CardHeader>
+              <CardTitle className="text-xl">{example.title}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-5">
+              <CodePanel code={example.code} />
+              <div className="rounded-lg border border-success/25 bg-success/10 p-4">
+                <p className="mb-2 text-xs uppercase tracking-widest text-success">Output</p>
+                {example.output.map((line) => (
+                  <p key={line} className="font-code text-sm text-foreground">{line}</p>
+                ))}
+              </div>
+              <p className="text-sm leading-7 text-muted-foreground">{example.explanation}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function VisualRepresentationAndSearch() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Visual Representation"
+        icon={GitBranch}
+        title="The Lookup Path from Object to null"
+        description="This is the shape to remember for interviews and debugging."
+      />
+
+      <div className="grid gap-6 xl:grid-cols-[0.85fr_1.15fr]">
+        <DiagramPanel
+          title="Prototype Chain"
+          diagram={`child Object
+      |
+      v
+Parent Prototype
+      |
+      v
+Grandparent Prototype
+      |
+      v
+Object.prototype
+      |
+      v
+null`}
+        />
+
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <h3 className="text-2xl font-headline font-bold">How JavaScript Searches</h3>
+            <p className="mt-4 text-base leading-8 text-muted-foreground">Suppose we access:</p>
+            <CodePanel code="child.city;" />
+            <div className="mt-5 space-y-3">
+              {visualSearchSteps.map((item, index) => (
+                <div key={item.label} className="flex items-center gap-3 rounded-lg border border-border bg-background/70 p-4">
+                  <span className="font-code text-sm text-muted-foreground">{index + 1}.</span>
+                  <span className="flex-1 text-sm font-medium">{item.label}</span>
+                  {item.success ? (
+                    <CheckCircle2 className="h-5 w-5 text-success" />
+                  ) : (
+                    <X className="h-5 w-5 text-destructive" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card className="mt-6 border-primary/20 bg-primary/5 backdrop-blur-xl">
+        <CardContent className="p-6">
+          <h3 className="text-2xl font-headline font-bold">Company Hierarchy Example</h3>
+          <p className="mt-3 text-base leading-8 text-muted-foreground">
+            Imagine a developer object linked to a manager object, and the manager
+            linked to a CEO object. If you ask for{" "}
+            <span className="font-code text-foreground">developer.company</span>,
+            JavaScript checks Developer, then Manager, then CEO, and returns the
+            company when it finds it.
+          </p>
+          <div className="mt-5 grid gap-3 md:grid-cols-3">
+            {[
+              ["CEO", "company: Systems Limited"],
+              ["Manager", "department: Commerce"],
+              ["Developer", "name: Zubair"],
+            ].map(([title, value]) => (
+              <div key={title} className="rounded-lg border border-border bg-card p-4">
+                <p className="font-semibold">{title}</p>
+                <p className="mt-2 font-code text-xs text-muted-foreground">{value}</p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </section>
   );
 }
@@ -1066,31 +1361,101 @@ function BuiltInChainsAndMethodLookup() {
       <SectionHeader
         badge="Built-in Prototype Chain"
         icon={Database}
-        title="Arrays, Functions, and Dates Use Prototypes Too"
-        description="Built-in objects use the same lookup idea as your own objects."
+        title="Arrays, Strings, and Functions Use Prototypes Too"
+        description="Built-in methods like push(), toUpperCase(), and call() are found through the same prototype lookup process."
       />
-      <div className="grid gap-5 lg:grid-cols-3">
-        {builtInChains.map((chain) => (
-          <Card key={chain[0]} className="border-border/60 bg-card/45 backdrop-blur-xl">
-            <CardContent className="p-5">
-              {chain.map((item, index) => (
-                <div key={item} className="flex items-center gap-3">
-                  <div className="my-2 flex-1 rounded-lg border border-white/10 bg-background/60 px-3 py-2 font-code text-xs">{item}</div>
-                  {index < chain.length - 1 ? <ArrowRight className="h-4 w-4 text-primary" /> : null}
-                </div>
-              ))}
+      <div className="grid gap-6 lg:grid-cols-3">
+        {builtInChains.map((item) => (
+          <Card key={item.title} className="border-border/60 bg-card/45 backdrop-blur-xl">
+            <CardHeader>
+              <CardTitle className="text-xl">{item.title}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-5">
+              <CodePanel code={item.code} />
+              <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
+                <p className="font-semibold">{item.question}</p>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.answer}</p>
+              </div>
+              <DiagramPanel title={`${item.title} chain`} diagram={item.chain.join("\n\n|\nv\n\n")} />
             </CardContent>
           </Card>
         ))}
       </div>
       <Card className="mt-6 border-primary/20 bg-primary/5 backdrop-blur-xl">
         <CardContent className="p-6">
-          <CodePanel code={`const arr = [1, 2, 3];\n\narr.map((item) => item * 2);`} activeLine={3} />
-          <p className="mt-4 text-sm leading-7 text-muted-foreground">
-            JavaScript searches arr, does not find map as an own property, follows Array.prototype, finds map, and executes it.
+          <h3 className="text-2xl font-headline font-bold">Every Object Eventually Ends Here</h3>
+          <DiagramPanel
+            title="Universal ending"
+            diagram={`Object
+
+|
+v
+
+Object.prototype
+
+|
+v
+
+null`}
+          />
+          <p className="mt-5 text-sm leading-7 text-muted-foreground">
+            If JavaScript reaches null, it stops searching. At that point, a missing
+            property returns undefined.
           </p>
         </CardContent>
       </Card>
+    </section>
+  );
+}
+
+function WhyItMattersAndInterviewAnswer() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Interview Ready"
+        icon={BookOpenCheck}
+        title="Why the Prototype Chain Matters"
+        description="This concept explains inheritance, shared methods, and many built-in JavaScript APIs."
+      />
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <h3 className="text-2xl font-headline font-bold">It Enables</h3>
+            <div className="mt-5 grid gap-3">
+              {[
+                "Code reuse",
+                "Inheritance through object links",
+                "Shared methods instead of duplicate methods on every object",
+                "Efficient memory usage",
+                "Built-in methods like map(), filter(), push(), toUpperCase(), and call()",
+              ].map((item) => (
+                <div key={item} className="flex gap-3 rounded-lg border border-border bg-background/70 p-4">
+                  <CheckCircle2 className="h-5 w-5 shrink-0 text-success" />
+                  <p className="text-sm leading-6 text-muted-foreground">{item}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-primary/20 bg-primary/5 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <Badge variant="outline" className="mb-4 border-primary/20 bg-background/60 text-primary">
+              30-second answer
+            </Badge>
+            <p className="text-base leading-8 text-muted-foreground">
+              The Prototype Chain is JavaScript&apos;s inheritance mechanism.
+              Every object has an internal reference to another object called
+              its prototype. When a property or method is accessed, JavaScript
+              first looks for it on the object itself. If it is not found,
+              JavaScript follows the prototype chain, checking each prototype
+              until it either finds the property or reaches null. This allows
+              objects to inherit shared properties and methods efficiently
+              without duplicating them.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
     </section>
   );
 }
@@ -1396,6 +1761,8 @@ export function PrototypeChainLesson() {
       </section>
 
       <ConceptOverview />
+      <BeginnerPrototypeGuide />
+      <VisualRepresentationAndSearch />
       <PropertyLookupAnimation />
       <PrototypeVisualizer />
       <ChainExplorer />
@@ -1403,6 +1770,7 @@ export function PrototypeChainLesson() {
       <PrototypeComparison />
       <MemoryAndInheritance />
       <BuiltInChainsAndMethodLookup />
+      <WhyItMattersAndInterviewAnswer />
       <CodePlayground />
       <RealWorldAndEngine />
       <CommonMistakes />

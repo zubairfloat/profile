@@ -125,6 +125,139 @@ request.then((message) => {
   },
 ];
 
+const promiseAnalogySteps = [
+  ["Order placed", "Promise is pending while the kitchen prepares the food."],
+  ["Food delivered", "Promise is fulfilled with the meal."],
+  ["Order cancelled", "Promise is rejected with a reason."],
+];
+
+const promiseFlowDiagram = `Promise Created
+      |
+      v
+Pending
+      |
+      +-------------------+
+      |                   |
+      v                   v
+Fulfilled             Rejected
+      |                   |
+      v                   v
+.then(value)         .catch(error)
+      |
+      v
+.finally(cleanup)`;
+
+const promiseChainDiagram = `fetchUser()
+    |
+    v
+.then(fetchOrders)
+    |
+    v
+.then(fetchRecommendations)
+    |
+    v
+.then(renderPage)
+    |
+    v
+.catch(handleError)`;
+
+const promiseInterviewAnswer =
+  "A Promise is a JavaScript object that represents the eventual result of an asynchronous operation. It starts in the Pending state and eventually becomes either Fulfilled by calling resolve() or Rejected by calling reject(). We consume Promises using .then(), .catch(), and .finally(), or with async/await. Promise callbacks are executed through the Microtask Queue, which the Event Loop processes before Macrotasks like setTimeout().";
+
+const bankTransferDiagram = `Transfer Started
+      |
+      v
+Processing...
+      |
+      +---------------------+
+      |                     |
+      v                     v
+Money Sent           Insufficient Balance`;
+
+const apiCallDiagram = `Request Sent
+      |
+      v
+Waiting...
+      |
+      v
+Server Responds
+      |
+      v
+Products Received
+      |
+      v
+Display Products`;
+
+const lifecycleDiagram = `Create Promise
+      |
+      v
+Pending
+      |
+      v
+Success?
+  |       |
+ Yes      No
+  |       |
+  v       v
+resolve() reject()
+  |       |
+  v       v
+.then()  .catch()`;
+
+const checkoutPromiseCode = `console.log("Validate Card");
+
+createPayment()
+  .then(() => {
+    console.log("Payment Approved");
+  })
+  .catch(() => {
+    console.log("Payment Failed");
+  })
+  .finally(() => {
+    console.log("Hide Spinner");
+  });
+
+console.log("Show Spinner");`;
+
+const eventLoopPromiseCode = `console.log("1");
+
+Promise.resolve().then(() => {
+  console.log("2");
+});
+
+console.log("3");`;
+
+const callbackHellCode = `getUser(function(user) {
+  getOrders(user, function(order) {
+    getPayment(order, function(payment) {
+      console.log(payment);
+    });
+  });
+});`;
+
+const cleanerPromiseCode = `getUser()
+  .then(getOrders)
+  .then(getPayment)
+  .then(console.log)
+  .catch(console.error);`;
+
+const promiseVsAsyncCode = `// Using Promises
+fetch("/api/products")
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.log(error));
+
+// Using async/await
+async function getProducts() {
+  try {
+    const response = await fetch("/api/products");
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+}`;
+
 const interviewQuestions = [
   {
     question: "What is a Promise?",
@@ -184,6 +317,35 @@ function CodePanel({ code }: { code: string }) {
   );
 }
 
+function DiagramPanel({ title, diagram }: { title: string; diagram: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function copyDiagram() {
+    await navigator.clipboard.writeText(diagram);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1400);
+  }
+
+  return (
+    <div className="rounded-lg border border-border bg-slate-950 p-4 text-slate-100 shadow-sm dark:bg-slate-900">
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <p className="font-code text-xs uppercase tracking-widest text-slate-400">{title}</p>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={copyDiagram}
+          className="h-8 w-8 text-slate-300 hover:bg-white/10 hover:text-white"
+          aria-label={`Copy ${title} diagram`}
+        >
+          {copied ? <Check className="h-4 w-4 text-success" /> : <Clipboard className="h-4 w-4" />}
+        </Button>
+      </div>
+      <pre className="overflow-x-auto whitespace-pre-wrap font-code text-sm leading-7">{diagram}</pre>
+    </div>
+  );
+}
+
 function StateBadge({ state }: { state: PromiseState }) {
   return (
     <Badge
@@ -227,6 +389,420 @@ function ConceptOverview() {
           );
         })}
       </div>
+    </section>
+  );
+}
+
+function BeginnerPromiseGuide() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Beginner Mental Model"
+        icon={Timer}
+        title="A Promise Means: I Will Give You a Result Later"
+        description="Promises help JavaScript represent work that has started but has not finished yet, like API calls, file uploads, timers, or payments."
+      />
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <h3 className="text-2xl font-headline font-bold">Food Delivery Analogy</h3>
+            <p className="mt-3 text-base leading-8 text-muted-foreground">
+              When you order food, you do not get the result immediately. The order
+              is pending. Later it either succeeds, or it fails. A Promise works
+              the same way for asynchronous JavaScript work.
+            </p>
+            <div className="mt-5 grid gap-3">
+              {promiseAnalogySteps.map(([title, text], index) => (
+                <div key={title} className="flex gap-3 rounded-lg border border-border bg-background/70 p-4">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-code text-sm font-bold text-primary">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <p className="font-semibold">{title}</p>
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="space-y-5 p-6">
+            <DiagramPanel title="Promise state flow" diagram={promiseFlowDiagram} />
+            <CodePanel
+              code={`const request = fetch("/api/products");
+
+request
+  .then((response) => response.json())
+  .then((products) => renderProducts(products))
+  .catch((error) => showError(error))
+  .finally(() => hideLoader());`}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+}
+
+function PromiseChainMentalModel() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Chain Mental Model"
+        icon={Workflow}
+        title="Promise Chains Pass Results Forward"
+        description="Each then() can return a value or another Promise. The next step waits for that result before running."
+      />
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <DiagramPanel title="Promise chain" diagram={promiseChainDiagram} />
+        <Card className="border-primary/20 bg-primary/5 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <h3 className="text-2xl font-headline font-bold">What to Remember</h3>
+            <div className="mt-5 grid gap-3">
+              {[
+                "then() handles a fulfilled Promise.",
+                "catch() handles a rejected Promise.",
+                "finally() runs after success or failure.",
+                "Returning a Promise makes the next then() wait.",
+                "A settled Promise cannot change state again.",
+              ].map((item) => (
+                <div key={item} className="flex gap-3 rounded-lg border border-border bg-card p-4">
+                  <Check className="h-5 w-5 shrink-0 text-success" />
+                  <p className="text-sm leading-6 text-muted-foreground">{item}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+}
+
+function CreatingPromisesExamples() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Creating Promises"
+        icon={Code2}
+        title="resolve() Means Success, reject() Means Failure"
+        description="A Promise constructor receives resolve and reject functions. Call resolve for success and reject for failure."
+      />
+      <div className="grid gap-6 lg:grid-cols-2">
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardHeader>
+            <CardTitle>Successful Promise</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-5">
+            <CodePanel
+              code={`const promise = new Promise((resolve, reject) => {
+  resolve("Payment Successful");
+});
+
+promise.then((result) => {
+  console.log(result);
+});`}
+            />
+            <div className="rounded-lg border border-success/25 bg-success/10 p-4">
+              <p className="text-xs uppercase tracking-widest text-success">Output</p>
+              <p className="mt-2 font-code text-sm">Payment Successful</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardHeader>
+            <CardTitle>Failed Promise</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-5">
+            <CodePanel
+              code={`const promise = new Promise((resolve, reject) => {
+  reject("Payment Failed");
+});
+
+promise.catch((error) => {
+  console.log(error);
+});`}
+            />
+            <div className="rounded-lg border border-destructive/25 bg-destructive/10 p-4">
+              <p className="text-xs uppercase tracking-widest text-destructive">Output</p>
+              <p className="mt-2 font-code text-sm">Payment Failed</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+}
+
+function RealWorldPromiseFlows() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Real-World Flows"
+        icon={Database}
+        title="Bank Transfers and API Calls Work Like Promises"
+        description="You start the operation now, then handle success or failure later without freezing the UI."
+      />
+      <div className="grid gap-6 lg:grid-cols-2">
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardHeader>
+            <CardTitle>Bank Transfer</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <DiagramPanel title="Bank transfer flow" diagram={bankTransferDiagram} />
+          </CardContent>
+        </Card>
+
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardHeader>
+            <CardTitle>API Call</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-5">
+            <DiagramPanel title="API call flow" diagram={apiCallDiagram} />
+            <CodePanel
+              code={`fetch("/api/products")
+  .then((response) => response.json())
+  .then((products) => {
+    console.log(products);
+  })
+  .catch((error) => {
+    console.log(error);
+  });`}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+}
+
+function PromiseLifecycleMethods() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Promise Methods"
+        icon={Workflow}
+        title=".then(), .catch(), and .finally()"
+        description="These methods are the main way to consume a Promise before using async/await."
+      />
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <DiagramPanel title="Promise lifecycle" diagram={lifecycleDiagram} />
+        <div className="grid gap-4">
+          {[
+            [".then()", "Runs when the Promise is fulfilled.", `Promise.resolve("Hello").then((result) => console.log(result));`],
+            [".catch()", "Runs when the Promise is rejected.", `Promise.reject("Error").catch((error) => console.log(error));`],
+            [".finally()", "Runs whether the Promise succeeds or fails, usually for cleanup.", `fetch("/api/products").finally(() => console.log("Hide Loader"));`],
+          ].map(([title, text, code]) => (
+            <Card key={title} className="border-border/60 bg-card/45 backdrop-blur-xl">
+              <CardContent className="space-y-4 p-5">
+                <div>
+                  <h3 className="text-xl font-headline font-bold">{title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{text}</p>
+                </div>
+                <CodePanel code={code} />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CallbackHellComparison() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Promises vs Callbacks"
+        icon={Workflow}
+        title="Promises Help Avoid Callback Hell"
+        description="Nested callbacks become difficult to read and maintain. Promise chains make the async flow flatter and easier to handle."
+      />
+      <div className="grid gap-6 lg:grid-cols-2">
+        <Card className="border-destructive/25 bg-destructive/10 backdrop-blur-xl">
+          <CardHeader>
+            <CardTitle>Callback Hell</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CodePanel code={callbackHellCode} />
+          </CardContent>
+        </Card>
+        <Card className="border-success/25 bg-success/10 backdrop-blur-xl">
+          <CardHeader>
+            <CardTitle>Cleaner Promise Chain</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CodePanel code={cleanerPromiseCode} />
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+}
+
+function PromiseEventLoopSection() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Event Loop"
+        icon={Timer}
+        title="Promise Callbacks Run in the Microtask Queue"
+        description="Synchronous code runs first. Promise callbacks run after the call stack is empty and before macrotasks like setTimeout."
+      />
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="space-y-5 p-6">
+            <CodePanel code={eventLoopPromiseCode} />
+            <div className="rounded-lg border border-primary/25 bg-primary/10 p-4">
+              <p className="text-xs uppercase tracking-widest text-primary">Output</p>
+              <p className="mt-2 font-code text-sm">1</p>
+              <p className="font-code text-sm">3</p>
+              <p className="font-code text-sm">2</p>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <h3 className="text-2xl font-headline font-bold">Why?</h3>
+            <div className="mt-5 grid gap-3">
+              {[
+                "console.log(\"1\") runs immediately.",
+                "Promise .then() is placed in the Microtask Queue.",
+                "console.log(\"3\") runs immediately.",
+                "The Event Loop runs microtasks, so console.log(\"2\") runs last.",
+              ].map((item, index) => (
+                <div key={item} className="flex gap-3 rounded-lg border border-border bg-background/70 p-4">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-code text-sm font-bold text-primary">
+                    {index + 1}
+                  </span>
+                  <p className="text-sm leading-6 text-muted-foreground">{item}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+}
+
+function CheckoutPaymentFlow() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Checkout Flow"
+        icon={ShoppingCart}
+        title="Real-World Example: Payment Promise"
+        description="A payment Promise keeps checkout responsive while the authorization request is processed."
+      />
+      <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <CodePanel code={checkoutPromiseCode} />
+          </CardContent>
+        </Card>
+        <Card className="border-primary/20 bg-primary/5 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <h3 className="text-2xl font-headline font-bold">Possible Outputs</h3>
+            <div className="mt-5 grid gap-4">
+              <div className="rounded-lg border border-success/25 bg-success/10 p-4">
+                <p className="mb-2 text-xs uppercase tracking-widest text-success">Success</p>
+                <p className="font-code text-sm">Validate Card</p>
+                <p className="font-code text-sm">Show Spinner</p>
+                <p className="font-code text-sm">Payment Approved</p>
+                <p className="font-code text-sm">Hide Spinner</p>
+              </div>
+              <div className="rounded-lg border border-destructive/25 bg-destructive/10 p-4">
+                <p className="mb-2 text-xs uppercase tracking-widest text-destructive">Failure</p>
+                <p className="font-code text-sm">Validate Card</p>
+                <p className="font-code text-sm">Show Spinner</p>
+                <p className="font-code text-sm">Payment Failed</p>
+                <p className="font-code text-sm">Hide Spinner</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+}
+
+function PromiseVsAsyncAwaitSection() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Promise vs async/await"
+        icon={Code2}
+        title="Same Behavior, Different Syntax"
+        description="async/await is built on top of Promises and often makes asynchronous code easier to read."
+      />
+      <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+        <CardContent className="p-6">
+          <CodePanel code={promiseVsAsyncCode} />
+        </CardContent>
+      </Card>
+    </section>
+  );
+}
+
+function WhyPromisesMatter() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Why Promises?"
+        icon={Zap}
+        title="Why Do We Need Promises?"
+        description="Promises make asynchronous JavaScript easier to read, chain, and recover from."
+      />
+      <div className="grid gap-6 lg:grid-cols-2">
+        <Card className="border-destructive/25 bg-destructive/10 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <h3 className="text-2xl font-headline font-bold">Without Promises</h3>
+            <div className="mt-5 grid gap-3">
+              {["Deeply nested callbacks", "Harder error handling", "Less readable code"].map((item) => (
+                <div key={item} className="flex gap-3 rounded-lg border border-border bg-card p-4">
+                  <AlertCircle className="h-5 w-5 shrink-0 text-destructive" />
+                  <p className="text-sm leading-6 text-muted-foreground">{item}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="border-success/25 bg-success/10 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <h3 className="text-2xl font-headline font-bold">With Promises</h3>
+            <div className="mt-5 grid gap-3">
+              {["Cleaner asynchronous code", "Better error handling with .catch()", "Easy chaining with .then()", "Works seamlessly with async/await"].map((item) => (
+                <div key={item} className="flex gap-3 rounded-lg border border-border bg-card p-4">
+                  <Check className="h-5 w-5 shrink-0 text-success" />
+                  <p className="text-sm leading-6 text-muted-foreground">{item}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+}
+
+function PromiseInterviewSummary() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Interview Ready"
+        icon={Trophy}
+        title="Promises in 30 Seconds"
+        description="Use this answer when someone asks what a Promise is."
+      />
+      <Card className="border-primary/20 bg-primary/5 backdrop-blur-xl">
+        <CardContent className="p-6">
+          <p className="text-base leading-8 text-muted-foreground">{promiseInterviewAnswer}</p>
+        </CardContent>
+      </Card>
     </section>
   );
 }
@@ -651,6 +1227,14 @@ export function PromisesLesson() {
       </section>
 
       <ConceptOverview />
+      <BeginnerPromiseGuide />
+      <CreatingPromisesExamples />
+      <RealWorldPromiseFlows />
+      <PromiseLifecycleMethods />
+      <PromiseChainMentalModel />
+      <CallbackHellComparison />
+      <PromiseEventLoopSection />
+      <CheckoutPaymentFlow />
 
       <section className="container mx-auto px-4 py-10">
         <Tabs defaultValue="lifecycle" className="space-y-8">
@@ -695,6 +1279,9 @@ export function PromisesLesson() {
 
       <RealWorldExamples />
       <EcommerceExamples />
+      <PromiseVsAsyncAwaitSection />
+      <WhyPromisesMatter />
+      <PromiseInterviewSummary />
       <InterviewQuestions />
     </div>
   );
