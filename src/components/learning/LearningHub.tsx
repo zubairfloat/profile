@@ -126,7 +126,7 @@ export function LearningHub() {
         </motion.div>
 
         <Tabs defaultValue="javascript" className="space-y-8">
-          <TabsList className="grid h-auto grid-cols-2 gap-1 rounded-lg border border-border bg-card p-1 shadow-sm md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-12">
+          <TabsList className="grid h-auto grid-cols-2 gap-1 rounded-lg border border-border bg-card p-1 shadow-sm md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
             {learningCategories.map((category) => {
               const Icon = category.icon;
               return (

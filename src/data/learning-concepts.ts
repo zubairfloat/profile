@@ -3,6 +3,7 @@ import {
   Bot,
   Boxes,
   BrainCircuit,
+  BriefcaseBusiness,
   Cloud,
   Code2,
   Cpu,
@@ -24,6 +25,7 @@ export type LearningCategoryId =
   | "aws"
   | "ai-engineering"
   | "agentic-ai"
+  | "interview-prep"
   | "d365-commerce";
 
 export type LearningConcept = {
@@ -116,9 +118,32 @@ export const learningCategories: LearningCategory[] = [
     description: "Commerce modules, CRT integrations, payments, checkout, and retail operations.",
     icon: Cpu,
   },
+  {
+    id: "interview-prep",
+    title: "Interview Prep",
+    description: "Architecture, React, frontend system design, enterprise examples, and live coding practice.",
+    icon: BriefcaseBusiness,
+  },
 ];
 
 export const learningConcepts: LearningConcept[] = [
+  {
+    id: "interview-micro-frontend-module-federation",
+    slug: "micro-frontend-module-federation",
+    title: "Micro Frontend Architecture Using Module Federation",
+    description:
+      "Prepare a strong interview answer for micro frontends, host/remote architecture, Module Federation, dependency sharing, communication contracts, and fallbacks.",
+    category: "interview-prep",
+    difficulty: "Advanced",
+    readTime: "28 minutes",
+    tags: ["Interview", "Architecture", "Module Federation", "React"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Learn how to explain micro frontend architecture with real e-commerce examples, Webpack Module Federation configs, dependency strategy, communication patterns, and live coding practice.",
+    },
+  },
   {
     id: "js-debounce-throttle",
     slug: "debouncing-vs-throttling",
