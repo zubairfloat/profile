@@ -1,12 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, CalendarDays } from "lucide-react";
+import { ArrowLeft, CalendarDays, ChevronDown, Globe2, Network } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { AwsGlobalInfrastructureLesson } from "@/components/learning/AwsGlobalInfrastructureLesson";
+import { Module5Networking } from "@/components/learning/Module5Networking/Module5Networking";
 
 export function AwsCloudPractitionerLesson() {
+  const [activeModule, setActiveModule] = useState<string | null>(null);
+
   return (
     <section className="relative overflow-hidden py-28">
       <div className="absolute inset-0 hero-gradient -z-10" />
@@ -52,8 +57,97 @@ export function AwsCloudPractitionerLesson() {
                   Module 1
                 </Badge>
               </motion.div>
+
+              <motion.button
+                type="button"
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -4 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: 0.05 }}
+                onClick={() => setActiveModule((current) => (current === "module-4" ? null : "module-4"))}
+                className={`group min-h-[340px] rounded-lg border bg-card/45 p-6 text-left backdrop-blur-xl transition-colors ${
+                  activeModule === "module-4"
+                    ? "border-primary/45 bg-primary/10"
+                    : "border-white/10 hover:border-primary/35 hover:bg-primary/5"
+                }`}
+                aria-expanded={activeModule === "module-4"}
+              >
+                <div className="mb-5 flex items-center justify-between gap-3">
+                  <Badge variant="outline" className="border-primary/20 bg-primary/5 text-primary">
+                    Module 4
+                  </Badge>
+                  <ChevronDown
+                    className={`h-5 w-5 text-muted-foreground transition-transform group-hover:text-primary ${
+                      activeModule === "module-4" ? "rotate-180 text-primary" : ""
+                    }`}
+                  />
+                </div>
+                <Globe2 className="mb-5 h-8 w-8 text-primary" />
+                <h3 className="font-headline text-2xl font-bold">
+                  AWS Global Infrastructure
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  Region selection, high availability, elasticity, edge locations,
+                  CloudFormation, and ways to interact with AWS.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <Badge variant="outline" className="border-white/10 bg-background/60 text-muted-foreground">
+                    Extended lesson
+                  </Badge>
+                  <Badge variant="outline" className="border-primary/20 bg-primary/5 text-primary">
+                    Practice quiz
+                  </Badge>
+                </div>
+              </motion.button>
+
+              <motion.button
+                type="button"
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -4 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: 0.1 }}
+                onClick={() => setActiveModule((current) => (current === "module-5" ? null : "module-5"))}
+                className={`group min-h-[340px] rounded-lg border bg-card/45 p-6 text-left backdrop-blur-xl transition-colors ${
+                  activeModule === "module-5"
+                    ? "border-primary/45 bg-primary/10"
+                    : "border-white/10 hover:border-primary/35 hover:bg-primary/5"
+                }`}
+                aria-expanded={activeModule === "module-5"}
+              >
+                <div className="mb-5 flex items-center justify-between gap-3">
+                  <Badge variant="outline" className="border-primary/20 bg-primary/5 text-primary">
+                    Module 5
+                  </Badge>
+                  <ChevronDown
+                    className={`h-5 w-5 text-muted-foreground transition-transform group-hover:text-primary ${
+                      activeModule === "module-5" ? "rotate-180 text-primary" : ""
+                    }`}
+                  />
+                </div>
+                <Network className="mb-5 h-8 w-8 text-primary" />
+                <h3 className="font-headline text-2xl font-bold">
+                  AWS Networking and Content Delivery
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  VPCs, subnets, gateways, firewalls, DNS, CloudFront, Global Accelerator,
+                  hybrid connectivity, and Cloud Practitioner practice.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <Badge variant="outline" className="border-white/10 bg-background/60 text-muted-foreground">
+                    60-90 minutes
+                  </Badge>
+                  <Badge variant="outline" className="border-primary/20 bg-primary/5 text-primary">
+                    Beginner
+                  </Badge>
+                </div>
+              </motion.button>
             </div>
           </div>
+
+          {activeModule === "module-4" ? <AwsGlobalInfrastructureLesson /> : null}
+          {activeModule === "module-5" ? <Module5Networking /> : null}
         </div>
       </div>
     </section>

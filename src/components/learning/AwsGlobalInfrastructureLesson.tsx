@@ -42,6 +42,24 @@ type RequestStepId = "browser" | "route53" | "cloudfront" | "alb" | "az" | "ec2"
 type BuilderComponent = "Users" | "Route53" | "CloudFront" | "ALB" | "EC2" | "Lambda" | "RDS" | "S3" | "CloudWatch";
 type DisasterRecoveryStrategy = [name: string, cost: string, description: string, nodes: string[]];
 type QuizQuestion = [question: string, options: string[], answer: number, explanation: string];
+type LearningCard = {
+  title: string;
+  explanation: string;
+  why: string;
+  examples: string[];
+  memory: string;
+  examTip: string;
+  scenario: string;
+  diagram: string[];
+  check: string;
+  answer: string;
+};
+type ExtendedQuestion = {
+  question: string;
+  options: Array<{ label: string; explanation: string }>;
+  answer: number;
+  topic: string;
+};
 
 const regions: Array<{
   id: RegionId;
@@ -106,6 +124,560 @@ const quizQuestions: QuizQuestion[] = [
   ["What is a Region?", ["A geographic AWS area", "A firewall rule", "A billing alert"], 0, "Regions are geographic areas that contain Availability Zones."],
   ["Why use Local Zones?", ["Lower city-level latency", "Store passwords", "Replace DNS"], 0, "Local Zones bring selected AWS services closer to a city."],
   ["What is Outposts?", ["AWS hardware in your location", "A CDN cache", "A JavaScript framework"], 0, "Outposts extends AWS infrastructure into an on-premises site."],
+];
+
+const regionSelectionCards: LearningCard[] = [
+  {
+    title: "Compliance",
+    explanation: "Compliance means following laws, regulations, contracts, and data residency requirements when choosing where data lives.",
+    why: "Some workloads must keep data in a specific country or legal area. The closest Region is not always the correct Region if the law says otherwise.",
+    examples: ["GDPR may require careful handling of European customer data.", "Hospitals may need patient data stored under healthcare rules.", "Government workloads may require approved Regions.", "A banking app serving German customers may choose Frankfurt."],
+    memory: "Compliance = Follow the law.",
+    examTip: "If the question mentions law, residency, government, healthcare, or GDPR, compliance is usually the first Region-selection factor.",
+    scenario: "A bank launches in Germany and must keep regulated customer records under local rules. Which factor matters most?",
+    diagram: ["Business requirement", "Compliance rule", "Allowed AWS Region", "Workload deployment"],
+    check: "A hospital must store patient data under strict local rules. Which Region-selection factor is most important?",
+    answer: "Compliance.",
+  },
+  {
+    title: "Proximity and Latency",
+    explanation: "Proximity means placing workloads close to users so requests travel a shorter distance and feel faster.",
+    why: "Distance affects latency. Gaming, streaming, checkout, and mobile APIs become frustrating when every request travels too far.",
+    examples: ["PUBG-style games need low latency for players.", "Netflix-style video apps benefit from nearby delivery paths.", "Mattress Firm-style retail users need fast browsing and checkout.", "A social media app in India may choose Mumbai for Indian users."],
+    memory: "Proximity = Stay close to users.",
+    examTip: "If the question says users experience delay or need low latency, choose the Region closest to users when compliance allows it.",
+    scenario: "A gaming startup has most players in India and Pakistan. It needs lower latency for gameplay APIs.",
+    diagram: ["Users", "Nearest AWS Region", "Application", "Fast response"],
+    check: "Which factor helps reduce user delay?",
+    answer: "Proximity or latency.",
+  },
+  {
+    title: "Feature Availability",
+    explanation: "Feature availability means confirming that the AWS service or feature you need exists in the Region you want to use.",
+    why: "AWS services do not always launch in every Region at the same time. New AI, analytics, and specialized services may start in selected Regions first.",
+    examples: ["A startup using a new AI service may need a Region where that service is available.", "A team may choose one Region for core services and another for a specific advanced service.", "A product launch can be delayed if the chosen Region lacks a required capability."],
+    memory: "Feature Availability = Does this Region support the AWS service?",
+    examTip: "If the scenario says a service is unavailable in a Region, feature availability becomes the deciding factor.",
+    scenario: "A company wants to use a newly released AI service, but it is only available in selected Regions.",
+    diagram: ["Required AWS service", "Regional availability check", "Supported Region", "Deployment"],
+    check: "Why should you check service availability before choosing a Region?",
+    answer: "Because not every AWS service or feature is available in every Region.",
+  },
+  {
+    title: "Pricing",
+    explanation: "Pricing means comparing service costs across Regions because the same resource can have different prices depending on location.",
+    why: "Startups and cost-sensitive teams may save money by choosing a Region that meets requirements at a lower cost.",
+    examples: ["A startup may compare EC2, RDS, and data transfer prices before launch.", "A global app may balance latency and cost.", "Non-regulated internal tools may use a lower-cost Region if performance is acceptable."],
+    memory: "Pricing = Compare costs.",
+    examTip: "If multiple Regions meet compliance, latency, and service needs, pricing can be the tie-breaker.",
+    scenario: "A startup can host in two compliant Regions with similar latency and service support, but one costs less.",
+    diagram: ["Architecture estimate", "Region price comparison", "Budget decision", "Launch"],
+    check: "When should pricing influence Region selection?",
+    answer: "After compliance, latency, and feature requirements are satisfied.",
+  },
+];
+
+const infrastructureArchitectureCards: LearningCard[] = [
+  {
+    title: "High Availability",
+    explanation: "High Availability means designing an application so it continues working when one component fails.",
+    why: "Production systems should survive server or Availability Zone problems without going fully offline.",
+    examples: ["A banking app runs across multiple Availability Zones.", "A food delivery app keeps ordering online during a server issue.", "Black Friday traffic is routed to healthy targets."],
+    memory: "High Availability = Keep running.",
+    examTip: "For high availability inside one Region, deploy across multiple Availability Zones.",
+    scenario: "An e-commerce site must stay online if one data center group has a problem.",
+    diagram: ["Users", "Load Balancer", "EC2 in AZ A", "EC2 in AZ B"],
+    check: "What AWS design commonly improves high availability in one Region?",
+    answer: "Multi-AZ deployment.",
+  },
+  {
+    title: "Agility",
+    explanation: "Agility is the ability to launch, change, and experiment quickly without waiting for physical hardware.",
+    why: "Teams can try ideas, create environments, and release products faster.",
+    examples: ["A startup creates a test environment in minutes.", "Amazon-style teams experiment with new services.", "Developers quickly create a demo stack."],
+    memory: "Agility = Move fast.",
+    examTip: "If the scenario emphasizes speed of innovation or experimentation, think agility.",
+    scenario: "A team wants to test a product idea this afternoon without buying servers.",
+    diagram: ["Idea", "AWS resources", "Test environment", "Feedback"],
+    check: "Which cloud benefit helps teams experiment quickly?",
+    answer: "Agility.",
+  },
+  {
+    title: "Elasticity",
+    explanation: "Elasticity means automatically adding or removing capacity as demand changes.",
+    why: "Applications can handle spikes without permanently paying for peak capacity.",
+    examples: ["Black Friday traffic scales out.", "A gaming launch adds servers during peak hours.", "A food delivery app scales during dinner time."],
+    memory: "Elasticity = Stretch and shrink.",
+    examTip: "If demand changes and capacity adjusts automatically, the answer is elasticity.",
+    scenario: "A retail app has ten times normal traffic for one weekend and then returns to normal.",
+    diagram: ["Normal traffic", "Scale out", "Traffic spike handled", "Scale in"],
+    check: "What cloud concept means capacity grows and shrinks with demand?",
+    answer: "Elasticity.",
+  },
+  {
+    title: "CloudFront and Caching",
+    explanation: "CloudFront is a content delivery network that uses Edge Locations to deliver content closer to users.",
+    why: "Caching reduces latency and can reduce load on the origin application.",
+    examples: ["Netflix-style thumbnails load from nearby edge caches.", "A gaming site serves downloads faster.", "A retail site caches images, CSS, and JavaScript."],
+    memory: "CloudFront = Nearby content shelf.",
+    examTip: "If the question says cache content near global users, choose CloudFront.",
+    scenario: "A media site has global users and wants images and videos to load faster.",
+    diagram: ["Internet Users", "Edge Location", "AWS Region", "Availability Zones"],
+    check: "Which AWS service uses Edge Locations for content delivery?",
+    answer: "Amazon CloudFront.",
+  },
+];
+
+const awsInteractionCards: LearningCard[] = [
+  {
+    title: "AWS Management Console",
+    explanation: "The AWS Management Console is the graphical web interface for creating and managing AWS resources.",
+    why: "It is beginner-friendly and useful for learning, visual checks, and one-off administrative tasks.",
+    examples: ["A developer creates an S3 bucket from the browser.", "An administrator checks EC2 instance health.", "A student explores AWS services visually."],
+    memory: "Console = Click.",
+    examTip: "If the scenario says graphical interface or browser-based management, choose Console.",
+    scenario: "A new developer wants to manually inspect services and learn the AWS interface.",
+    diagram: ["Developer", "Browser", "AWS Console", "AWS resources"],
+    check: "Which AWS tool is browser-based and graphical?",
+    answer: "AWS Management Console.",
+  },
+  {
+    title: "AWS CLI",
+    explanation: "The AWS CLI is a command-line tool for managing AWS resources by typing commands.",
+    why: "It is useful for scripting, repeatable operations, administration, and automation.",
+    examples: ["An administrator starts and stops EC2 instances with scripts.", "A team uploads files to S3 from a terminal.", "Operations teams automate routine changes."],
+    memory: "CLI = Type.",
+    examTip: "If the scenario says shell script, terminal, or command automation, choose AWS CLI.",
+    scenario: "An administrator wants a repeatable script that lists S3 buckets every morning.",
+    diagram: ["Admin", "Terminal command", "AWS CLI", "AWS API"],
+    check: "Which tool is best for command-line scripting?",
+    answer: "AWS CLI.",
+  },
+  {
+    title: "AWS SDK",
+    explanation: "The AWS SDK lets application code interact with AWS services using programming languages.",
+    why: "Applications need to call AWS services programmatically, such as uploading files or sending messages.",
+    examples: ["A Node.js app uploads profile images to S3.", "A backend writes records to DynamoDB.", "A Python app calls AWS AI services."],
+    memory: "SDK = Code.",
+    examTip: "If application code needs to call AWS, choose SDK.",
+    scenario: "A Node.js application needs to upload user files directly to Amazon S3 from backend code.",
+    diagram: ["Application code", "AWS SDK", "AWS API", "S3"],
+    check: "Which tool should application code use to call AWS services?",
+    answer: "AWS SDK.",
+  },
+  {
+    title: "AWS CloudFormation",
+    explanation: "AWS CloudFormation is Infrastructure as Code. It creates AWS resources from YAML or JSON templates.",
+    why: "Templates make deployments repeatable, version-controlled, automated, and easier to roll back.",
+    examples: ["A startup creates identical dev, staging, and production stacks.", "A DevOps team deploys VPC, EC2, RDS, and Load Balancer together.", "A disaster recovery plan recreates infrastructure in another Region."],
+    memory: "CloudFormation = Blueprint.",
+    examTip: "If the scenario says template, YAML, JSON, repeatable deployment, rollback, or Infrastructure as Code, choose CloudFormation.",
+    scenario: "A DevOps team wants one version-controlled template to recreate the same application stack many times.",
+    diagram: ["Developer", "YAML Template", "CloudFormation", "VPC", "EC2", "RDS", "Load Balancer"],
+    check: "Which AWS service provisions resources from YAML or JSON templates?",
+    answer: "AWS CloudFormation.",
+  },
+];
+
+const regionSelectionRows = [
+  ["Compliance", "Data may need to stay in a specific legal area.", "GDPR in Europe, hospitals, government workloads, German banking data."],
+  ["Proximity", "Closer Regions usually reduce latency.", "PUBG-style gaming, Netflix-style streaming, Mattress Firm-style retail users."],
+  ["Feature Availability", "Some AWS services launch only in selected Regions.", "AI services or advanced analytics available in limited Regions."],
+  ["Pricing", "AWS prices can vary by Region.", "A startup compares costs after compliance and latency are satisfied."],
+];
+
+const infrastructureComparisonRows = [
+  ["High Availability", "Keeps systems running during failures.", "Multi-AZ load-balanced app."],
+  ["Agility", "Helps teams launch and change quickly.", "Create test environments in minutes."],
+  ["Elasticity", "Adds and removes capacity with demand.", "Black Friday scaling."],
+];
+
+const locationComparisonRows = [
+  ["Region", "Geographic AWS area.", "Choose based on compliance, latency, services, pricing."],
+  ["Availability Zone", "One or more physically separate data centers in a Region.", "Use multiple AZs for high availability."],
+  ["Edge Location", "Nearby edge site used by services such as CloudFront.", "Cache content closer to global users."],
+];
+
+const toolComparisonRows = [
+  ["Console", "Click", "Graphical management and learning", "Developer manually creates a test bucket."],
+  ["CLI", "Type", "Scripting and automation", "Admin runs repeatable terminal commands."],
+  ["SDK", "Code", "Applications calling AWS", "Node.js app uploads files to S3."],
+  ["CloudFormation", "Blueprint", "Infrastructure as Code", "DevOps deploys VPC, EC2, RDS, and ALB from YAML."],
+];
+
+const situationRows = [
+  ["Explore AWS visually", "AWS Management Console"],
+  ["Automate repeatable admin tasks", "AWS CLI"],
+  ["Let app code interact with AWS", "AWS SDK"],
+  ["Provision repeatable infrastructure", "AWS CloudFormation"],
+  ["Version control infrastructure changes", "AWS CloudFormation"],
+  ["Run commands in CI/CD scripts", "AWS CLI or CloudFormation"],
+];
+
+const extendedQuestions: ExtendedQuestion[] = [
+  {
+    question: "A company must store European customer data according to GDPR requirements. Which Region-selection factor matters most?",
+    options: [
+      { label: "Compliance", explanation: "Correct. Legal and data residency requirements are compliance concerns." },
+      { label: "Pricing", explanation: "Pricing matters later, but it cannot override legal requirements." },
+      { label: "Elasticity", explanation: "Elasticity is capacity adjustment, not legal placement." },
+      { label: "Caching", explanation: "Caching improves latency, not compliance." },
+    ],
+    answer: 0,
+    topic: "Region selection",
+  },
+  {
+    question: "A gaming app has players in India and Pakistan and needs lower latency. Which factor should guide Region selection?",
+    options: [
+      { label: "Proximity to users", explanation: "Correct. Placing workloads closer to users reduces network delay." },
+      { label: "IAM policy size", explanation: "IAM policy size does not choose Regions." },
+      { label: "S3 bucket naming", explanation: "Bucket naming is unrelated to latency." },
+      { label: "CloudFormation rollback", explanation: "Rollback is not a latency factor." },
+    ],
+    answer: 0,
+    topic: "Region selection",
+  },
+  {
+    question: "A team needs an AWS AI service that is only available in selected Regions. Which factor is this?",
+    options: [
+      { label: "Feature Availability", explanation: "Correct. Not all services are available in every Region." },
+      { label: "High Availability", explanation: "High availability is about uptime, not service launch locations." },
+      { label: "Agility", explanation: "Agility is speed of experimentation." },
+      { label: "Edge caching", explanation: "Edge caching is CloudFront behavior." },
+    ],
+    answer: 0,
+    topic: "Region selection",
+  },
+  {
+    question: "After compliance, latency, and services all fit, a startup compares Region costs. Which factor is being evaluated?",
+    options: [
+      { label: "Pricing", explanation: "Correct. AWS prices can vary by Region." },
+      { label: "Availability Zone count", explanation: "AZ count affects resilience, not direct price comparison." },
+      { label: "DNS routing", explanation: "DNS routing is not the cost factor." },
+      { label: "SDK selection", explanation: "SDKs are for application code." },
+    ],
+    answer: 0,
+    topic: "Region selection",
+  },
+  {
+    question: "What does an AWS Region contain?",
+    options: [
+      { label: "Multiple Availability Zones", explanation: "Correct. A Region is a geographic area with multiple AZs." },
+      { label: "Only one server", explanation: "A Region is much larger than one server." },
+      { label: "Only one Edge Location", explanation: "Edge Locations are separate edge sites." },
+      { label: "Only one IAM user", explanation: "IAM users are identities, not infrastructure." },
+    ],
+    answer: 0,
+    topic: "Regions",
+  },
+  {
+    question: "What is an Availability Zone?",
+    options: [
+      { label: "One or more physically separate data centers in a Region", explanation: "Correct. AZs have independent infrastructure and are connected with high-speed networking." },
+      { label: "A billing report", explanation: "Billing reports are not infrastructure locations." },
+      { label: "A command-line tool", explanation: "The command-line tool is AWS CLI." },
+      { label: "A CDN service", explanation: "CloudFront is the CDN service." },
+    ],
+    answer: 0,
+    topic: "Availability Zones",
+  },
+  {
+    question: "How is high availability commonly achieved inside one AWS Region?",
+    options: [
+      { label: "Deploy across multiple Availability Zones", explanation: "Correct. Multi-AZ designs reduce impact from one AZ failure." },
+      { label: "Use one EC2 instance", explanation: "One instance is a single point of failure." },
+      { label: "Disable load balancing", explanation: "Load balancing helps distribute traffic." },
+      { label: "Store all resources in one subnet", explanation: "One subnet does not provide AZ-level resilience." },
+    ],
+    answer: 0,
+    topic: "High Availability",
+  },
+  {
+    question: "What protects against a full Regional failure?",
+    options: [
+      { label: "Multi-Region architecture", explanation: "Correct. Multi-Region designs can fail over outside the affected Region." },
+      { label: "One Availability Zone", explanation: "One AZ does not protect against Regional failure." },
+      { label: "One EBS volume", explanation: "One volume is not Regional failover." },
+      { label: "One Security Group", explanation: "Security Groups filter traffic but do not provide Regional recovery." },
+    ],
+    answer: 0,
+    topic: "Multi-Region",
+  },
+  {
+    question: "Which AWS locations are used by CloudFront to cache content near users?",
+    options: [
+      { label: "Edge Locations", explanation: "Correct. CloudFront uses Edge Locations." },
+      { label: "IAM groups", explanation: "IAM groups organize identities." },
+      { label: "EBS snapshots", explanation: "Snapshots are backups, not cache sites." },
+      { label: "CloudFormation stacks", explanation: "Stacks manage resources from templates." },
+    ],
+    answer: 0,
+    topic: "Edge Locations",
+  },
+  {
+    question: "A retail site needs images, CSS, and JavaScript cached near global users. Which service should it use?",
+    options: [
+      { label: "Amazon CloudFront", explanation: "Correct. CloudFront is the CDN service for content delivery." },
+      { label: "AWS CLI", explanation: "CLI is a command-line tool." },
+      { label: "AWS SDK", explanation: "SDK is for application code." },
+      { label: "Amazon RDS", explanation: "RDS is a relational database service." },
+    ],
+    answer: 0,
+    topic: "CloudFront",
+  },
+  {
+    question: "What cloud benefit means launching resources quickly without waiting for hardware procurement?",
+    options: [
+      { label: "Agility", explanation: "Correct. Agility is moving and experimenting quickly." },
+      { label: "Encryption", explanation: "Encryption protects data." },
+      { label: "Caching", explanation: "Caching stores content closer to users." },
+      { label: "Data residency", explanation: "Data residency is compliance placement." },
+    ],
+    answer: 0,
+    topic: "Agility",
+  },
+  {
+    question: "What cloud concept means capacity can grow during Black Friday and shrink afterward?",
+    options: [
+      { label: "Elasticity", explanation: "Correct. Elasticity adds and removes capacity as demand changes." },
+      { label: "Compliance", explanation: "Compliance is following rules and laws." },
+      { label: "CloudFormation", explanation: "CloudFormation provisions infrastructure from templates." },
+      { label: "Route table", explanation: "Route tables control network routes." },
+    ],
+    answer: 0,
+    topic: "Elasticity",
+  },
+  {
+    question: "Which tool is the graphical browser-based way to manage AWS?",
+    options: [
+      { label: "AWS Management Console", explanation: "Correct. The Console is graphical and browser-based." },
+      { label: "AWS CLI", explanation: "CLI is command-line based." },
+      { label: "AWS SDK", explanation: "SDK is for code." },
+      { label: "CloudFormation", explanation: "CloudFormation is IaC, not the graphical UI." },
+    ],
+    answer: 0,
+    topic: "AWS tools",
+  },
+  {
+    question: "Which AWS tool is best for scripting administrative tasks from a terminal?",
+    options: [
+      { label: "AWS CLI", explanation: "Correct. CLI is best for command-line scripting." },
+      { label: "AWS Console", explanation: "Console is graphical and manual." },
+      { label: "Edge Location", explanation: "Edge Locations serve edge traffic." },
+      { label: "Availability Zone", explanation: "AZ is a data center group." },
+    ],
+    answer: 0,
+    topic: "AWS CLI",
+  },
+  {
+    question: "A Node.js application needs to upload files to S3 from backend code. Which tool should it use?",
+    options: [
+      { label: "AWS SDK", explanation: "Correct. SDKs let application code call AWS services." },
+      { label: "AWS Console", explanation: "Console is for people clicking in a browser." },
+      { label: "CloudFront", explanation: "CloudFront is a CDN." },
+      { label: "Availability Zone", explanation: "AZ is infrastructure location." },
+    ],
+    answer: 0,
+    topic: "AWS SDK",
+  },
+  {
+    question: "Which AWS service is Infrastructure as Code and uses YAML or JSON templates?",
+    options: [
+      { label: "AWS CloudFormation", explanation: "Correct. CloudFormation provisions resources from YAML or JSON templates." },
+      { label: "AWS Management Console", explanation: "Console is graphical management." },
+      { label: "Amazon CloudFront", explanation: "CloudFront is content delivery." },
+      { label: "Amazon EC2", explanation: "EC2 is virtual servers." },
+    ],
+    answer: 0,
+    topic: "CloudFormation",
+  },
+  {
+    question: "Why does CloudFormation help with disaster recovery?",
+    options: [
+      { label: "It can recreate infrastructure from version-controlled templates", explanation: "Correct. Templates can be reused to rebuild environments." },
+      { label: "It caches images near users", explanation: "CloudFront does caching." },
+      { label: "It replaces all backups", explanation: "Backups are still needed for data." },
+      { label: "It is only a billing tool", explanation: "CloudFormation provisions infrastructure." },
+    ],
+    answer: 0,
+    topic: "CloudFormation",
+  },
+  {
+    question: "What is a CloudFormation stack?",
+    options: [
+      { label: "A collection of AWS resources managed as one unit", explanation: "Correct. A stack groups resources created from a template." },
+      { label: "A single user password", explanation: "Passwords are identity data." },
+      { label: "A CDN cache point", explanation: "Edge Locations are cache points." },
+      { label: "A command-line profile only", explanation: "CLI profiles are separate from stacks." },
+    ],
+    answer: 0,
+    topic: "CloudFormation",
+  },
+  {
+    question: "A DevOps team wants repeatable dev, staging, and production environments. Which service fits best?",
+    options: [
+      { label: "AWS CloudFormation", explanation: "Correct. IaC templates create repeatable environments." },
+      { label: "AWS Console only", explanation: "Manual clicking is less repeatable." },
+      { label: "Edge Location", explanation: "Edge Locations do not provision environments." },
+      { label: "CloudFront only", explanation: "CloudFront is CDN, not full environment provisioning." },
+    ],
+    answer: 0,
+    topic: "CloudFormation",
+  },
+  {
+    question: "Which template formats does CloudFormation support?",
+    options: [
+      { label: "YAML and JSON", explanation: "Correct. CloudFormation templates can be written in YAML or JSON." },
+      { label: "PNG and JPG", explanation: "Those are image formats." },
+      { label: "MP3 and MP4", explanation: "Those are media formats." },
+      { label: "CSV only", explanation: "CSV is not the CloudFormation template format." },
+    ],
+    answer: 0,
+    topic: "CloudFormation",
+  },
+  {
+    question: "What helps roll back infrastructure changes when deployment fails?",
+    options: [
+      { label: "CloudFormation rollback", explanation: "Correct. CloudFormation can roll back stack changes." },
+      { label: "Edge caching", explanation: "Caching does not roll back infrastructure." },
+      { label: "A nearby Region", explanation: "Region proximity does not roll back a failed deployment." },
+      { label: "Manual screenshots", explanation: "Screenshots are not automated rollback." },
+    ],
+    answer: 0,
+    topic: "CloudFormation",
+  },
+  {
+    question: "A company wants to manage infrastructure changes in Git. Which approach supports this best?",
+    options: [
+      { label: "Infrastructure as Code with CloudFormation", explanation: "Correct. Templates can be committed to version control." },
+      { label: "Only manual Console clicks", explanation: "Manual clicks are hard to version control." },
+      { label: "Only cached files", explanation: "Caching is unrelated to infrastructure definitions." },
+      { label: "Only a single AZ", explanation: "A single AZ is not version control." },
+    ],
+    answer: 0,
+    topic: "IaC",
+  },
+  {
+    question: "What is the main difference between SDK and CLI?",
+    options: [
+      { label: "SDK is used inside application code; CLI is used from a terminal", explanation: "Correct. SDK = code, CLI = typed commands." },
+      { label: "SDK is a Region; CLI is an Availability Zone", explanation: "Neither is an infrastructure location." },
+      { label: "SDK caches content; CLI stores databases", explanation: "This confuses unrelated services." },
+      { label: "SDK is only for billing", explanation: "SDKs call many AWS services from code." },
+    ],
+    answer: 0,
+    topic: "AWS tools",
+  },
+  {
+    question: "What is the best tool for a beginner visually creating a test EC2 instance?",
+    options: [
+      { label: "AWS Management Console", explanation: "Correct. The Console is easiest for visual manual learning." },
+      { label: "CloudFormation only", explanation: "CloudFormation is better for repeatable IaC." },
+      { label: "SDK only", explanation: "SDK is for code integrations." },
+      { label: "CloudFront", explanation: "CloudFront is content delivery." },
+    ],
+    answer: 0,
+    topic: "AWS tools",
+  },
+  {
+    question: "A startup wants automated CI/CD infrastructure deployment. Which tool is most aligned?",
+    options: [
+      { label: "CloudFormation", explanation: "Correct. CloudFormation templates fit CI/CD automation." },
+      { label: "Manual Console", explanation: "Manual clicking is not ideal for CI/CD." },
+      { label: "Edge Location", explanation: "Edge Locations serve users, not deployment automation." },
+      { label: "RDS snapshot only", explanation: "A snapshot is not an IaC deployment pipeline." },
+    ],
+    answer: 0,
+    topic: "CI/CD",
+  },
+  {
+    question: "Which architecture protects against an Availability Zone failure?",
+    options: [
+      { label: "Load balancer with EC2 instances in multiple AZs", explanation: "Correct. Traffic can shift to healthy AZs." },
+      { label: "One EC2 instance in one AZ", explanation: "That is a single point of failure." },
+      { label: "One private IP address only", explanation: "A private IP does not provide HA." },
+      { label: "One manual backup only", explanation: "Backups help recovery, but do not keep the app immediately available." },
+    ],
+    answer: 0,
+    topic: "High Availability",
+  },
+  {
+    question: "Which architecture is better for Regional disaster recovery?",
+    options: [
+      { label: "Multi-Region deployment", explanation: "Correct. Another Region can take over if one Region is unavailable." },
+      { label: "Single-AZ deployment", explanation: "Single AZ cannot protect against Regional failure." },
+      { label: "One local browser cache", explanation: "Browser cache is not Regional recovery." },
+      { label: "One security group rule", explanation: "Security rules do not provide Regional failover." },
+    ],
+    answer: 0,
+    topic: "Multi-Region",
+  },
+  {
+    question: "Which AWS infrastructure layer is closest to the user for content delivery?",
+    options: [
+      { label: "Edge Location", explanation: "Correct. Edge Locations are closer to users for services such as CloudFront." },
+      { label: "A distant database only", explanation: "Databases are not edge cache locations." },
+      { label: "A CloudFormation template", explanation: "Templates define infrastructure." },
+      { label: "An IAM password", explanation: "Passwords are identity data." },
+    ],
+    answer: 0,
+    topic: "Edge Locations",
+  },
+  {
+    question: "What is the best first factor when selecting a Region for government workloads?",
+    options: [
+      { label: "Compliance", explanation: "Correct. Government workloads often have strict location and regulatory requirements." },
+      { label: "Only lowest price", explanation: "Price cannot override compliance." },
+      { label: "Only UI color", explanation: "UI color is irrelevant." },
+      { label: "Only local laptop speed", explanation: "Laptop speed does not decide AWS Region compliance." },
+    ],
+    answer: 0,
+    topic: "Region selection",
+  },
+  {
+    question: "A social media app mainly serves users in India. If compliance and features are satisfied, what Region factor is likely important?",
+    options: [
+      { label: "Proximity", explanation: "Correct. Choosing a closer Region helps reduce latency." },
+      { label: "CloudFormation syntax only", explanation: "Syntax does not decide user latency." },
+      { label: "Explicit deny rules", explanation: "That relates to Network ACLs." },
+      { label: "Root account usage", explanation: "Root account usage is a security topic." },
+    ],
+    answer: 0,
+    topic: "Region selection",
+  },
+  {
+    question: "Which CloudFormation benefit helps recover from failed deployments?",
+    options: [
+      { label: "Rollback", explanation: "Correct. CloudFormation can roll back failed stack operations." },
+      { label: "Lower latency by itself", explanation: "CloudFormation does not automatically reduce user latency." },
+      { label: "Explicit deny for packets", explanation: "Network ACLs provide deny rules." },
+      { label: "Content caching", explanation: "CloudFront provides caching." },
+    ],
+    answer: 0,
+    topic: "CloudFormation",
+  },
+  {
+    question: "Which service creates resources automatically from a template?",
+    options: [
+      { label: "AWS CloudFormation", explanation: "Correct. It reads templates and provisions resources." },
+      { label: "Amazon CloudFront", explanation: "CloudFront delivers content." },
+      { label: "AWS Management Console only", explanation: "The Console is a UI, not template automation." },
+      { label: "Edge Location", explanation: "Edge Locations are infrastructure sites." },
+    ],
+    answer: 0,
+    topic: "CloudFormation",
+  },
+  {
+    question: "Which statement is accurate?",
+    options: [
+      { label: "Regions contain multiple Availability Zones", explanation: "Correct. This is a core AWS infrastructure fact." },
+      { label: "Availability Zones contain multiple Regions", explanation: "The relationship is reversed." },
+      { label: "CloudFormation is a CDN", explanation: "CloudFormation is Infrastructure as Code." },
+      { label: "CLI is a browser-only graphical tool", explanation: "CLI is command-line based." },
+    ],
+    answer: 0,
+    topic: "Global Infrastructure",
+  },
 ];
 
 function SectionHeader({ badge, title, description, icon: Icon }: { badge: string; title: string; description: string; icon: typeof Cloud }) {
@@ -761,6 +1333,333 @@ function CloudDiagram() {
   );
 }
 
+function SimpleFlow({ steps }: { steps: string[] }) {
+  return (
+    <div className="overflow-x-auto rounded-lg border border-white/10 bg-background/50 p-4">
+      <div className="flex min-w-max items-center gap-3">
+        {steps.map((step, index) => (
+          <div key={`${step}-${index}`} className="flex items-center gap-3">
+            <div className="rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-sm font-medium">
+              {step}
+            </div>
+            {index < steps.length - 1 ? <ChevronRight className="h-4 w-4 text-primary" /> : null}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function LearningCardView({ card }: { card: LearningCard }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+      <CardContent className="space-y-5 p-6">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <h3 className="text-2xl font-headline">{card.title}</h3>
+            <p className="mt-2 text-sm leading-7 text-muted-foreground">{card.explanation}</p>
+          </div>
+          <Button variant="outline" className="rounded-full border-white/10" onClick={() => setOpen((current) => !current)}>
+            {open ? "Hide details" : "Expand details"}
+          </Button>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <VisualNote title="Why it matters" text={card.why} />
+          <VisualNote title="Memory trick" text={card.memory} />
+          <VisualNote title="Exam tip" text={card.examTip} />
+          <VisualNote title="Scenario example" text={card.scenario} />
+        </div>
+
+        <SimpleFlow steps={card.diagram} />
+
+        {open ? (
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="grid gap-4 md:grid-cols-[1.2fr_0.8fr]">
+            <div className="rounded-lg border border-white/10 bg-background/50 p-4">
+              <p className="font-semibold">Real-world examples</p>
+              <ul className="mt-3 space-y-2 text-sm leading-6 text-muted-foreground">
+                {card.examples.map((example) => (
+                  <li key={example}>- {example}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
+              <p className="font-semibold text-primary">Knowledge check</p>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">{card.check}</p>
+              <p className="mt-3 rounded-lg border border-white/10 bg-background/50 p-3 text-sm">{card.answer}</p>
+            </div>
+          </motion.div>
+        ) : null}
+      </CardContent>
+    </Card>
+  );
+}
+
+function ComparisonTable({ title, columns, rows }: { title: string; columns: string[]; rows: string[][] }) {
+  return (
+    <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+      <CardHeader>
+        <CardTitle className="font-headline text-2xl">{title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="overflow-x-auto rounded-lg border border-white/10">
+          <table className="w-full min-w-[680px] text-left text-sm">
+            <thead className="bg-primary/10 text-primary">
+              <tr>
+                {columns.map((column) => (
+                  <th key={column} className="px-4 py-3 font-semibold">{column}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, index) => (
+                <tr key={`${title}-${index}`} className="border-t border-white/10">
+                  {row.map((cell) => (
+                    <td key={cell} className="px-4 py-3 leading-6 text-muted-foreground">{cell}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function CheatSheetGrid({ title, items }: { title: string; items: Array<[string, string]> }) {
+  return (
+    <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+      <CardHeader>
+        <CardTitle className="font-headline text-2xl">{title}</CardTitle>
+      </CardHeader>
+      <CardContent className="grid gap-3 md:grid-cols-2">
+        {items.map(([label, text]) => (
+          <div key={label} className="rounded-lg border border-white/10 bg-background/50 p-4">
+            <p className="font-semibold">{label}</p>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">{text}</p>
+          </div>
+        ))}
+      </CardContent>
+    </Card>
+  );
+}
+
+function RegionSelectionSection() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Region Selection"
+        icon={Globe2}
+        title="Choosing the Right AWS Region"
+        description="Region selection is a business and technical decision. Start with compliance, then consider latency, service availability, and pricing."
+      />
+      <div className="space-y-6">
+        {regionSelectionCards.map((card) => (
+          <LearningCardView key={card.title} card={card} />
+        ))}
+        <ComparisonTable title="Region Selection Factors" columns={["Factor", "Why It Matters", "Real-World Example"]} rows={regionSelectionRows} />
+        <CheatSheetGrid
+          title="Region Selection Cheat Sheet"
+          items={[
+            ["Compliance", "Follow the law before optimizing for convenience."],
+            ["Proximity", "Stay close to users to reduce latency."],
+            ["Feature Availability", "Confirm the Region supports the AWS service you need."],
+            ["Pricing", "Compare costs after the other requirements are satisfied."],
+          ]}
+        />
+      </div>
+    </section>
+  );
+}
+
+function HighlyAvailableArchitecturesSection() {
+  const [activeDiagram, setActiveDiagram] = useState<"az" | "edge">("az");
+
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Highly Available Architectures"
+        icon={ShieldCheck}
+        title="AWS Global Infrastructure and Resilient Design"
+        description="Use Regions, Availability Zones, Edge Locations, CloudFront, and scaling patterns to build apps that stay fast and available."
+      />
+      <div className="space-y-6">
+        <div className="grid gap-5 md:grid-cols-2">
+          {infrastructureArchitectureCards.map((card) => (
+            <LearningCardView key={card.title} card={card} />
+          ))}
+        </div>
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="space-y-5 p-6">
+            <div className="flex flex-wrap gap-2">
+              <Button variant={activeDiagram === "az" ? "default" : "outline"} onClick={() => setActiveDiagram("az")} className="rounded-full border-white/10">
+                Multi-AZ Flow
+              </Button>
+              <Button variant={activeDiagram === "edge" ? "default" : "outline"} onClick={() => setActiveDiagram("edge")} className="rounded-full border-white/10">
+                Edge Flow
+              </Button>
+            </div>
+            {activeDiagram === "az" ? (
+              <SimpleFlow steps={["Users", "Load Balancer", "EC2 in AZ A", "EC2 in AZ B"]} />
+            ) : (
+              <SimpleFlow steps={["Internet Users", "Edge Location", "AWS Region", "Availability Zones"]} />
+            )}
+          </CardContent>
+        </Card>
+        <ComparisonTable title="High Availability vs Agility vs Elasticity" columns={["Concept", "Meaning", "Example"]} rows={infrastructureComparisonRows} />
+        <ComparisonTable title="Region vs Availability Zone vs Edge Location" columns={["Layer", "Meaning", "Exam Use"]} rows={locationComparisonRows} />
+        <CheatSheetGrid
+          title="Infrastructure Cheat Sheet"
+          items={[
+            ["High Availability", "Keep the application running during failures."],
+            ["Agility", "Launch and change quickly."],
+            ["Elasticity", "Scale out and in with demand."],
+            ["Region", "Geographic AWS area containing multiple AZs."],
+            ["Availability Zone", "One or more physically separate data centers."],
+            ["Edge Location", "Site used by services such as CloudFront."],
+          ]}
+        />
+      </div>
+    </section>
+  );
+}
+
+function CloudFormationAndToolsSection() {
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Ways to Interact with AWS"
+        icon={Workflow}
+        title="Console, CLI, SDK, and CloudFormation"
+        description="AWS gives different tools for different jobs: click for visual management, type for automation, code for applications, and templates for infrastructure."
+      />
+      <div className="space-y-6">
+        <div className="grid gap-5 md:grid-cols-2">
+          {awsInteractionCards.map((card) => (
+            <LearningCardView key={card.title} card={card} />
+          ))}
+        </div>
+        <Card className="border-border/60 bg-card/45 backdrop-blur-xl">
+          <CardContent className="space-y-5 p-6">
+            <h3 className="font-headline text-2xl">CloudFormation Workflow</h3>
+            <SimpleFlow steps={["Developer", "YAML Template", "CloudFormation", "VPC", "EC2", "RDS", "Load Balancer"]} />
+            <pre className="overflow-x-auto rounded-lg border border-white/10 bg-background/70 p-4 text-sm leading-6 text-muted-foreground">
+{`Resources:
+  WebServer:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t3.micro
+      ImageId: ami-1234567890abcdef0
+
+  AppBucket:
+    Type: AWS::S3::Bucket`}
+            </pre>
+          </CardContent>
+        </Card>
+        <ComparisonTable title="Console vs CLI vs SDK vs CloudFormation" columns={["Tool", "Memory Trick", "Best For", "Example"]} rows={toolComparisonRows} />
+        <ComparisonTable title="Situation to Best Tool" columns={["Situation", "Best Tool"]} rows={situationRows} />
+        <CheatSheetGrid
+          title="AWS Interaction Cheat Sheet"
+          items={[
+            ["Console", "Click: browser-based graphical management."],
+            ["CLI", "Type: command-line scripting and automation."],
+            ["SDK", "Code: application code calls AWS APIs."],
+            ["CloudFormation", "Blueprint: repeatable Infrastructure as Code with YAML or JSON."],
+          ]}
+        />
+      </div>
+    </section>
+  );
+}
+
+function ExtendedAssessment() {
+  const [answers, setAnswers] = useState<Record<number, number>>({});
+  const answered = Object.keys(answers).length;
+  const correct = useMemo(
+    () => extendedQuestions.reduce((count, question, index) => count + (answers[index] === question.answer ? 1 : 0), 0),
+    [answers]
+  );
+
+  return (
+    <section className="container mx-auto px-4 py-10">
+      <SectionHeader
+        badge="Final Assessment"
+        icon={Check}
+        title="Module 4 Extended Practice Questions"
+        description="Practice Region selection, high availability, elasticity, Regions, Availability Zones, CloudFront, CloudFormation, Console, CLI, SDK, and Infrastructure as Code."
+      />
+      <div className="mb-6 h-3 overflow-hidden rounded-full bg-background">
+        <motion.div className="h-full bg-primary" animate={{ width: `${(answered / extendedQuestions.length) * 100}%` }} />
+      </div>
+      <div className="grid gap-5 lg:grid-cols-2">
+        {extendedQuestions.map((question, questionIndex) => {
+          const selected = answers[questionIndex];
+          return (
+            <Card key={question.question} className="border-border/60 bg-card/45 backdrop-blur-xl">
+              <CardContent className="space-y-4 p-5">
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="outline" className="border-primary/20 bg-primary/5 text-primary">Question {questionIndex + 1}</Badge>
+                  <Badge variant="secondary">{question.topic}</Badge>
+                </div>
+                <p className="font-semibold leading-7">{question.question}</p>
+                {question.options.map((option, optionIndex) => {
+                  const isSelected = selected === optionIndex;
+                  const isCorrect = question.answer === optionIndex;
+                  return (
+                    <button
+                      key={option.label}
+                      onClick={() => setAnswers((current) => ({ ...current, [questionIndex]: optionIndex }))}
+                      className={cn(
+                        "w-full rounded-lg border p-3 text-left text-sm transition-colors",
+                        isSelected && isCorrect && "border-primary/50 bg-primary/10 text-primary",
+                        isSelected && !isCorrect && "border-red-300/40 bg-red-500/10 text-red-100",
+                        !isSelected && "border-white/10 bg-background/50 hover:border-primary/30"
+                      )}
+                    >
+                      {option.label}
+                    </button>
+                  );
+                })}
+                {selected !== undefined ? (
+                  <div className="space-y-2 rounded-lg border border-white/10 bg-background/50 p-4 text-sm leading-6 text-muted-foreground">
+                    {question.options.map((option, optionIndex) => (
+                      <p key={`${question.question}-${option.label}`}>
+                        <span className="font-semibold text-foreground">{optionIndex === question.answer ? "Correct" : "Incorrect"}:</span> {option.explanation}
+                      </p>
+                    ))}
+                  </div>
+                ) : null}
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+      <Card className="mt-6 border-primary/20 bg-primary/5">
+        <CardContent className="flex flex-col gap-3 p-5 md:flex-row md:items-center md:justify-between">
+          <p className="font-semibold">Score: {correct} / {extendedQuestions.length}</p>
+          <Button variant="outline" className="rounded-full border-white/10" onClick={() => setAnswers({})}>
+            Reset Assessment
+          </Button>
+        </CardContent>
+      </Card>
+    </section>
+  );
+}
+
+function ExtendedModule4Sections() {
+  return (
+    <>
+      <RegionSelectionSection />
+      <HighlyAvailableArchitecturesSection />
+      <CloudFormationAndToolsSection />
+      <ExtendedAssessment />
+    </>
+  );
+}
+
 export function AwsGlobalInfrastructureLesson() {
   return (
     <div className="relative overflow-hidden">
@@ -803,6 +1702,7 @@ export function AwsGlobalInfrastructureLesson() {
       <InteractiveQuiz />
       <InteractiveTimeline />
       <CloudDiagram />
+      <ExtendedModule4Sections />
     </div>
   );
 }
