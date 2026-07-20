@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, CalendarDays, ChevronDown, Globe2, Network } from "lucide-react";
+import { ArrowLeft, CalendarDays, ChevronDown, Database, Globe2, Network } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AwsGlobalInfrastructureLesson } from "@/components/learning/AwsGlobalInfrastructureLesson";
 import { Module5Networking } from "@/components/learning/Module5Networking/Module5Networking";
+import { Module6Storage } from "@/components/learning/Module6Storage/Module6Storage";
 
 export function AwsCloudPractitionerLesson() {
   const [activeModule, setActiveModule] = useState<string | null>(null);
@@ -143,11 +144,55 @@ export function AwsCloudPractitionerLesson() {
                   </Badge>
                 </div>
               </motion.button>
+
+              <motion.button
+                type="button"
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -4 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: 0.15 }}
+                onClick={() => setActiveModule((current) => (current === "module-6" ? null : "module-6"))}
+                className={`group min-h-[340px] rounded-lg border bg-card/45 p-6 text-left backdrop-blur-xl transition-colors ${
+                  activeModule === "module-6"
+                    ? "border-primary/45 bg-primary/10"
+                    : "border-white/10 hover:border-primary/35 hover:bg-primary/5"
+                }`}
+                aria-expanded={activeModule === "module-6"}
+              >
+                <div className="mb-5 flex items-center justify-between gap-3">
+                  <Badge variant="outline" className="border-primary/20 bg-primary/5 text-primary">
+                    Module 6
+                  </Badge>
+                  <ChevronDown
+                    className={`h-5 w-5 text-muted-foreground transition-transform group-hover:text-primary ${
+                      activeModule === "module-6" ? "rotate-180 text-primary" : ""
+                    }`}
+                  />
+                </div>
+                <Database className="mb-5 h-8 w-8 text-primary" />
+                <h3 className="font-headline text-2xl font-bold">
+                  AWS Storage Services
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  EBS, Instance Store, S3, EFS, FSx, Storage Gateway, Elastic Disaster
+                  Recovery, snapshots, and DLM automation.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <Badge variant="outline" className="border-white/10 bg-background/60 text-muted-foreground">
+                    Storage
+                  </Badge>
+                  <Badge variant="outline" className="border-primary/20 bg-primary/5 text-primary">
+                    Exam practice
+                  </Badge>
+                </div>
+              </motion.button>
             </div>
           </div>
 
           {activeModule === "module-4" ? <AwsGlobalInfrastructureLesson /> : null}
           {activeModule === "module-5" ? <Module5Networking /> : null}
+          {activeModule === "module-6" ? <Module6Storage /> : null}
         </div>
       </div>
     </section>
