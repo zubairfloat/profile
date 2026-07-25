@@ -16,21 +16,50 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 
+const heroContentVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1, delayChildren: 0.15 },
+  },
+};
+
+const heroItemVariants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
 export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center pt-24 sm:pt-20 overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 hero-gradient -z-10" />
+      <motion.div
+        aria-hidden="true"
+        className="absolute -left-24 top-32 h-72 w-72 rounded-full bg-primary/10 blur-3xl -z-10"
+        animate={{ x: [0, 35, 0], y: [0, -20, 0], scale: [1, 1.08, 1] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        aria-hidden="true"
+        className="absolute -right-24 bottom-16 h-80 w-80 rounded-full bg-accent/10 blur-3xl -z-10"
+        animate={{ x: [0, -30, 0], y: [0, 18, 0], scale: [1.05, 1, 1.05] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+      />
       <div className="absolute left-1/2 top-24 h-px w-[82vw] -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
 
       <div className="container px-4 mx-auto grid lg:grid-cols-2 gap-12 items-center">
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
+          variants={heroContentVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
           className="space-y-8"
         >
-          <div className="space-y-4">
+          <motion.div variants={heroItemVariants} className="space-y-4">
             <Badge
               variant="outline"
               className="px-4 py-1 text-primary border-primary/20 bg-primary/5 rounded-full font-medium"
@@ -53,9 +82,9 @@ export function Hero() {
               commerce platforms, modern web applications, and visual learning systems
               with JavaScript, React, Next.js, TypeScript, and Dynamics 365.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="flex flex-wrap gap-4">
+          <motion.div variants={heroItemVariants} className="flex flex-wrap gap-4">
             <Button
               asChild
               size="lg"
@@ -103,9 +132,9 @@ export function Hero() {
                 <Mail className="ml-2 h-4 w-4" />
               </a>
             </Button>
-          </div>
+          </motion.div>
 
-          <div className="flex items-center gap-6 pt-4">
+          <motion.div variants={heroItemVariants} className="flex items-center gap-6 pt-4">
             <a
               href="https://www.linkedin.com/in/muhammad-zubair-rizwan-69a355180/"
               target="_blank"
@@ -132,7 +161,7 @@ export function Hero() {
                 TypeScript
               </Badge>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
 
         <motion.div

@@ -16,30 +16,31 @@ const experiences = [
         title: "Principal Consultant",
         time: "Jan 2025 – Present",
         achievements: [
-          "Integrated Affirm Buy Now Pay Later (Top 3 payment method by order volume)",
-          "Developed Extend Warranty Feature & Cart Cross-Sell Functionality",
-          "Synchrony Data Share Improvements & Easy Promo Apply Optimization",
-          "Implemented Datadog Monitoring & Alerting systems",
-          "Lead Code Reviews and Technical Mentoring for senior developers"
+          "Launched Affirm Buy Now, Pay Later in May 2025; it became the third-highest payment method by order volume.",
+          "Shipped warranty extensions, cart cross-sell, and streamlined customer and delivery selection to improve the purchase journey.",
+          "Improved Buy Synchrony data sharing and optimized promo-code application for more reliable, low-friction checkout flows.",
+          "Introduced Datadog API monitoring and alerting, enabling proactive production issue detection.",
+          "Drive peer reviews, front-end architecture decisions, developer onboarding, and technical interviews."
         ]
       },
       {
         title: "Senior Consultant",
         time: "2023 – 2025",
         achievements: [
-          "PayPal Express & Apple Pay Express Integration for global brands",
-          "Progressive Leasing Integration for enterprise financing solutions",
-          "Led Mattress Firm Headless Migration & Next.js 14 transition",
-          "Architected Edgio to Vercel Deployment Migration project"
+          "Launched PayPal Express and Apple Pay Express using customized iframe payment modules and order-attribute handling.",
+          "Integrated Progressive Leasing from cart messaging through the payment flow, expanding financing options for shoppers.",
+          "Led the Mattress Firm buy-side migration to Next.js 14, covering cart, checkout, customer information, delivery, payments, and express checkout.",
+          "Completed the headless rollout in early 2025 via Edgio, then led the production deployment migration to Vercel."
         ]
       },
       {
         title: "Consultant Dynamics Commerce",
         time: "2021 – 2023",
         achievements: [
-          "Salesforce to Dynamics 365 Enterprise Migration",
-          "React Frontend Migration for legacy systems",
-          "Full Checkout Flow & CRT API Integrations development"
+          "Supported the Mattress Firm Salesforce-to-Dynamics 365 Commerce migration, moving the storefront front end to React.",
+          "Rebuilt PLP, PDP, and home experiences by extending Dynamics views, overriding data actions, and improving CMS reusability.",
+          "Implemented cart through order confirmation, integrating customer, delivery, and payment experiences with CRT APIs.",
+          "Delivered complex front-end customizations using business rules, BPFs, and workflows while mentoring junior developers."
         ]
       }
     ]
@@ -52,10 +53,10 @@ const experiences = [
         title: "MERN Stack Developer",
         time: "2019 – 2021",
         achievements: [
-          "Enterprise React and Next.js Development for UK-based clients",
-          "Redux State Management & MySQL/PostgreSQL Optimization",
-          "Node.js API Development with complex business logic",
-          "Multiple Payment Gateway Integrations implementation"
+          "Built and maintained responsive React and Next.js applications with a focus on reliable user experiences.",
+          "Used Redux for predictable state management and optimized MySQL and PostgreSQL queries for application performance.",
+          "Integrated external APIs and payment gateways, and connected Node.js services with MongoDB and MySQL data stores.",
+          "Partnered with cross-functional teams, reviewed code, and contributed to mentoring and front-end architecture decisions."
         ]
       }
     ]
@@ -68,9 +69,9 @@ const experiences = [
         title: "MERN Stack Developer",
         time: "2018 – 2019",
         achievements: [
-          "MERN Applications Development for startups and scaleups",
-          "UI/UX Implementation with high fidelity and animations",
-          "Database Design & API Development from scratch"
+          "Developed full-stack MERN applications for startups, including attendance, land-record, and e-commerce products.",
+          "Created intuitive React interfaces and built the APIs and database foundations needed to support them.",
+          "Applied practical UI/UX principles to deliver responsive, user-friendly product experiences."
         ]
       }
     ]
@@ -85,7 +86,7 @@ export function Experience() {
           <Badge variant="outline" className="text-primary border-primary/20 bg-primary/5">Career Journey</Badge>
           <h2 className="text-4xl lg:text-5xl font-headline">Professional Experience</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            A track record of delivering enterprise-scale solutions for market-leading organizations.
+            Nine years of hands-on leadership across enterprise commerce, payments, platform modernization, and high-performing customer journeys.
           </p>
         </div>
 

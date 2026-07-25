@@ -41,7 +41,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="font-body antialiased selection:bg-primary/30">
+      <body className="font-body antialiased selection:bg-primary/30" suppressHydrationWarning>
         {children}
         <Toaster />
       </body>

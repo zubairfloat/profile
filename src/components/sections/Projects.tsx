@@ -1,54 +1,95 @@
 
 "use client"
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { motion } from "framer-motion";
-import { Users, Zap, ShieldCheck, Globe } from "lucide-react";
+import { ArrowLeft, ArrowRight, Globe, ShieldCheck, ShoppingCart, Sparkles, Users, Zap } from "lucide-react";
+
+const projectsPerPage = 3;
 
 const projects = [
   {
     id: "mattress-firm",
-    title: "Mattress Firm Commerce Platform",
-    role: "Lead Frontend Developer",
-    description: "Architected a headless commerce solution serving millions of users, migrating from legacy architecture to a modern Next.js 14 platform.",
-    tags: ["Next.js", "D365 Commerce", "Headless", "Vercel"],
+    title: "Mattress Firm Headless Commerce Migration",
+    role: "Lead Frontend Developer · 2024–2025",
+    description: "Led the buy-side migration from Microsoft Dynamics 365 Commerce to a Next.js 14 storefront—rebuilding cart, checkout, customer information, delivery, payments, and express checkout for a production retail platform.",
+    tags: ["Next.js 14", "D365 Commerce", "Headless", "Edgio", "Vercel"],
     metrics: [
-      { label: "Scale", value: "Millions of Users", icon: Users },
-      { label: "Platform", value: "Enterprise Scale", icon: Globe }
+      { label: "Scope", value: "End-to-end checkout", icon: Users },
+      { label: "Launch", value: "Edgio → Vercel", icon: Globe }
     ],
    image: "/projects/mattress-firm.webp"
   },
   {
     id: "affirm",
-    title: "Affirm Payment Integration",
-    role: "Strategic Integration Lead",
-    description: "Seamlessly integrated Affirm BNPL financing into checkout, becoming a top 3 payment method by order volume within months.",
-    tags: ["Payments", "FinTech", "Checkout UX"],
+    title: "Payments & Financing Modernization",
+    role: "Strategic Integration Lead · 2023–2025",
+    description: "Delivered a portfolio of revenue-focused payment experiences: Affirm Buy Now, Pay Later, Progressive Leasing, PayPal Express, and Apple Pay Express—making checkout faster and giving customers more ways to pay.",
+    tags: ["Affirm", "Progressive Leasing", "PayPal", "Apple Pay", "Checkout"],
     metrics: [
-      { label: "Performance", value: "Top 3 Payment Method", icon: Zap },
-      { label: "Impact", value: "High Order Volume", icon: ShieldCheck }
+      { label: "Affirm impact", value: "#3 by order volume", icon: Zap },
+      { label: "Delivery", value: "Production launches", icon: ShieldCheck }
     ],
      image: "/projects/affirm.png"
   },
   {
     id: "dynamics",
-    title: "Dynamics 365 Commerce Suite",
-    role: "D365 Specialist",
-    description: "Developed custom commerce modules and CRT API integrations for Fortune 500 retail chains.",
-    tags: ["Dynamics 365", "ERP", "CRT API"],
+    title: "Dynamics 365 Commerce Replatforming",
+    role: "Dynamics 365 Commerce Consultant · 2021–2023",
+    description: "Modernized a large retail storefront during its Salesforce-to-Dynamics 365 Commerce migration. Rebuilt PLP, PDP, home, and the complete checkout flow in React, with reusable CMS capabilities and CRT API integrations.",
+    tags: ["Dynamics 365", "React", "CRT APIs", "Commerce CMS"],
     metrics: [
-      { label: "Type", value: "Enterprise CRM/ERP", icon: Globe },
-      { label: "Tech", value: "Modern D365", icon: Zap }
+      { label: "Modules", value: "Browse to order confirmation", icon: Globe },
+      { label: "Approach", value: "Reusable commerce UI", icon: Zap }
     ],
     image: "/projects/dynamics.png"
+  },
+  {
+    id: "checkout-optimization",
+    title: "Checkout Conversion Experience",
+    role: "Principal Consultant · 2025",
+    description: "Simplified the purchase path by combining customer information and delivery selection, while introducing warranty extensions and contextual cart cross-sell recommendations that keep shoppers moving toward purchase.",
+    tags: ["Checkout UX", "Cross-Sell", "Warranty", "Conversion"],
+    metrics: [
+      { label: "Experience", value: "Fewer checkout steps", icon: ShoppingCart },
+      { label: "Value", value: "Relevant add-ons", icon: Sparkles }
+    ],
+    image: "/projects/checkout-conversion.png"
+  },
+  {
+    id: "commerce-reliability",
+    title: "Commerce Reliability & Observability",
+    role: "Principal Consultant · 2025",
+    description: "Strengthened critical commerce operations with Datadog API monitoring and alerting, plus Buy Synchrony data-sharing improvements that made production behavior easier to observe and resolve proactively.",
+    tags: ["Datadog", "API Monitoring", "Synchrony", "Production Support"],
+    metrics: [
+      { label: "Visibility", value: "API health alerts", icon: ShieldCheck },
+      { label: "Focus", value: "Proactive response", icon: Zap }
+    ],
+    image: "/projects/dynamics.png"
+  },
+  {
+    id: "cart-promotion",
+    title: "Cart & Promotion Optimization",
+    role: "Principal Consultant · 2025",
+    description: "Improved cart performance and shopper confidence through fast promo-code application, prioritized cross-sell placement, and clear add-to-cart notifications—small details that create a more polished retail journey.",
+    tags: ["Cart", "Promotions", "Merchandising", "UX"],
+    metrics: [
+      { label: "Promo flow", value: "Fast application", icon: Zap },
+      { label: "Merchandising", value: "Top-of-cart cross-sell", icon: ShoppingCart }
+    ],
+    image: "/projects/home1.png"
   }
 ];
 
 export function Projects() {
+  const [currentPage, setCurrentPage] = useState(0);
+  const pageCount = Math.ceil(projects.length / projectsPerPage);
+  const visibleProjects = projects.slice(currentPage * projectsPerPage, (currentPage + 1) * projectsPerPage);
+
   return (
     <section id="projects" className="py-24">
       <div className="container px-4 mx-auto">
@@ -57,13 +98,13 @@ export function Projects() {
             <Badge variant="outline" className="text-primary border-primary/20 bg-primary/5">Selected Work</Badge>
             <h2 className="text-4xl lg:text-5xl font-headline leading-tight">Enterprise Case Study Vault</h2>
             <p className="text-muted-foreground text-lg">
-              High-fidelity project displays showcasing strategic impact on digital commerce at scale.
+              Selected enterprise engagements across commerce replatforming, checkout modernization, and payment innovation.
             </p>
           </div>
         </div>
 
-        <div className="grid gap-8">
-          {projects.map((project, idx) => (
+        <div className="grid gap-8" aria-live="polite">
+          {visibleProjects.map((project, idx) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 20 }}
@@ -120,6 +161,44 @@ export function Projects() {
               </Card>
             </motion.div>
           ))}
+        </div>
+
+        <div className="mt-12 flex flex-col items-center justify-between gap-5 rounded-2xl border border-border/60 bg-card/40 px-5 py-4 sm:flex-row sm:px-6">
+          <p className="text-sm text-muted-foreground">
+            Showing <span className="font-semibold text-foreground">{currentPage * projectsPerPage + 1}–{Math.min((currentPage + 1) * projectsPerPage, projects.length)}</span> of <span className="font-semibold text-foreground">{projects.length}</span> case studies
+          </p>
+          <nav className="flex items-center gap-2" aria-label="Case study pagination">
+            <button
+              type="button"
+              onClick={() => setCurrentPage((page) => Math.max(page - 1, 0))}
+              disabled={currentPage === 0}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary disabled:pointer-events-none disabled:opacity-40"
+              aria-label="Previous case studies"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </button>
+            {Array.from({ length: pageCount }, (_, page) => (
+              <button
+                key={page}
+                type="button"
+                onClick={() => setCurrentPage(page)}
+                className={`h-10 min-w-10 rounded-lg border px-3 text-sm font-semibold transition-all ${currentPage === page ? "border-primary bg-primary text-primary-foreground shadow-lg shadow-primary/20" : "border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-primary"}`}
+                aria-label={`Show case study page ${page + 1}`}
+                aria-current={currentPage === page ? "page" : undefined}
+              >
+                {page + 1}
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => setCurrentPage((page) => Math.min(page + 1, pageCount - 1))}
+              disabled={currentPage === pageCount - 1}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary disabled:pointer-events-none disabled:opacity-40"
+              aria-label="Next case studies"
+            >
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </nav>
         </div>
       </div>
     </section>
