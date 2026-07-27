@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, CalendarDays, ChevronDown, Database, Globe2, Network } from "lucide-react";
+import { Archive, ArrowLeft, BrainCircuit, CalendarDays, ChevronDown, Database, Globe2, Network } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AwsGlobalInfrastructureLesson } from "@/components/learning/AwsGlobalInfrastructureLesson";
 import { Module5Networking } from "@/components/learning/Module5Networking/Module5Networking";
 import { Module6Storage } from "@/components/learning/Module6Storage/Module6Storage";
+import { Module7Databases } from "@/components/learning/Module7Databases/Module7Databases";
+import { Module8AiMlDataAnalyticsNative } from "@/components/learning/Module8AiMlDataAnalytics/Module8AiMlDataAnalyticsNative";
 
 export function AwsCloudPractitionerLesson() {
   const [activeModule, setActiveModule] = useState<string | null>(null);
@@ -187,12 +189,96 @@ export function AwsCloudPractitionerLesson() {
                   </Badge>
                 </div>
               </motion.button>
+
+              <motion.button
+                type="button"
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -4 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: 0.2 }}
+                onClick={() => setActiveModule((current) => (current === "module-7" ? null : "module-7"))}
+                className={`group min-h-[340px] rounded-lg border bg-card/45 p-6 text-left backdrop-blur-xl transition-colors ${
+                  activeModule === "module-7"
+                    ? "border-primary/45 bg-primary/10"
+                    : "border-white/10 hover:border-primary/35 hover:bg-primary/5"
+                }`}
+                aria-expanded={activeModule === "module-7"}
+              >
+                <div className="mb-5 flex items-center justify-between gap-3">
+                  <Badge variant="outline" className="border-primary/20 bg-primary/5 text-primary">
+                    Module 7
+                  </Badge>
+                  <ChevronDown
+                    className={`h-5 w-5 text-muted-foreground transition-transform group-hover:text-primary ${
+                      activeModule === "module-7" ? "rotate-180 text-primary" : ""
+                    }`}
+                  />
+                </div>
+                <Archive className="mb-5 h-8 w-8 text-primary" />
+                <h3 className="font-headline text-2xl font-bold">AWS Database Services</h3>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  Relational databases, DocumentDB, Neptune, AWS Backup, and shared
+                  responsibility for database operations.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <Badge variant="outline" className="border-white/10 bg-background/60 text-muted-foreground">
+                    Databases
+                  </Badge>
+                  <Badge variant="outline" className="border-primary/20 bg-primary/5 text-primary">
+                    Practice quiz
+                  </Badge>
+                </div>
+              </motion.button>
+
+              <motion.button
+                type="button"
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -4 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: 0.25 }}
+                onClick={() => setActiveModule((current) => (current === "module-8" ? null : "module-8"))}
+                className={`group min-h-[340px] rounded-lg border bg-card/45 p-6 text-left backdrop-blur-xl transition-colors ${
+                  activeModule === "module-8"
+                    ? "border-primary/45 bg-primary/10"
+                    : "border-white/10 hover:border-primary/35 hover:bg-primary/5"
+                }`}
+                aria-expanded={activeModule === "module-8"}
+              >
+                <div className="mb-5 flex items-center justify-between gap-3">
+                  <Badge variant="outline" className="border-primary/20 bg-primary/5 text-primary">
+                    Module 8
+                  </Badge>
+                  <ChevronDown
+                    className={`h-5 w-5 text-muted-foreground transition-transform group-hover:text-primary ${
+                      activeModule === "module-8" ? "rotate-180 text-primary" : ""
+                    }`}
+                  />
+                </div>
+                <BrainCircuit className="mb-5 h-8 w-8 text-primary" />
+                <h3 className="font-headline text-2xl font-bold">AI, ML &amp; Data Analytics</h3>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  AI foundations, AWS AI services, generative AI, SageMaker, Bedrock,
+                  data pipelines, analytics, and exam review.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <Badge variant="outline" className="border-white/10 bg-background/60 text-muted-foreground">
+                    90-120 minutes
+                  </Badge>
+                  <Badge variant="outline" className="border-primary/20 bg-primary/5 text-primary">
+                    25-question quiz
+                  </Badge>
+                </div>
+              </motion.button>
             </div>
           </div>
 
           {activeModule === "module-4" ? <AwsGlobalInfrastructureLesson /> : null}
           {activeModule === "module-5" ? <Module5Networking /> : null}
           {activeModule === "module-6" ? <Module6Storage /> : null}
+          {activeModule === "module-7" ? <Module7Databases /> : null}
+          {activeModule === "module-8" ? <Module8AiMlDataAnalyticsNative /> : null}
         </div>
       </div>
     </section>
