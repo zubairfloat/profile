@@ -161,6 +161,57 @@ export const learningConcepts: LearningConcept[] = [
     },
   },
   {
+    id: "js-data-types",
+    slug: "javascript-data-types",
+    title: "JavaScript Data Types",
+    description:
+      "Learn primitive and reference values, typeof, memory representation, null versus undefined, and common data-type interview questions.",
+    category: "javascript",
+    difficulty: "Beginner",
+    readTime: "18 minutes",
+    tags: ["JavaScript", "Fundamentals", "Interview", "Memory"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Understand JavaScript's eight data types through practical examples, memory diagrams, and an interactive quiz.",
+    },
+  },
+  {
+    id: "js-equality",
+    slug: "javascript-equality",
+    title: "Difference Between == and ===",
+    description:
+      "Understand loose equality, strict equality, type coercion, null versus undefined, object references, and predictable comparison practices.",
+    category: "javascript",
+    difficulty: "Beginner",
+    readTime: "16 minutes",
+    tags: ["JavaScript", "Equality", "Type Coercion", "Interview"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Learn why JavaScript developers usually prefer === and when value == null is intentional.",
+    },
+  },
+  {
+    id: "js-null-undefined",
+    slug: "javascript-null-vs-undefined",
+    title: "null vs undefined in JavaScript",
+    description:
+      "Understand intentional absence versus missing values, default parameters, JSON serialization, nullish coalescing, and API behavior.",
+    category: "javascript",
+    difficulty: "Beginner",
+    readTime: "18 minutes",
+    tags: ["JavaScript", "Fundamentals", "Type Coercion", "APIs"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Learn how null and undefined behave in functions, objects, JSON, React state, and production APIs.",
+    },
+  },
+  {
     id: "js-event-loop",
     slug: "event-loop",
     title: "Event Loop",

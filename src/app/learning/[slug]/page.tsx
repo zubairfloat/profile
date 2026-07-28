@@ -11,6 +11,9 @@ import { CallStackLesson } from "@/components/learning/CallStackLesson";
 import { ClosuresLesson } from "@/components/learning/ClosuresLesson";
 import { DebounceThrottleLesson } from "@/components/learning/DebounceThrottleLesson";
 import { ExecutionContextLesson } from "@/components/learning/ExecutionContextLesson";
+import { JavaScriptDataTypesLesson } from "@/components/learning/JavaScriptDataTypesLesson";
+import { JavaScriptEqualityLesson } from "@/components/learning/JavaScriptEqualityLesson";
+import { JavaScriptNullUndefinedLesson } from "@/components/learning/JavaScriptNullUndefinedLesson";
 import { HoistingLesson } from "@/components/learning/HoistingLesson";
 import { MemoryManagementLesson } from "@/components/learning/MemoryManagementLesson";
 import { MicroFrontendModuleFederationLesson } from "@/components/learning/MicroFrontendModuleFederationLesson";
@@ -77,6 +80,9 @@ export default async function LearningConceptPage({ params }: PageProps) {
     "call-stack": CallStackLesson,
     closures: ClosuresLesson,
     "execution-context": ExecutionContextLesson,
+    "javascript-data-types": JavaScriptDataTypesLesson,
+    "javascript-equality": JavaScriptEqualityLesson,
+    "javascript-null-vs-undefined": JavaScriptNullUndefinedLesson,
     hoisting: HoistingLesson,
     promises: PromisesLesson,
     "prototype-chain": PrototypeChainLesson,
