@@ -113,7 +113,7 @@ export function Hero() {
               className="rounded-full border-white/10 hover:bg-secondary/60 px-8 font-semibold"
             >
               <a
-                href="/resume/zubair.pdf"
+                href="/resume/MuhammadZubairResume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
               >

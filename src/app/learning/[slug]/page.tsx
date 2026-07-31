@@ -14,6 +14,8 @@ import { ExecutionContextLesson } from "@/components/learning/ExecutionContextLe
 import { JavaScriptDataTypesLesson } from "@/components/learning/JavaScriptDataTypesLesson";
 import { JavaScriptEqualityLesson } from "@/components/learning/JavaScriptEqualityLesson";
 import { JavaScriptNullUndefinedLesson } from "@/components/learning/JavaScriptNullUndefinedLesson";
+import { JavaScriptThisBindingLesson } from "@/components/learning/JavaScriptThisBindingLesson";
+import { JavaScriptCallApplyBindLesson } from "@/components/learning/JavaScriptCallApplyBindLesson";
 import { HoistingLesson } from "@/components/learning/HoistingLesson";
 import { MemoryManagementLesson } from "@/components/learning/MemoryManagementLesson";
 import { MicroFrontendModuleFederationLesson } from "@/components/learning/MicroFrontendModuleFederationLesson";
@@ -83,6 +85,8 @@ export default async function LearningConceptPage({ params }: PageProps) {
     "javascript-data-types": JavaScriptDataTypesLesson,
     "javascript-equality": JavaScriptEqualityLesson,
     "javascript-null-vs-undefined": JavaScriptNullUndefinedLesson,
+    "javascript-this-binding": JavaScriptThisBindingLesson,
+    "javascript-call-apply-bind": JavaScriptCallApplyBindLesson,
     hoisting: HoistingLesson,
     promises: PromisesLesson,
     "prototype-chain": PrototypeChainLesson,

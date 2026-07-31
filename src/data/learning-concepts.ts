@@ -212,6 +212,40 @@ export const learningConcepts: LearningConcept[] = [
     },
   },
   {
+    id: "js-this-binding",
+    slug: "javascript-this-binding",
+    title: "this and Its Binding Rules",
+    description:
+      "Understand call-site binding, new, call, apply, bind, object methods, default binding, arrow functions, callbacks, and common this interview traps.",
+    category: "javascript",
+    difficulty: "Intermediate",
+    readTime: "22 minutes",
+    tags: ["JavaScript", "Runtime", "this", "Interview"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Master dynamic this, lexical arrow-function this, binding priority, and reliable callback patterns.",
+    },
+  },
+  {
+    id: "js-call-apply-bind",
+    slug: "javascript-call-apply-bind",
+    title: "call() vs apply() vs bind()",
+    description:
+      "Compare explicit this binding, immediate versus deferred execution, argument styles, method borrowing, callbacks, and partial application.",
+    category: "javascript",
+    difficulty: "Intermediate",
+    readTime: "18 minutes",
+    tags: ["JavaScript", "this", "Functions", "Interview"],
+    featured: true,
+    available: true,
+    content: {
+      subtitle:
+        "Master the three Function.prototype binding methods with practical examples and interview-ready comparisons.",
+    },
+  },
+  {
     id: "js-event-loop",
     slug: "event-loop",
     title: "Event Loop",
