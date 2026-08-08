@@ -55,6 +55,7 @@ export function Navbar() {
 
   function getHref(link: NavLink) {
     if (link.name === "Learning" && !isHomePage) return link.href ?? "/learning";
+    if (link.href) return link.href;
     if (!link.sectionId) return link.href ?? "/";
     return isHomePage ? `#${link.sectionId}` : `/#${link.sectionId}`;
   }
@@ -78,7 +79,7 @@ export function Navbar() {
   function handleLinkClick(event: React.MouseEvent<HTMLAnchorElement>, link: NavLink) {
     setIsMobileMenuOpen(false);
 
-    if (!isHomePage || !link.sectionId) return;
+    if (!isHomePage || !link.sectionId || link.href) return;
 
     event.preventDefault();
     scrollToSection(link.sectionId);

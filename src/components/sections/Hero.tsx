@@ -170,7 +170,7 @@ export function Hero() {
           transition={{ duration: 1 }}
           className="relative flex justify-center lg:justify-end"
         >
-          <div className="relative w-72 h-72 lg:w-[450px] lg:h-[450px]">
+          <div className="relative w-72 h-96 lg:w-[390px] lg:h-[520px]">
             {/* Animated badges around image */}
             <motion.div
               animate={{ y: [0, -15, 0] }}
@@ -217,10 +217,10 @@ export function Hero() {
 
             <div className="relative w-full h-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
               <Image
-                src="/images/zubair.jpeg"
+                src="/images/zubair.png"
                 alt="Muhammad Zubair Rizwan"
                 fill
-                className="object-cover hover:grayscale-0 transition-all duration-700"
+                className="object-cover object-top hover:grayscale-0 transition-all duration-700"
                 data-ai-hint="professional headshot"
               />
             </div>
